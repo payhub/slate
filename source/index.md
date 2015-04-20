@@ -12,6 +12,7 @@ toc_footers:
 includes:
   - sale_transaction
   - recurring
+  - voids_refunds
   - errors
 
 search: true

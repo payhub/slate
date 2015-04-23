@@ -13,7 +13,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["java","json"]);
+          setupLanguages(["java","php","csharp","json"]);
         });
       </script>
   </head>
@@ -29,6 +29,8 @@
       <img src="images/logo.jpg" />
         <div class="lang-selector">
               <a href="#" data-language-name="java">java</a>
+              <a href="#" data-language-name="php">php</a>
+              <a href="#" data-language-name="csharp">csharp</a>
               <a href="#" data-language-name="json">json</a>
         </div>
         <div class="search">
@@ -119,7 +121,26 @@ supplied findByMerchantOrganizationId search functions.
 </ol>
 
           <h1 id="sale-transaction">Sale Transaction</h1>
-<pre><code class="highlight java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sale</span> <span class="o">{</span>
+<pre><code class="highlight java"><span class="kn">package</span> <span class="n">transactions</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.UnsupportedEncodingException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.http.Header</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.HttpResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.ClientProtocolException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.HttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.methods.HttpPost</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.entity.StringEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.impl.client.DefaultHttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpConnectionParams</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpParams</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.JSONException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.JSONObject</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sale</span> <span class="o">{</span>
 
   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">RunSale</span><span class="o">()</span> <span class="o">{</span>
     <span class="k">try</span> <span class="o">{</span>
@@ -232,6 +253,257 @@ supplied findByMerchantOrganizationId search functions.
 
 <span class="o">}</span>
 </code></pre>
+<pre><code class="highlight php"><span class="cp">&lt;?php</span>
+  <span class="nv">$trans_type</span> <span class="o">=</span> <span class="s2">"sale"</span><span class="p">;</span>
+  <span class="nv">$processed</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
+  <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+  <span class="c1">//Defining the Web Service URL
+</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
+
+
+  <span class="c1">//Defining data for the SALE transaction
+</span>  <span class="c1">// Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
+</span>  <span class="nv">$organization_id</span> <span class="o">=</span> <span class="mi">10002</span><span class="p">;</span>
+  <span class="nv">$terminal_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="nv">$oauth_token</span> <span class="o">=</span> <span class="s2">"22fe3c69-db70-4a8c-9aed-9a33ebb1e9b4"</span><span class="p">;</span>
+  <span class="c1">// bill data
+</span>  <span class="nv">$base_amount</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">;</span>
+  <span class="nv">$shipping_amount</span> <span class="o">=</span> <span class="mf">1.23</span><span class="p">;</span>
+  <span class="nv">$tax_amount</span> <span class="o">=</span> <span class="mf">1.00</span><span class="p">;</span>
+  <span class="nv">$note</span> <span class="o">=</span> <span class="s2">"this a sample note"</span><span class="p">;</span>
+  <span class="nv">$invoice_number</span> <span class="o">=</span> <span class="s2">"a-00240"</span><span class="p">;</span>
+  <span class="nv">$po_number</span> <span class="o">=</span> <span class="s2">"56"</span><span class="p">;</span>
+  <span class="c1">//Credit card data
+</span>  <span class="nv">$card_number</span> <span class="o">=</span> <span class="s2">"5466410004374507"</span><span class="p">;</span>
+  <span class="nv">$card_expiry_date</span> <span class="o">=</span> <span class="s2">"202011"</span><span class="p">;</span>
+  <span class="nv">$cvv_data</span> <span class="o">=</span> <span class="s2">"998"</span><span class="p">;</span>
+  <span class="nv">$billing_address_1</span> <span class="o">=</span> <span class="s2">"2350 Kerner Blvd"</span><span class="p">;</span>
+  <span class="nv">$billing_address_2</span> <span class="o">=</span> <span class="s2">"On the corner"</span><span class="p">;</span>
+  <span class="nv">$billing_city</span> <span class="o">=</span> <span class="s2">"San Rafael"</span><span class="p">;</span>
+  <span class="nv">$billing_state</span> <span class="o">=</span> <span class="s2">"CA"</span><span class="p">;</span>
+  <span class="nv">$billing_zip</span> <span class="o">=</span> <span class="s2">"94901"</span><span class="p">;</span>
+  <span class="c1">// Customer data
+</span>  <span class="nv">$first_name</span> <span class="o">=</span> <span class="s2">"First"</span><span class="p">;</span>
+  <span class="nv">$last_name</span> <span class="o">=</span> <span class="s2">"Contact"</span><span class="p">;</span>
+  <span class="nv">$company_name</span> <span class="o">=</span> <span class="s2">"Payhub Inc"</span><span class="p">;</span>
+  <span class="nv">$job_title</span> <span class="o">=</span> <span class="s2">"Software Engineer"</span><span class="p">;</span>
+  <span class="nv">$email_address</span> <span class="o">=</span> <span class="s2">"jhon@company.com"</span><span class="p">;</span>
+  <span class="nv">$web_address</span> <span class="o">=</span> <span class="s2">"http://payhub.com"</span><span class="p">;</span>
+  <span class="nv">$phone_number</span> <span class="o">=</span> <span class="s2">"(415) 479 1349"</span><span class="p">;</span>
+  <span class="nv">$phone_ext</span> <span class="o">=</span> <span class="s2">"123"</span><span class="p">;</span>
+  <span class="nv">$phone_type</span> <span class="o">=</span> <span class="s2">"M"</span><span class="p">;</span>
+
+
+  <span class="c1">//Convert data to array to send it to the WS as JSON format
+</span>  <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"merchant"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"organization_id"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$organization_id</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"terminal_id"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$terminal_id</span><span class="s2">"</span><span class="p">);</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"bill"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"base_amount"</span> <span class="o">=&gt;</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"currency"</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span><span class="s2">"amount"</span> <span class="o">=&gt;</span> <span class="nv">$base_amount</span><span class="p">),</span>
+    <span class="s2">"shipping_amount"</span> <span class="o">=&gt;</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"currency"</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span><span class="s2">"amount"</span> <span class="o">=&gt;</span> <span class="nv">$shipping_amount</span><span class="p">),</span>
+    <span class="s2">"tax_amount"</span> <span class="o">=&gt;</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"currency"</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span><span class="s2">"amount"</span> <span class="o">=&gt;</span> <span class="nv">$tax_amount</span><span class="p">));</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"card_data"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"card_number"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$card_number</span><span class="s2">"</span><span class="p">,</span><span class="s2">"card_expiry_date"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$card_expiry_date</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"cvv_data"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$cvv_data</span><span class="s2">"</span><span class="p">,</span><span class="s2">"billing_address_1"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_address_1</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"billing_address_2"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_address_2</span><span class="s2">"</span><span class="p">,</span><span class="s2">"billing_city"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_city</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"billing_state"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_state</span><span class="s2">"</span><span class="p">,</span><span class="s2">"billing_zip"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_zip</span><span class="s2">"</span><span class="p">);</span>
+  <span class="nv">$data</span> <span class="p">[</span><span class="s2">"customer"</span><span class="p">]</span><span class="o">=</span>  <span class="k">array</span><span class="p">(</span><span class="s2">"first_name"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$first_name</span><span class="s2">"</span><span class="p">,</span><span class="s2">"last_name"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$last_name</span><span class="s2">"</span><span class="p">,</span><span class="s2">"company_name"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$company_name</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"job_title"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$job_title</span><span class="s2">"</span><span class="p">,</span><span class="s2">"email_address"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$email_address</span><span class="s2">"</span><span class="p">,</span><span class="s2">"web_address"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$web_address</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"phone_number"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$phone_number</span><span class="s2">"</span><span class="p">,</span><span class="s2">"phone_ext"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$phone_ext</span><span class="s2">"</span><span class="p">,</span><span class="s2">"phone_type"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$phone_type</span><span class="s2">"</span><span class="p">);</span>
+
+  <span class="c1">//Convert data from Array to JSON
+</span>  <span class="nv">$data_string</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
+  <span class="c1">//Creating a CURL object to access the WS
+</span>  <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+  <span class="c1">//Setting the address to connect to
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$WsURL</span><span class="p">);</span>
+  <span class="c1">//Setting HTTP method. For a new transaction we need to use POST
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"POST"</span><span class="p">);</span>
+  <span class="c1">//Setting data in JSON format
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nv">$data_string</span><span class="p">);</span>
+  <span class="c1">//Setting the proper header.
+</span>  <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">'Content-Type: application/json'</span><span class="p">,</span>
+    <span class="s1">'Accept: application/json'</span><span class="p">,</span>
+    <span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">)</span>
+    <span class="p">);</span>
+  <span class="c1">//Store the response as a variable and not showing the content as echo $variable
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="c1">//Set to return the response header, this is to analyze the result and the transaction ID
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+  <span class="c1">//execute connection to the Web Service
+</span>  <span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+  <span class="c1">// get some data from the response
+</span>  <span class="nv">$httpcode</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+  <span class="nv">$header_size</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HEADER_SIZE</span><span class="p">);</span>
+  <span class="c1">//Get the header as string.
+</span>  <span class="nv">$header</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$response</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$header_size</span><span class="p">);</span>
+  <span class="c1">//close connection to the Web Service
+</span>  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+
+  <span class="c1">//Obtain the data from the sale recently created
+</span>  <span class="k">if</span> <span class="p">(</span><span class="nv">$httpcode</span><span class="o">==</span><span class="mi">201</span><span class="p">){</span>
+    <span class="c1">//find the url of the sale (Location header in the response)
+</span>    <span class="nb">preg_match</span><span class="p">(</span><span class="s2">"!</span><span class="se">\r\n</span><span class="s2">(?:Location): *(.*?) *</span><span class="se">\r\n</span><span class="s2">!"</span><span class="p">,</span> <span class="nv">$header</span><span class="p">,</span> <span class="nv">$matches</span><span class="p">);</span>
+    <span class="c1">//$url contains the URL to GET the data from the Web Service
+</span>    <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="c1">//Once we get the transaction ID we will query for the information of the last transaction
+</span>    <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$url</span><span class="p">);</span>
+    <span class="c1">//Setting HTTP method. To get a transaction response we need to use GET
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"GET"</span><span class="p">);</span>
+    <span class="c1">//Setting the proper header.
+</span>    <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">));</span>
+    <span class="c1">//Store the response as a variable and not showing the content as echo $variable
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="c1">//execute connection to the Web Service
+</span>    <span class="nv">$response_json</span><span class="o">=</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="c1">//close connection to the Web Service
+</span>    <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="c1">//show result (standard JSON), parse it, process it, etc..
+</span>    <span class="k">echo</span> <span class="nv">$response_json</span><span class="p">;</span>
+    <span class="c1">// now you could parse the json object to array if you preffer: $obj = json_decode($response_json);
+</span>    <span class="nv">$array</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$response_json</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+    <span class="nb">print_r</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">//There was an error with the WS
+</span>  <span class="k">else</span><span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"Error creating the "</span><span class="o">.</span><span class="nb">strtoupper</span><span class="p">(</span><span class="nv">$trans_type</span><span class="p">)</span><span class="o">.</span><span class="s2">": RESPONSE MESSAGE"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$response</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="cp">?&gt;</span>
+</code></pre>
+<pre><code class="highlight csharp"><span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">PayHubSamples</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Sale</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">RunSale</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/sale"</span><span class="p">);</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
+
+                <span class="n">var</span> <span class="n">sale</span> <span class="p">=</span> <span class="k">new</span>
+                <span class="p">{</span>
+                    <span class="n">merchant</span> <span class="p">=</span> <span class="k">new</span>
+                     <span class="p">{</span>
+                         <span class="n">organization_id</span> <span class="p">=</span> <span class="s">"10005"</span><span class="p">,</span>
+                         <span class="n">terminal_id</span> <span class="p">=</span> <span class="s">"5"</span><span class="p">,</span>
+                     <span class="p">},</span>
+                    <span class="n">bill</span> <span class="p">=</span> <span class="k">new</span>
+                    <span class="p">{</span>
+                        <span class="n">base_amount</span> <span class="p">=</span> <span class="k">new</span>
+                        <span class="p">{</span>
+                            <span class="n">amount</span> <span class="p">=</span> <span class="s">"1275"</span> <span class="c1">//$12.75
+</span>                        <span class="p">},</span>
+                        <span class="n">shipping_amount</span> <span class="p">=</span> <span class="k">new</span>
+                        <span class="p">{</span>
+                            <span class="n">amount</span> <span class="p">=</span> <span class="s">"725"</span> <span class="c1">//$7.25
+</span>                        <span class="p">},</span>
+                        <span class="n">tax_amount</span> <span class="p">=</span> <span class="k">new</span>
+                        <span class="p">{</span>
+                            <span class="n">amount</span> <span class="p">=</span> <span class="s">"113"</span> <span class="c1">//$1.13
+</span>                        <span class="p">},</span>
+                        <span class="n">note</span> <span class="p">=</span> <span class="s">"Shipped as a gift"</span><span class="p">,</span>
+                        <span class="n">invoice_number</span> <span class="p">=</span> <span class="s">"4645782"</span><span class="p">,</span>
+                        <span class="n">po_number</span> <span class="p">=</span> <span class="s">"1234-654321"</span>
+                    <span class="p">},</span>
+                    <span class="n">card_data</span> <span class="p">=</span> <span class="k">new</span>
+                    <span class="p">{</span>
+                        <span class="n">card_number</span> <span class="p">=</span> <span class="s">"5466410004374507"</span><span class="p">,</span>
+                        <span class="n">card_expiry_date</span> <span class="p">=</span> <span class="s">"201809"</span><span class="p">,</span> <span class="c1">//September 2018
+</span>                        <span class="n">billing_address_1</span> <span class="p">=</span> <span class="s">"237 E 33rd Street"</span><span class="p">,</span>
+                        <span class="n">billing_address_2</span> <span class="p">=</span> <span class="s">"3rd Floor"</span><span class="p">,</span>
+                        <span class="n">billing_city</span> <span class="p">=</span> <span class="s">"New York"</span><span class="p">,</span>
+                        <span class="n">billing_state</span> <span class="p">=</span> <span class="s">"NY"</span><span class="p">,</span>
+                        <span class="n">billing_zip</span> <span class="p">=</span> <span class="s">"10016"</span><span class="p">,</span>
+                        <span class="n">cvv_data</span> <span class="p">=</span> <span class="s">"998"</span><span class="p">,</span>
+                        <span class="n">cvv_code</span> <span class="p">=</span> <span class="s">"Y"</span>
+                    <span class="p">},</span>
+                    <span class="n">customer</span> <span class="p">=</span> <span class="k">new</span>
+                    <span class="p">{</span>
+                        <span class="n">first_name</span> <span class="p">=</span> <span class="s">"John"</span><span class="p">,</span>
+                        <span class="n">last_name</span> <span class="p">=</span> <span class="s">"Smith"</span><span class="p">,</span>
+                        <span class="n">company_name</span> <span class="p">=</span> <span class="s">"CBA Stakehouse"</span><span class="p">,</span>
+                        <span class="n">job_title</span> <span class="p">=</span> <span class="s">"Owner"</span><span class="p">,</span>
+                        <span class="n">email_address</span> <span class="p">=</span> <span class="s">"john@cbastakehouse.com"</span><span class="p">,</span>
+                        <span class="n">web_address</span> <span class="p">=</span> <span class="s">"http://www.cbasteakhouse.com"</span><span class="p">,</span>
+                        <span class="n">phone_number</span> <span class="p">=</span> <span class="s">"(917) 479 1349"</span><span class="p">,</span>
+                        <span class="n">phone_ext</span> <span class="p">=</span> <span class="s">"5478"</span><span class="p">,</span>
+                        <span class="n">phone_type</span> <span class="p">=</span> <span class="s">"M"</span>
+                    <span class="p">},</span>
+                    <span class="n">record_format</span> <span class="p">=</span> <span class="s">"CC"</span>
+                <span class="p">};</span>
+
+                <span class="kt">string</span> <span class="n">json</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="n">sale</span><span class="p">);</span>
+
+                <span class="n">request</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"Bearer dfd4f12a-79af-4825-8dba-db27342c8491"</span><span class="p">);</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">Accept</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+
+                <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">streamWriter</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="nf">GetRequestStream</span><span class="p">()))</span>
+                <span class="p">{</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Flush</span><span class="p">();</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="k">try</span>
+                <span class="p">{</span>
+                    <span class="n">var</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">request</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span><span class="c1">//You return this response.
+</span>                    <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
+                    <span class="p">{</span>
+                        <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
+                        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">StatusCode</span><span class="p">);</span><span class="c1">//Created
+</span>                        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+                        <span class="p">{</span>
+                            <span class="k">if</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="s">"Location"</span><span class="p">)</span>
+                            <span class="p">{</span>
+                                <span class="kt">string</span> <span class="n">path</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                                <span class="kt">int</span> <span class="n">lastSlash</span> <span class="p">=</span> <span class="n">path</span><span class="p">.</span><span class="nf">LastIndexOf</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>
+                                <span class="kt">string</span> <span class="n">transactionId</span> <span class="p">=</span> <span class="n">path</span><span class="p">.</span><span class="nf">Substring</span><span class="p">(</span><span class="n">lastSlash</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+                                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Transaction Id: "</span> <span class="p">+</span> <span class="n">transactionId</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="k">catch</span> <span class="p">(</span><span class="n">WebException</span> <span class="n">wex</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">errorResponse</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span><span class="p">)</span><span class="c1">//You return wex.Response instead
+</span>                        <span class="p">{</span>
+                            <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">errorResponse</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
+                            <span class="p">{</span>
+                                <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
+                                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"merchant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"organization_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10002</span><span class="p">,</span><span class="w">
@@ -289,19 +561,7 @@ supplied findByMerchantOrganizationId search functions.
 
 <p>If you do a GET request to this URL, you will get all the transaction information in JSON format.</p>
 
-<h2 id="merchant">merchant</h2>
-<pre><code class="highlight java"><span class="n">JSONObject</span> <span class="n">merchant</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-  <span class="n">merchant</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"organization_id"</span><span class="o">,</span> <span class="s">"10005"</span><span class="o">);</span><span class="c1">//You put your org id here</span>
-  <span class="n">merchant</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"terminal_id"</span><span class="o">,</span> <span class="s">"5"</span><span class="o">);</span><span class="c1">//You put your terminal id</span>
-<span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"merchant"</span><span class="o">,</span> <span class="n">merchant</span><span class="o">);</span>
-</code></pre>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"merchant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"organization_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10002</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"terminal_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="merchant">merchant</h3>
 
 <table><thead>
 <tr>
@@ -319,39 +579,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="bill">bill</h2>
-<pre><code class="highlight java"><span class="n">JSONObject</span> <span class="n">bill</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-  <span class="n">JSONObject</span> <span class="n">base_amount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-    <span class="n">base_amount</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amount"</span><span class="o">,</span> <span class="s">"1275"</span><span class="o">);</span><span class="c1">//$12.75</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"base_amount"</span><span class="o">,</span> <span class="n">base_amount</span><span class="o">);</span>
-  <span class="n">JSONObject</span> <span class="n">shipping_amount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-    <span class="n">shipping_amount</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amount"</span><span class="o">,</span> <span class="s">"725"</span><span class="o">);</span><span class="c1">//$7.25</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"shipping_amount"</span><span class="o">,</span> <span class="n">shipping_amount</span><span class="o">);</span>
-  <span class="n">JSONObject</span> <span class="n">tax_amount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-    <span class="n">tax_amount</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amount"</span><span class="o">,</span> <span class="s">"113"</span><span class="o">);</span><span class="c1">//$1.13</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"tax_amount"</span><span class="o">,</span> <span class="n">tax_amount</span><span class="o">);</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"note"</span><span class="o">,</span> <span class="s">"Shipped as a gift"</span><span class="o">);</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"invoice_number"</span><span class="o">,</span> <span class="s">"4645782"</span><span class="o">);</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"po_number"</span><span class="o">,</span> <span class="s">"1234-654321"</span><span class="o">);</span>
-<span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"bill"</span><span class="o">,</span> <span class="n">bill</span><span class="o">);</span>
-</code></pre>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"bill"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"base_amount"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"shipping_amount"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.23</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"tax_amount"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.00</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is a note."</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"invoice_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"328"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"po_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sample po number"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="bill">bill</h3>
 
 <table><thead>
 <tr>
@@ -381,32 +609,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="card_data">card_data</h2>
-<pre><code class="highlight java"><span class="n">JSONObject</span> <span class="n">card_data</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"card_number"</span><span class="o">,</span> <span class="s">"5466410004374507"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"card_expiry_date"</span><span class="o">,</span> <span class="s">"201809"</span><span class="o">);</span><span class="c1">// September 2018</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_address_1"</span><span class="o">,</span> <span class="s">"237 E 33rd Street"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_address_2"</span><span class="o">,</span> <span class="s">"3rd Floor"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_city"</span><span class="o">,</span> <span class="s">"New York"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_zip"</span><span class="o">,</span> <span class="s">"10016"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_state"</span><span class="o">,</span> <span class="s">"NY"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"cvv_data"</span><span class="o">,</span> <span class="s">"998"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"cvv_code"</span><span class="o">,</span> <span class="s">"Y"</span><span class="o">);</span>
-<span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"card_data"</span><span class="o">,</span> <span class="n">card_data</span><span class="o">);</span>
-</code></pre>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"card_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"card_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5466410004374507"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"card_expiry_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"202011"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"billing_address_1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2350 Kerner Blvd"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"billing_address_2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2 floor"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"billing_city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"San Rafael"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"billing_state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CA"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"billing_zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"94901"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cvv_data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"998"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="card_data">card_data</h3>
 
 <table><thead>
 <tr>
@@ -440,33 +643,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="customer">customer</h2>
-<pre><code class="highlight java"><span class="n">JSONObject</span> <span class="n">customer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"first_name"</span><span class="o">,</span> <span class="s">"John"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"last_name"</span><span class="o">,</span> <span class="s">"Smith"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"company_name"</span><span class="o">,</span> <span class="s">"CBA Steakhouse"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"job_title"</span><span class="o">,</span> <span class="s">"Owner"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"email_address"</span><span class="o">,</span> <span class="s">"john@cbasteakhouse.com"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"web_address"</span><span class="o">,</span> <span class="s">"http://www.cbasteakhouse.com"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"phone_number"</span><span class="o">,</span> <span class="s">"(917) 479 1349"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"phone_ext"</span><span class="o">,</span> <span class="s">"5478"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"phone_type"</span><span class="o">,</span> <span class="s">"M"</span><span class="o">);</span>
-<span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"customer"</span><span class="o">,</span> <span class="n">customer</span><span class="o">);</span>
-</code></pre>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"customer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Miguel"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"company_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Payhub Inc"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"job_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Software Engineer"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"msmith14567@payhub.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"web_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://payhub.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"(415) 479 1349"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phone_ext"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phone_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="customer">customer</h3>
 
 <table><thead>
 <tr>
@@ -513,7 +690,29 @@ supplied findByMerchantOrganizationId search functions.
 </tbody></table>
 
           <h1 id="recurring-billing">Recurring Billing</h1>
-<pre><code class="highlight java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RecurringBill</span> <span class="o">{</span>
+
+<h2 id="post">POST</h2>
+<pre><code class="highlight java"><span class="kn">package</span> <span class="n">transactions</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.UnsupportedEncodingException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.http.Header</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.HttpResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.ClientProtocolException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.HttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.methods.HttpPost</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.entity.StringEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.impl.client.DefaultHttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpConnectionParams</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpParams</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.JSONArray</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.JSONException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.JSONObject</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RecurringBill</span> <span class="o">{</span>
 
   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">CreateRecurringBill</span><span class="o">()</span> <span class="o">{</span>
     <span class="k">try</span> <span class="o">{</span>
@@ -631,6 +830,278 @@ supplied findByMerchantOrganizationId search functions.
 
 <span class="o">}</span>
 </code></pre>
+<pre><code class="highlight php"><span class="cp">&lt;?php</span>
+  <span class="nv">$processed</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
+  <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+  <span class="c1">//Defining the Web Service URL
+</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
+
+
+  <span class="c1">//Defining data for the RECURRING BILL transaction
+</span>  <span class="c1">// Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
+</span>  <span class="nv">$organization_id</span> <span class="o">=</span> <span class="mi">10002</span><span class="p">;</span>
+  <span class="nv">$terminal_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="nv">$oauth_token</span> <span class="o">=</span> <span class="s2">"22fe3c69-db70-4a8c-9aed-9a33ebb1e9b4"</span><span class="p">;</span>
+  <span class="c1">// bill data
+</span>  <span class="nv">$base_amount</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">;</span>
+  <span class="nv">$shipping_amount</span> <span class="o">=</span> <span class="mf">1.23</span><span class="p">;</span>
+  <span class="nv">$tax_amount</span> <span class="o">=</span> <span class="mf">1.00</span><span class="p">;</span>
+  <span class="nv">$note</span> <span class="o">=</span> <span class="s2">"this a sample note"</span><span class="p">;</span>
+  <span class="nv">$invoice_number</span> <span class="o">=</span> <span class="s2">"a-00240"</span><span class="p">;</span>
+  <span class="nv">$po_number</span> <span class="o">=</span> <span class="s2">"56"</span><span class="p">;</span>
+  <span class="c1">//Credit card data
+</span>  <span class="nv">$card_number</span> <span class="o">=</span> <span class="s2">"5466410004374507"</span><span class="p">;</span>
+  <span class="nv">$card_expiry_date</span> <span class="o">=</span> <span class="s2">"202011"</span><span class="p">;</span>
+  <span class="nv">$cvv_data</span> <span class="o">=</span> <span class="s2">"998"</span><span class="p">;</span>
+  <span class="nv">$billing_address_1</span> <span class="o">=</span> <span class="s2">"2350 Kerner Blvd"</span><span class="p">;</span>
+  <span class="nv">$billing_address_2</span> <span class="o">=</span> <span class="s2">"On the corner"</span><span class="p">;</span>
+  <span class="nv">$billing_city</span> <span class="o">=</span> <span class="s2">"San Rafael"</span><span class="p">;</span>
+  <span class="nv">$billing_state</span> <span class="o">=</span> <span class="s2">"CA"</span><span class="p">;</span>
+  <span class="nv">$billing_zip</span> <span class="o">=</span> <span class="s2">"94901"</span><span class="p">;</span>
+  <span class="c1">// Customer data
+</span>  <span class="nv">$first_name</span> <span class="o">=</span> <span class="s2">"First"</span><span class="p">;</span>
+  <span class="nv">$last_name</span> <span class="o">=</span> <span class="s2">"Contact"</span><span class="p">;</span>
+  <span class="nv">$company_name</span> <span class="o">=</span> <span class="s2">"Payhub Inc"</span><span class="p">;</span>
+  <span class="nv">$job_title</span> <span class="o">=</span> <span class="s2">"Software Engineer"</span><span class="p">;</span>
+  <span class="nv">$email_address</span> <span class="o">=</span> <span class="s2">"jhon@company.com"</span><span class="p">;</span>
+  <span class="nv">$web_address</span> <span class="o">=</span> <span class="s2">"http://payhub.com"</span><span class="p">;</span>
+  <span class="nv">$phone_number</span> <span class="o">=</span> <span class="s2">"(415) 479 1349"</span><span class="p">;</span>
+  <span class="nv">$phone_ext</span> <span class="o">=</span> <span class="s2">"123"</span><span class="p">;</span>
+  <span class="nv">$phone_type</span> <span class="o">=</span> <span class="s2">"M"</span><span class="p">;</span>
+  <span class="c1">// Schedule data
+</span>  <span class="nv">$schedule_type</span> <span class="o">=</span> <span class="s2">"M"</span><span class="p">;</span>
+  <span class="nv">$bill_generation_interval</span><span class="o">=</span><span class="s2">"1"</span><span class="p">;</span>
+  <span class="c1">//Schedule - schedule_start_and_end (object)
+</span>  <span class="nv">$start_date</span><span class="o">=</span><span class="s2">"2015-06-01"</span><span class="p">;</span>
+  <span class="nv">$end_date_type</span><span class="o">=</span><span class="s2">"A"</span><span class="p">;</span>
+  <span class="nv">$end_after_bill_count</span><span class="o">=</span><span class="s2">"6"</span><span class="p">;</span>
+  <span class="c1">//Schedule - monthly_schedule (object)
+</span>  <span class="nv">$monthly_type</span><span class="o">=</span><span class="s2">"E"</span><span class="p">;</span>
+  <span class="c1">//This is an array, put the elements separated by ","
+</span>  <span class="nv">$monthly_each_days</span><span class="o">=</span><span class="s2">"1"</span><span class="p">;</span>
+
+  <span class="c1">//Convert data to array to send it to the WS as JSON format
+</span>  <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"merchant"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"organization_id"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$organization_id</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"terminal_id"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$terminal_id</span><span class="s2">"</span><span class="p">);</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"bill"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"base_amount"</span> <span class="o">=&gt;</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"currency"</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span><span class="s2">"amount"</span> <span class="o">=&gt;</span> <span class="nv">$base_amount</span><span class="p">),</span>
+    <span class="s2">"shipping_amount"</span> <span class="o">=&gt;</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"currency"</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span><span class="s2">"amount"</span> <span class="o">=&gt;</span> <span class="nv">$shipping_amount</span><span class="p">),</span>
+    <span class="s2">"tax_amount"</span> <span class="o">=&gt;</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"currency"</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span><span class="s2">"amount"</span> <span class="o">=&gt;</span> <span class="nv">$tax_amount</span><span class="p">));</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"card_data"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"card_number"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$card_number</span><span class="s2">"</span><span class="p">,</span><span class="s2">"card_expiry_date"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$card_expiry_date</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"cvv_data"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$cvv_data</span><span class="s2">"</span><span class="p">,</span><span class="s2">"billing_address_1"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_address_1</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"billing_address_2"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_address_2</span><span class="s2">"</span><span class="p">,</span><span class="s2">"billing_city"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_city</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"billing_state"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_state</span><span class="s2">"</span><span class="p">,</span><span class="s2">"billing_zip"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_zip</span><span class="s2">"</span><span class="p">);</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"customer"</span><span class="p">]</span><span class="o">=</span>  <span class="k">array</span><span class="p">(</span><span class="s2">"first_name"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$first_name</span><span class="s2">"</span><span class="p">,</span><span class="s2">"last_name"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$last_name</span><span class="s2">"</span><span class="p">,</span><span class="s2">"company_name"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$company_name</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"job_title"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$job_title</span><span class="s2">"</span><span class="p">,</span><span class="s2">"email_address"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$email_address</span><span class="s2">"</span><span class="p">,</span><span class="s2">"web_address"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$web_address</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"phone_number"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$phone_number</span><span class="s2">"</span><span class="p">,</span><span class="s2">"phone_ext"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$phone_ext</span><span class="s2">"</span><span class="p">,</span><span class="s2">"phone_type"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$phone_type</span><span class="s2">"</span><span class="p">);</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"schedule"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"schedule_type"</span> <span class="o">=&gt;</span> <span class="nv">$schedule_type</span><span class="p">,</span> <span class="s2">"bill_generation_interval"</span> <span class="o">=&gt;</span> <span class="nv">$bill_generation_interval</span><span class="p">,</span>
+    <span class="s2">"schedule_start_and_end"</span> <span class="o">=&gt;</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"start_date"</span> <span class="o">=&gt;</span> <span class="nv">$start_date</span><span class="p">,</span> <span class="s2">"end_date_type"</span> <span class="o">=&gt;</span> <span class="nv">$end_date_type</span><span class="p">,</span> <span class="s2">"end_after_bill_count"</span> <span class="o">=&gt;</span> <span class="nv">$end_after_bill_count</span><span class="p">),</span>
+    <span class="s2">"monthly_schedule"</span> <span class="o">=&gt;</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"monthly_type"</span> <span class="o">=&gt;</span> <span class="nv">$monthly_type</span><span class="p">));</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"schedule"</span><span class="p">][</span><span class="s2">"monthly_schedule"</span><span class="p">][</span><span class="s2">"monthly_each_days"</span><span class="p">]</span><span class="o">=</span><span class="nb">explode</span><span class="p">(</span><span class="s2">","</span><span class="p">,</span><span class="nv">$monthly_each_days</span><span class="p">);</span>
+
+  <span class="c1">//Convert data from Array to JSON
+</span>  <span class="k">echo</span> <span class="nv">$data_string</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
+  <span class="c1">//Creating a CURL object to access the WS
+</span>  <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+  <span class="c1">//Setting the address to connect to
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$WsURL</span><span class="p">);</span>
+  <span class="c1">//Setting HTTP method. For a new transaction we need to use POST
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"POST"</span><span class="p">);</span>
+  <span class="c1">//Setting data in JSON format
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nv">$data_string</span><span class="p">);</span>
+  <span class="c1">//Setting the proper header.
+</span>  <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">'Content-Type: application/json'</span><span class="p">,</span>
+    <span class="s1">'Accept: application/json'</span><span class="p">,</span>
+    <span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">)</span>
+    <span class="p">);</span>
+  <span class="c1">//Store the response as a variable and not showing the content as echo $variable
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="c1">//Set to return the response header, this is to analyze the result and the transaction ID
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+  <span class="c1">//execute connection to the Web Service
+</span>  <span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+  <span class="c1">// get some data from the response
+</span>  <span class="nv">$httpcode</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+  <span class="nv">$header_size</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HEADER_SIZE</span><span class="p">);</span>
+  <span class="c1">//Get the header as string.
+</span>  <span class="nv">$header</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$response</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$header_size</span><span class="p">);</span>
+  <span class="c1">//close connection to the Web Service
+</span>  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+
+  <span class="c1">//Obtain the data from the recurring bill recently created
+</span>  <span class="k">if</span> <span class="p">(</span><span class="nv">$httpcode</span><span class="o">==</span><span class="mi">201</span><span class="p">){</span>
+    <span class="c1">//find the url of the recurring bill (Location header in the response)
+</span>    <span class="nb">preg_match</span><span class="p">(</span><span class="s2">"!</span><span class="se">\r\n</span><span class="s2">(?:Location): *(.*?) *</span><span class="se">\r\n</span><span class="s2">!"</span><span class="p">,</span> <span class="nv">$header</span><span class="p">,</span> <span class="nv">$matches</span><span class="p">);</span>
+    <span class="c1">//$url contains the URL to GET the data from the Web Service
+</span>    <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="c1">//Once we get the transaction ID we will query for the information of the last transaction
+</span>    <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$url</span><span class="p">);</span>
+    <span class="c1">//Setting HTTP method. To get a transaction response we need to use GET
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"GET"</span><span class="p">);</span>
+    <span class="c1">//Setting the proper header.
+</span>    <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">));</span>
+    <span class="c1">//Store the response as a variable and not showing the content as echo $variable
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="c1">//execute connection to the Web Service
+</span>    <span class="nv">$response_json</span><span class="o">=</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="c1">//close connection to the Web Service
+</span>    <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="c1">//show result (standard JSON), parse it, process it, etc..
+</span>    <span class="k">echo</span> <span class="nv">$response_json</span><span class="p">;</span>
+    <span class="c1">// now you could parse the json object to array if you preffer: $obj = json_decode($response_json);
+</span>    <span class="nv">$array</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$response_json</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+    <span class="nb">print_r</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">//There was an error with the WS
+</span>  <span class="k">else</span><span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"Error creating the "</span><span class="o">.</span><span class="nb">strtoupper</span><span class="p">(</span><span class="nv">$trans_type</span><span class="p">)</span><span class="o">.</span><span class="s2">": RESPONSE MESSAGE"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$response</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="cp">?&gt;</span>
+</code></pre>
+<pre><code class="highlight csharp"><span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">PayHubSamples</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">RecurringBilling</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">CreateRecurringBilling</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/recurring-bill"</span><span class="p">);</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
+
+                <span class="n">var</span> <span class="n">recurringBill</span> <span class="p">=</span> <span class="k">new</span>
+                <span class="p">{</span>
+                    <span class="n">merchant</span> <span class="p">=</span> <span class="k">new</span>
+                     <span class="p">{</span>
+                         <span class="n">organization_id</span> <span class="p">=</span> <span class="s">"10005"</span><span class="p">,</span>
+                         <span class="n">terminal_id</span> <span class="p">=</span> <span class="s">"5"</span><span class="p">,</span>
+                     <span class="p">},</span>
+                    <span class="n">bill</span> <span class="p">=</span> <span class="k">new</span>
+                    <span class="p">{</span>
+                        <span class="n">base_amount</span> <span class="p">=</span> <span class="k">new</span>
+                        <span class="p">{</span>
+                            <span class="n">amount</span> <span class="p">=</span> <span class="s">"1275"</span> <span class="c1">//$12.75
+</span>                        <span class="p">},</span>
+                        <span class="n">shipping_amount</span> <span class="p">=</span> <span class="k">new</span>
+                        <span class="p">{</span>
+                            <span class="n">amount</span> <span class="p">=</span> <span class="s">"725"</span> <span class="c1">//$7.25
+</span>                        <span class="p">},</span>
+                        <span class="n">tax_amount</span> <span class="p">=</span> <span class="k">new</span>
+                        <span class="p">{</span>
+                            <span class="n">amount</span> <span class="p">=</span> <span class="s">"113"</span> <span class="c1">//$1.13
+</span>                        <span class="p">},</span>
+                        <span class="n">note</span> <span class="p">=</span> <span class="s">"Shipped as a gift"</span><span class="p">,</span>
+                        <span class="n">invoice_number</span> <span class="p">=</span> <span class="s">"4645782"</span><span class="p">,</span>
+                        <span class="n">po_number</span> <span class="p">=</span> <span class="s">"1234-654321"</span>
+                    <span class="p">},</span>
+                    <span class="n">card_data</span> <span class="p">=</span> <span class="k">new</span>
+                    <span class="p">{</span>
+                        <span class="n">card_number</span> <span class="p">=</span> <span class="s">"5466410004374507"</span><span class="p">,</span>
+                        <span class="n">card_expiry_date</span> <span class="p">=</span> <span class="s">"201809"</span><span class="p">,</span> <span class="c1">//September 2018
+</span>                        <span class="n">billing_address_1</span> <span class="p">=</span> <span class="s">"237 E 33rd Street"</span><span class="p">,</span>
+                        <span class="n">billing_address_2</span> <span class="p">=</span> <span class="s">"3rd Floor"</span><span class="p">,</span>
+                        <span class="n">billing_city</span> <span class="p">=</span> <span class="s">"New York"</span><span class="p">,</span>
+                        <span class="n">billing_state</span> <span class="p">=</span> <span class="s">"NY"</span><span class="p">,</span>
+                        <span class="n">billing_zip</span> <span class="p">=</span> <span class="s">"10016"</span>
+                    <span class="p">},</span>
+                    <span class="n">customer</span> <span class="p">=</span> <span class="k">new</span>
+                    <span class="p">{</span>
+                        <span class="n">first_name</span> <span class="p">=</span> <span class="s">"John"</span><span class="p">,</span>
+                        <span class="n">last_name</span> <span class="p">=</span> <span class="s">"Smith"</span><span class="p">,</span>
+                        <span class="n">company_name</span> <span class="p">=</span> <span class="s">"CBA Stakehouse"</span><span class="p">,</span>
+                        <span class="n">job_title</span> <span class="p">=</span> <span class="s">"Owner"</span><span class="p">,</span>
+                        <span class="n">email_address</span> <span class="p">=</span> <span class="s">"john@cbastakehouse.com"</span><span class="p">,</span>
+                        <span class="n">web_address</span> <span class="p">=</span> <span class="s">"http://www.cbasteakhouse.com"</span><span class="p">,</span>
+                        <span class="n">phone_number</span> <span class="p">=</span> <span class="s">"(917) 479 1349"</span><span class="p">,</span>
+                        <span class="n">phone_ext</span> <span class="p">=</span> <span class="s">"5478"</span><span class="p">,</span>
+                        <span class="n">phone_type</span> <span class="p">=</span> <span class="s">"M"</span>
+                    <span class="p">},</span>
+                    <span class="n">schedule</span> <span class="p">=</span> <span class="k">new</span>
+                    <span class="p">{</span>
+                        <span class="n">schedule_type</span> <span class="p">=</span> <span class="s">"S"</span><span class="p">,</span>
+                        <span class="n">specific_dates_schedule</span> <span class="p">=</span> <span class="k">new</span>
+                        <span class="p">{</span>
+                            <span class="n">specific_dates</span> <span class="p">=</span> <span class="k">new</span><span class="p">[]</span>
+                            <span class="p">{</span>
+                                <span class="s">"2016-02-01"</span><span class="p">,</span>
+                                <span class="s">"2016-10-31"</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+
+                    <span class="p">}</span>
+                <span class="p">};</span>
+
+                <span class="kt">string</span> <span class="n">json</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="n">recurringBill</span><span class="p">);</span>
+
+                <span class="n">request</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"Bearer dfd4f12a-79af-4825-8dba-db27342c8491"</span><span class="p">);</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">Accept</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+
+                <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">streamWriter</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="nf">GetRequestStream</span><span class="p">()))</span>
+                <span class="p">{</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Flush</span><span class="p">();</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="k">try</span>
+                <span class="p">{</span>
+                    <span class="n">var</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">request</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span><span class="c1">//You return this response.
+</span>                    <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
+                    <span class="p">{</span>
+                        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">StatusCode</span><span class="p">);</span><span class="c1">//Created
+</span>                        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+                        <span class="p">{</span>
+                            <span class="k">if</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="s">"Location"</span><span class="p">)</span>
+                            <span class="p">{</span>
+                                <span class="kt">string</span> <span class="n">path</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                                <span class="kt">int</span> <span class="n">lastSlash</span> <span class="p">=</span> <span class="n">path</span><span class="p">.</span><span class="nf">LastIndexOf</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>
+                                <span class="kt">string</span> <span class="n">transactionId</span> <span class="p">=</span> <span class="n">path</span><span class="p">.</span><span class="nf">Substring</span><span class="p">(</span><span class="n">lastSlash</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+                                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Recurring Billing Id: "</span> <span class="p">+</span> <span class="n">transactionId</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="k">catch</span> <span class="p">(</span><span class="n">WebException</span> <span class="n">wex</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">errorResponse</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span><span class="p">)</span><span class="c1">//You return wex.Response instead
+</span>                        <span class="p">{</span>
+                            <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">errorResponse</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
+                            <span class="p">{</span>
+                                <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
+                                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"merchant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"organization_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10005</span><span class="p">,</span><span class="w">
@@ -690,18 +1161,7 @@ supplied findByMerchantOrganizationId search functions.
 
 <p><code class="prettyprint">POST http://payhub.com/payhubws/api/recurring-bill</code></p>
 
-<h2 id="recurringbillinginput">RecurringBillingInput</h2>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"order"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"invoice"</span><span class="p">:</span><span class="s2">"a123"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"lines"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 1"</span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 2"</span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="recurringbillinginput">RecurringBillingInput</h3>
 
 <table><thead>
 <tr>
@@ -735,32 +1195,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="customerinput">CustomerInput</h2>
-<pre><code class="highlight java"><span class="n">JSONObject</span> <span class="n">customer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"first_name"</span><span class="o">,</span> <span class="s">"John"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"last_name"</span><span class="o">,</span> <span class="s">"Smith"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"company_name"</span><span class="o">,</span> <span class="s">"CBA Steakhouse"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"job_title"</span><span class="o">,</span> <span class="s">"Owner"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"email_address"</span><span class="o">,</span> <span class="s">"john@cbasteakhouse.com"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"phone_number"</span><span class="o">,</span> <span class="s">"(917) 479 1349"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"phone_ext"</span><span class="o">,</span> <span class="s">"5478"</span><span class="o">);</span>
-  <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"phone_type"</span><span class="o">,</span> <span class="s">"M"</span><span class="o">);</span>
-<span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"customer"</span><span class="o">,</span> <span class="n">customer</span><span class="o">);</span>
-</code></pre>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"customer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Adam"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"company_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Capital Inc"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"job_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"President"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"adam@smith.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"web_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://capitalinc.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"(917) 479 1349"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phone_ext"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5702"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phone_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"W"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="customerinput">CustomerInput</h3>
 
 <table><thead>
 <tr>
@@ -810,7 +1245,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="metadata">MetaData</h2>
+<h3 id="metadata">MetaData</h3>
 
 <table><thead>
 <tr>
@@ -820,29 +1255,7 @@ supplied findByMerchantOrganizationId search functions.
 </thead><tbody>
 </tbody></table>
 
-<h2 id="carddatainput">CardDataInput</h2>
-<pre><code class="highlight java"><span class="n">JSONObject</span> <span class="n">card_data</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"card_number"</span><span class="o">,</span> <span class="s">"5466410004374507"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"card_expiry_date"</span><span class="o">,</span> <span class="s">"201809"</span><span class="o">);</span><span class="c1">// September 2018</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_address_1"</span><span class="o">,</span> <span class="s">"237 E 33rd Street"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_address_2"</span><span class="o">,</span> <span class="s">"3rd Floor"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_zip"</span><span class="o">,</span> <span class="s">"10016"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_city"</span><span class="o">,</span> <span class="s">"New York"</span><span class="o">);</span>
-  <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_state"</span><span class="o">,</span> <span class="s">"NY"</span><span class="o">);</span>
-<span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"card_data"</span><span class="o">,</span> <span class="n">card_data</span><span class="o">);</span>
-</code></pre>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"card_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"card_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4055011111111111"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"card_expiry_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"201709"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"billing_address_1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"154 E 34th St"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"billing_address_2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fifth Floor"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"billing_city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"billing_state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NY"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"billing_zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10016"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="carddatainput">CardDataInput</h3>
 
 <table><thead>
 <tr>
@@ -884,19 +1297,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="merchantinput">MerchantInput</h2>
-<pre><code class="highlight java"><span class="n">JSONObject</span> <span class="n">merchant</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-  <span class="n">merchant</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"organization_id"</span><span class="o">,</span> <span class="s">"10005"</span><span class="o">);</span><span class="c1">//You put your org id here</span>
-  <span class="n">merchant</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"terminal_id"</span><span class="o">,</span> <span class="s">"5"</span><span class="o">);</span><span class="c1">//You put your terminal id</span>
-<span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"merchant"</span><span class="o">,</span> <span class="n">merchant</span><span class="o">);</span>
-</code></pre>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"merchant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"organization_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10005</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"terminal_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="merchantinput">MerchantInput</h3>
 
 <table><thead>
 <tr>
@@ -914,39 +1315,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="billinput">BillInput</h2>
-<pre><code class="highlight java"><span class="n">JSONObject</span> <span class="n">bill</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-  <span class="n">JSONObject</span> <span class="n">base_amount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-    <span class="n">base_amount</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amount"</span><span class="o">,</span> <span class="s">"1275"</span><span class="o">);</span><span class="c1">//$12.75</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"base_amount"</span><span class="o">,</span> <span class="n">base_amount</span><span class="o">);</span>
-  <span class="n">JSONObject</span> <span class="n">shipping_amount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-    <span class="n">shipping_amount</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amount"</span><span class="o">,</span> <span class="s">"725"</span><span class="o">);</span><span class="c1">//$7.25</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"shipping_amount"</span><span class="o">,</span> <span class="n">shipping_amount</span><span class="o">);</span>
-  <span class="n">JSONObject</span> <span class="n">tax_amount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-    <span class="n">tax_amount</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amount"</span><span class="o">,</span> <span class="s">"113"</span><span class="o">);</span><span class="c1">//$1.13</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"tax_amount"</span><span class="o">,</span> <span class="n">tax_amount</span><span class="o">);</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"note"</span><span class="o">,</span> <span class="s">"Shipped as a gift"</span><span class="o">);</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"invoice_number"</span><span class="o">,</span> <span class="s">"4645782"</span><span class="o">);</span>
-  <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"po_number"</span><span class="o">,</span> <span class="s">"1234-654321"</span><span class="o">);</span>
-<span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"bill"</span><span class="o">,</span> <span class="n">bill</span><span class="o">);</span>
-</code></pre>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"bill"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"base_amount"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">72.34</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"shipping_amount"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.87</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"tax_amount"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">7.23</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Gym stuff monthly delivered."</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"invoice_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FF7845742ARG"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"po_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"What is a PO number?"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="billinput">BillInput</h3>
 
 <table><thead>
 <tr>
@@ -984,57 +1353,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="transactionamount">TransactionAmount</h2>
-<pre><code class="highlight json"><span class="p">{</span><span class="s2">"order"</span><span class="p">:</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s2">"invoice"</span><span class="p">:</span><span class="s2">"a123"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"lines"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 1"</span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 2"</span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<table><thead>
-<tr>
-<th>Key</th>
-<th>Value</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>amount (number):</td>
-<td>The amount expressed as a decimal number with at most two decimal places (example: 1.23),</td>
-</tr>
-<tr>
-<td>currency (string, optional) = [&#39;USD&rsquo;]:</td>
-<td>The ISO 4217 currency code for this amount. Currently only &#39;USD&rsquo; is accepted.</td>
-</tr>
-</tbody></table>
-
-<h2 id="scheduleinput">ScheduleInput</h2>
-<pre><code class="highlight java"><span class="n">JSONObject</span> <span class="n">schedule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-  <span class="n">schedule</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"schedule_type"</span><span class="o">,</span> <span class="s">"S"</span><span class="o">);</span>
-  <span class="n">JSONObject</span> <span class="n">specific_dates_schedule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-    <span class="n">JSONArray</span> <span class="n">specific_dates</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONArray</span><span class="o">();</span>
-      <span class="n">specific_dates</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="s">"2016-02-01"</span><span class="o">);</span>
-      <span class="n">specific_dates</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="s">"2016-10-31"</span><span class="o">);</span>
-    <span class="n">specific_dates_schedule</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"specific_dates"</span><span class="o">,</span> <span class="n">specific_dates</span><span class="o">);</span>
-  <span class="n">schedule</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"specific_dates_schedule"</span><span class="o">,</span> <span class="n">specific_dates_schedule</span><span class="o">);</span>
-<span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"schedule"</span><span class="o">,</span> <span class="n">schedule</span><span class="o">);</span>
-</code></pre>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"schedule"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"schedule_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"S"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"specific_dates_schedule"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"specific_dates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"2015-10-01"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"2016-09-30"</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="scheduleinput">ScheduleInput</h3>
 
 <table><thead>
 <tr>
@@ -1072,17 +1391,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="specificdatesschedule">SpecificDatesSchedule</h2>
-<pre><code class="highlight json"><span class="p">{</span><span class="s2">"order"</span><span class="p">:</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s2">"invoice"</span><span class="p">:</span><span class="s2">"a123"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"lines"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 1"</span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 2"</span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="specificdatesschedule">SpecificDatesSchedule</h3>
 
 <table><thead>
 <tr>
@@ -1096,17 +1405,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="weeklyschedule">WeeklySchedule</h2>
-<pre><code class="highlight json"><span class="p">{</span><span class="s2">"order"</span><span class="p">:</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s2">"invoice"</span><span class="p">:</span><span class="s2">"a123"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"lines"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 1"</span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 2"</span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="weeklyschedule">WeeklySchedule</h3>
 
 <table><thead>
 <tr>
@@ -1120,17 +1419,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="monthlyschedule">MonthlySchedule</h2>
-<pre><code class="highlight json"><span class="p">{</span><span class="s2">"order"</span><span class="p">:</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s2">"invoice"</span><span class="p">:</span><span class="s2">"a123"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"lines"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 1"</span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 2"</span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="monthlyschedule">MonthlySchedule</h3>
 
 <table><thead>
 <tr>
@@ -1152,17 +1441,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="schedulestartandend">ScheduleStartAndEnd</h2>
-<pre><code class="highlight json"><span class="p">{</span><span class="s2">"order"</span><span class="p">:</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s2">"invoice"</span><span class="p">:</span><span class="s2">"a123"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"lines"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 1"</span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 2"</span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="schedulestartandend">ScheduleStartAndEnd</h3>
 
 <table><thead>
 <tr>
@@ -1188,17 +1467,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h2 id="yearlyschedule">YearlySchedule</h2>
-<pre><code class="highlight json"><span class="p">{</span><span class="s2">"order"</span><span class="p">:</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s2">"invoice"</span><span class="p">:</span><span class="s2">"a123"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"lines"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 1"</span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="s2">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"part 2"</span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h3 id="yearlyschedule">YearlySchedule</h3>
 
 <table><thead>
 <tr>
@@ -1237,9 +1506,9 @@ Link {
 }
 </code></pre>
 
-<p>You can also send a GET to http://payhub.com/payhubws/api/recurring-bill to list all recurring bills and associated operations in compact form.</p>
+<p>You can also send a GET to <code class="prettyprint">http://payhub.com/payhubws/api/recurring-bill</code> to list all recurring bills and associated operations in compact form.</p>
 
-<h2 id="response-messages">Response Messages</h2>
+<h3 id="response-messages">Response Messages</h3>
 
 <table><thead>
 <tr>
@@ -1272,33 +1541,56 @@ Link {
 <td>Internal server error due to encoding the data, or to a PayHub server failure. Contact PayHub.</td>
 </tr>
 </tbody></table>
-
-<p>ResourceSupport {
-links ( array[Link], optional)
+<pre><code class="highlight plaintext">ResourceSupport {
+  links ( array[Link], optional)
 }
+
 Link {
-templated ( boolean, optional), rel ( string, optional),
-href ( string, optional) }
-Void {
+  templated ( boolean, optional), rel ( string, optional),
+  href ( string, optional)
 }
-RestErrorStructure {
-errors ( array[RestError], optional)
-}
-RestError {
-status ( string, optional) = [&#39;100&rsquo; or &#39;101&rsquo; or &#39;102&rsquo; or &#39;103&rsquo; or &#39;200&rsquo; or &#39;201&rsquo; or &#39;202&rsquo; or &#39;203&rsquo; or &#39;204&rsquo; or &#39;205&rsquo; or &#39;206&rsquo; or &#39;207&rsquo; or &#39;208&rsquo; or &#39;226&rsquo; or &#39;300&rsquo; or &#39;301&rsquo; or &#39;302&rsquo; or &#39;302&rsquo; or &#39;303&rsquo; or &#39;304&rsquo; or &#39;305&rsquo; or &#39;307&rsquo; or &#39;308&rsquo; or &#39;400&rsquo; or &#39;401&rsquo; or &#39;402&rsquo; or &#39;403&rsquo; or &#39;404&rsquo; or &#39;405&rsquo; or &#39;406&rsquo; or &#39;407&rsquo; or &#39;408&rsquo; or &#39;409&rsquo; or &#39;410&rsquo; or &#39;411&rsquo; or &#39;412&rsquo; or &#39;413&rsquo; or &#39;414&rsquo; or &#39;415&rsquo; or &#39;416&rsquo; or &#39;417&rsquo; or &#39;418&rsquo; or &#39;419&rsquo; or &#39;420&rsquo; or &#39;421&rsquo; or &#39;422&rsquo; or &#39;423&rsquo; or &#39;424&rsquo; or &#39;426&rsquo; or &#39;428&rsquo; or &#39;429&rsquo; or &#39;431&rsquo; or &#39;500&rsquo; or &#39;501&rsquo; or &#39;502&rsquo; or &#39;503&rsquo; or &#39;504&rsquo; or &#39;505&rsquo; or &#39;506&rsquo; or &#39;507&rsquo; or &#39;508&rsquo; or &#39;509&rsquo; or &#39;510&rsquo; or &#39;511&rsquo;]: The Http Status Code,
-code ( string, optional), location ( string, optional), reason ( string, optional), severity ( string, optional) }
-Void { 401</p>
 
-<p>}
 Void { }
-Void { }</p>
+
+RestErrorStructure {
+  errors ( array[RestError], optional)
+}
+
+RestError {
+  status ( string, optional) = ['100' or '101' or '102' or '103' or '200' or '201' or '202' or '203' or '204' or '205' or '206' or '207' or '208' or '226' or '300' or '301' or '302' or '302' or '303' or '304' or '305' or '307' or '308' or '400' or '401' or '402' or '403' or '404' or '405' or '406' or '407' or '408' or '409' or '410' or '411' or '412' or '413' or '414' or '415' or '416' or '417' or '418' or '419' or '420' or '421' or '422' or '423' or '424' or '426' or '428' or '429' or '431' or '500' or '501' or '502' or '503' or '504' or '505' or '506' or '507' or '508' or '509' or '510' or '511']: The Http Status Code,
+  code ( string, optional), location ( string, optional), reason ( string, optional), severity ( string, optional)
+}
+
+Void { 401 }
+Void { }
+Void { }
+</code></pre>
 
           <h1 id="void-&amp;-refund-transactions">Void &amp; Refund Transactions</h1>
 
 <p>The purpose of this document is to provide you with what you need to first understand whether you need to run a void or a refund transaction, then with what you need to run either.</p>
 
 <h2 id="refund">Refund</h2>
-<pre><code class="highlight java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Refund</span> <span class="o">{</span>
+<pre><code class="highlight java"><span class="kn">package</span> <span class="n">transactions</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.UnsupportedEncodingException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.http.Header</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.HttpResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.ClientProtocolException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.HttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.methods.HttpPost</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.entity.StringEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.impl.client.DefaultHttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpConnectionParams</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpParams</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.JSONException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.JSONObject</span><span class="o">;</span>
+
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Refund</span> <span class="o">{</span>
 
   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">RunRefund</span><span class="o">()</span> <span class="o">{</span>
     <span class="k">try</span> <span class="o">{</span>
@@ -1373,6 +1665,187 @@ Void { }</p>
 
 <span class="o">}</span>
 </code></pre>
+<pre><code class="highlight php"><span class="cp">&lt;?php</span>
+  <span class="nv">$trans_type</span> <span class="o">=</span> <span class="s2">"refund"</span><span class="p">;</span>
+  <span class="nv">$processed</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
+  <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+  <span class="c1">//Defining the Web Service URL
+</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
+
+
+  <span class="c1">//Defining data for the REFUND transaction
+</span>  <span class="c1">// Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
+</span>  <span class="nv">$organization_id</span> <span class="o">=</span> <span class="mi">10002</span><span class="p">;</span>
+  <span class="nv">$terminal_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="nv">$oauth_token</span> <span class="o">=</span> <span class="s2">"22fe3c69-db70-4a8c-9aed-9a33ebb1e9b4"</span><span class="p">;</span>
+
+  <span class="c1">//The rest of the data needed
+</span>  <span class="nv">$record_format</span><span class="o">=</span><span class="s2">"CREDIT_CARD"</span><span class="p">;</span>
+  <span class="nv">$transaction_id</span><span class="o">=</span><span class="s2">"82"</span><span class="p">;</span>
+
+
+
+  <span class="c1">//Convert data to array to send it to the WS as JSON format
+</span>  <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"merchant"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"organization_id"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$organization_id</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"terminal_id"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$terminal_id</span><span class="s2">"</span><span class="p">);</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"record_format"</span><span class="p">]</span><span class="o">=</span><span class="nv">$record_format</span><span class="p">;</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"transaction_id"</span><span class="p">]</span><span class="o">=</span><span class="nv">$transaction_id</span><span class="p">;</span>
+
+  <span class="c1">//Convert data from Array to JSON
+</span>  <span class="nv">$data_string</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
+  <span class="c1">//Creating a CURL object to access the WS
+</span>  <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+  <span class="c1">//Setting the address to connect to
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$WsURL</span><span class="p">);</span>
+  <span class="c1">//Setting HTTP method. For a new transaction we need to use POST
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"POST"</span><span class="p">);</span>
+  <span class="c1">//Setting data in JSON format
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nv">$data_string</span><span class="p">);</span>
+  <span class="c1">//Setting the proper header.
+</span>  <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">'Content-Type: application/json'</span><span class="p">,</span>
+    <span class="s1">'Accept: application/json'</span><span class="p">,</span>
+    <span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">)</span>
+    <span class="p">);</span>
+  <span class="c1">//Store the response as a variable and not showing the content as echo $variable
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="c1">//Set to return the response header, this is to analyze the result and the transaction ID
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+  <span class="c1">//execute connection to the Web Service
+</span>  <span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+  <span class="c1">// get some data from the response
+</span>  <span class="nv">$httpcode</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+  <span class="nv">$header_size</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HEADER_SIZE</span><span class="p">);</span>
+  <span class="c1">//Get the header as string.
+</span>  <span class="nv">$header</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$response</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$header_size</span><span class="p">);</span>
+  <span class="c1">//close connection to the Web Service
+</span>  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+
+  <span class="c1">//Obtain the data from the refund recently created
+</span>  <span class="k">if</span> <span class="p">(</span><span class="nv">$httpcode</span><span class="o">==</span><span class="mi">201</span><span class="p">){</span>
+    <span class="c1">//find the url of the refund (Location header in the response)
+</span>    <span class="nb">preg_match</span><span class="p">(</span><span class="s2">"!</span><span class="se">\r\n</span><span class="s2">(?:Location): *(.*?) *</span><span class="se">\r\n</span><span class="s2">!"</span><span class="p">,</span> <span class="nv">$header</span><span class="p">,</span> <span class="nv">$matches</span><span class="p">);</span>
+    <span class="c1">//$url contains the URL to GET the data from the Web Service
+</span>    <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="c1">//Once we get the transaction ID we will query for the information of the last transaction
+</span>    <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$url</span><span class="p">);</span>
+    <span class="c1">//Setting HTTP method. To get a transaction response we need to use GET
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"GET"</span><span class="p">);</span>
+    <span class="c1">//Setting the proper header.
+</span>    <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">));</span>
+    <span class="c1">//Store the response as a variable and not showing the content as echo $variable
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="c1">//execute connection to the Web Service
+</span>    <span class="nv">$response_json</span><span class="o">=</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="c1">//close connection to the Web Service
+</span>    <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="c1">//show result (standard JSON), parse it, process it, etc..
+</span>    <span class="k">echo</span> <span class="nv">$response_json</span><span class="p">;</span>
+    <span class="c1">// now you could parse the json object to array if you preffer: $obj = json_decode($response_json);
+</span>    <span class="nv">$array</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$response_json</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+    <span class="nb">print_r</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">//There was an error with the WS
+</span>  <span class="k">else</span><span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"Error creating the "</span><span class="o">.</span><span class="nb">strtoupper</span><span class="p">(</span><span class="nv">$trans_type</span><span class="p">)</span><span class="o">.</span><span class="s2">": RESPONSE MESSAGE"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$response</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="cp">?&gt;</span>
+</code></pre>
+<pre><code class="highlight csharp"><span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">PayHubSamples</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Refund</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">RunRefund</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/refund"</span><span class="p">);</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
+
+                <span class="n">var</span> <span class="n">refund</span> <span class="p">=</span> <span class="k">new</span>
+                <span class="p">{</span>
+                    <span class="n">merchant</span> <span class="p">=</span> <span class="k">new</span>
+                     <span class="p">{</span>
+                         <span class="n">organization_id</span> <span class="p">=</span> <span class="s">"10005"</span><span class="p">,</span>
+                         <span class="n">terminal_id</span> <span class="p">=</span> <span class="s">"5"</span><span class="p">,</span>
+                     <span class="p">},</span>
+                    <span class="n">record_format</span> <span class="p">=</span> <span class="s">"CREDIT_CARD"</span><span class="p">,</span>
+                    <span class="n">transaction_id</span> <span class="p">=</span> <span class="s">"228"</span>
+                   <span class="p">};</span>
+
+                <span class="kt">string</span> <span class="n">json</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="n">refund</span><span class="p">);</span>
+
+                <span class="n">request</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"Bearer dfd4f12a-79af-4825-8dba-db27342c8491"</span><span class="p">);</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">Accept</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+
+                <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">streamWriter</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="nf">GetRequestStream</span><span class="p">()))</span>
+                <span class="p">{</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Flush</span><span class="p">();</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="k">try</span>
+                <span class="p">{</span>
+                    <span class="n">var</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">request</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span><span class="c1">//You return this response.
+</span>                    <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
+                    <span class="p">{</span>
+                        <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
+                        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">StatusCode</span><span class="p">);</span><span class="c1">//Created
+</span>                        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+                        <span class="p">{</span>
+                            <span class="k">if</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="s">"Location"</span><span class="p">)</span>
+                            <span class="p">{</span>
+                                <span class="kt">string</span> <span class="n">path</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                                <span class="kt">int</span> <span class="n">lastSlash</span> <span class="p">=</span> <span class="n">path</span><span class="p">.</span><span class="nf">LastIndexOf</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>
+                                <span class="kt">string</span> <span class="n">transactionId</span> <span class="p">=</span> <span class="n">path</span><span class="p">.</span><span class="nf">Substring</span><span class="p">(</span><span class="n">lastSlash</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+                                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Transaction Id: "</span> <span class="p">+</span> <span class="n">transactionId</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="k">catch</span> <span class="p">(</span><span class="n">WebException</span> <span class="n">wex</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">errorResponse</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span><span class="p">)</span><span class="c1">//You return wex.Response instead
+</span>                        <span class="p">{</span>
+                            <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">errorResponse</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
+                            <span class="p">{</span>
+                                <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
+                                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"merchant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"organization_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10005</span><span class="p">,</span><span class="w">
@@ -1418,7 +1891,26 @@ Void { }</p>
 </tbody></table>
 
 <h2 id="void">Void</h2>
-<pre><code class="highlight java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Void</span> <span class="o">{</span>
+<pre><code class="highlight java"><span class="kn">package</span> <span class="n">transactions</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.UnsupportedEncodingException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.http.Header</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.HttpResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.ClientProtocolException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.HttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.methods.HttpPost</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.entity.StringEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.impl.client.DefaultHttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpConnectionParams</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpParams</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.JSONException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.JSONObject</span><span class="o">;</span>
+
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Void</span> <span class="o">{</span>
 
   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">RunVoid</span><span class="o">()</span> <span class="o">{</span>
     <span class="k">try</span> <span class="o">{</span>
@@ -1492,6 +1984,182 @@ Void { }</p>
 
 
 <span class="o">}</span>
+</code></pre>
+<pre><code class="highlight php"><span class="cp">&lt;?php</span>
+  <span class="nv">$trans_type</span> <span class="o">=</span> <span class="s2">"void"</span><span class="p">;</span>
+  <span class="nv">$processed</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
+  <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+  <span class="c1">//Defining the Web Service URL
+</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
+
+
+  <span class="c1">//Defining data for the VOID transaction
+</span>  <span class="c1">// Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
+</span>  <span class="nv">$organization_id</span> <span class="o">=</span> <span class="mi">10002</span><span class="p">;</span>
+  <span class="nv">$terminal_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="nv">$oauth_token</span> <span class="o">=</span> <span class="s2">"22fe3c69-db70-4a8c-9aed-9a33ebb1e9b4"</span><span class="p">;</span>
+  <span class="nv">$transaction_id</span><span class="o">=</span><span class="s2">"83"</span><span class="p">;</span>
+
+
+
+  <span class="c1">//Convert data to array to send it to the WS as JSON format
+</span>  <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"merchant"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"organization_id"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$organization_id</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"terminal_id"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$terminal_id</span><span class="s2">"</span><span class="p">);</span>
+  <span class="nv">$data</span><span class="p">[</span><span class="s2">"transaction_id"</span><span class="p">]</span><span class="o">=</span><span class="nv">$transaction_id</span><span class="p">;</span>
+
+  <span class="c1">//Convert data from Array to JSON
+</span>  <span class="nv">$data_string</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
+  <span class="c1">//Creating a CURL object to access the WS
+</span>  <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+  <span class="c1">//Setting the address to connect to
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$WsURL</span><span class="p">);</span>
+  <span class="c1">//Setting HTTP method. For a new transaction we need to use POST
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"POST"</span><span class="p">);</span>
+  <span class="c1">//Setting data in JSON format
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nv">$data_string</span><span class="p">);</span>
+  <span class="c1">//Setting the proper header.
+</span>  <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">'Content-Type: application/json'</span><span class="p">,</span>
+    <span class="s1">'Accept: application/json'</span><span class="p">,</span>
+    <span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">)</span>
+    <span class="p">);</span>
+  <span class="c1">//Store the response as a variable and not showing the content as echo $variable
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="c1">//Set to return the response header, this is to analyze the result and the transaction ID
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+  <span class="c1">//execute connection to the Web Service
+</span>  <span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+  <span class="c1">// get some data from the response
+</span>  <span class="nv">$httpcode</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+  <span class="nv">$header_size</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HEADER_SIZE</span><span class="p">);</span>
+  <span class="c1">//Get the header as string.
+</span>  <span class="nv">$header</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$response</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$header_size</span><span class="p">);</span>
+  <span class="c1">//close connection to the Web Service
+</span>  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+
+  <span class="c1">//Obtain the data from the void recently created
+</span>  <span class="k">if</span> <span class="p">(</span><span class="nv">$httpcode</span><span class="o">==</span><span class="mi">201</span><span class="p">){</span>
+    <span class="c1">//find the url of the void (Location header in the response)
+</span>    <span class="nb">preg_match</span><span class="p">(</span><span class="s2">"!</span><span class="se">\r\n</span><span class="s2">(?:Location): *(.*?) *</span><span class="se">\r\n</span><span class="s2">!"</span><span class="p">,</span> <span class="nv">$header</span><span class="p">,</span> <span class="nv">$matches</span><span class="p">);</span>
+    <span class="c1">//$url contains the URL to GET the data from the Web Service
+</span>    <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="c1">//Once we get the transaction ID we will query for the information of the last transaction
+</span>    <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$url</span><span class="p">);</span>
+    <span class="c1">//Setting HTTP method. To get a transaction response we need to use GET
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"GET"</span><span class="p">);</span>
+    <span class="c1">//Setting the proper header.
+</span>    <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">));</span>
+    <span class="c1">//Store the response as a variable and not showing the content as echo $variable
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="c1">//execute connection to the Web Service
+</span>    <span class="nv">$response_json</span><span class="o">=</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="c1">//close connection to the Web Service
+</span>    <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="c1">//show result (standard JSON), parse it, process it, etc..
+</span>    <span class="k">echo</span> <span class="nv">$response_json</span><span class="p">;</span>
+    <span class="c1">// now you could parse the json object to array if you preffer: $obj = json_decode($response_json);
+</span>    <span class="nv">$array</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$response_json</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+    <span class="nb">print_r</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">//There was an error with the WS
+</span>  <span class="k">else</span><span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"Error creating the "</span><span class="o">.</span><span class="nb">strtoupper</span><span class="p">(</span><span class="nv">$trans_type</span><span class="p">)</span><span class="o">.</span><span class="s2">": RESPONSE MESSAGE"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$response</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="cp">?&gt;</span>
+</code></pre>
+<pre><code class="highlight csharp"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">PayHubSamples</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Void</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">RunVoid</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/void"</span><span class="p">);</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
+
+                <span class="n">var</span> <span class="n">refund</span> <span class="p">=</span> <span class="k">new</span>
+                <span class="p">{</span>
+                    <span class="n">merchant</span> <span class="p">=</span> <span class="k">new</span>
+                    <span class="p">{</span>
+                        <span class="n">organization_id</span> <span class="p">=</span> <span class="s">"10005"</span><span class="p">,</span>
+                        <span class="n">terminal_id</span> <span class="p">=</span> <span class="s">"5"</span><span class="p">,</span>
+                    <span class="p">},</span>
+                    <span class="n">transaction_id</span> <span class="p">=</span> <span class="s">"238"</span>
+                <span class="p">};</span>
+
+                <span class="kt">string</span> <span class="n">json</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="n">refund</span><span class="p">);</span>
+
+                <span class="n">request</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"Bearer dfd4f12a-79af-4825-8dba-db27342c8491"</span><span class="p">);</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">Accept</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+
+                <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">streamWriter</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="nf">GetRequestStream</span><span class="p">()))</span>
+                <span class="p">{</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Flush</span><span class="p">();</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="k">try</span>
+                <span class="p">{</span>
+                    <span class="n">var</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">request</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span><span class="c1">//You return this response.
+</span>                    <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
+                    <span class="p">{</span>
+                        <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
+                        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">StatusCode</span><span class="p">);</span><span class="c1">//Created
+</span>                        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span><span class="p">)</span>
+                        <span class="p">{</span>
+                            <span class="k">if</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="s">"Location"</span><span class="p">)</span>
+                            <span class="p">{</span>
+                                <span class="kt">string</span> <span class="n">path</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">Headers</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                                <span class="kt">int</span> <span class="n">lastSlash</span> <span class="p">=</span> <span class="n">path</span><span class="p">.</span><span class="nf">LastIndexOf</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>
+                                <span class="kt">string</span> <span class="n">transactionId</span> <span class="p">=</span> <span class="n">path</span><span class="p">.</span><span class="nf">Substring</span><span class="p">(</span><span class="n">lastSlash</span> <span class="p">+</span> <span class="m">1</span><span class="p">);</span>
+                                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Transaction Id: "</span> <span class="p">+</span> <span class="n">transactionId</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="k">catch</span> <span class="p">(</span><span class="n">WebException</span> <span class="n">wex</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">errorResponse</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span><span class="p">)</span><span class="c1">//You return wex.Response instead
+</span>                        <span class="p">{</span>
+                            <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">errorResponse</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
+                            <span class="p">{</span>
+                                <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
+                                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"merchant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -2088,6 +2756,8 @@ Void { }</p>
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="java">java</a>
+                <a href="#" data-language-name="php">php</a>
+                <a href="#" data-language-name="csharp">csharp</a>
                 <a href="#" data-language-name="json">json</a>
           </div>
       </div>

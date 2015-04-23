@@ -3,6 +3,8 @@ title: PayHub API Reference
 
 language_tabs:
   - java
+  - php
+  - csharp
   - json
 
 toc_footers:

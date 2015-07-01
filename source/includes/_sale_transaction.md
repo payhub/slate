@@ -432,7 +432,7 @@ namespace PayHubSamples
 }
 ```
 
-The purpose of this document is to provide you with what you need to understand what you need to run a sale transaction.
+The purpose of this document is to provide you with the information you need to understand what you need to run a sale transaction.
 
 Use a Sale transaction to charge a credit card. You will receive an approval code on a successful sale. Once a sale transaction is settled, the money will be taken from the cardholder's account and deposited to the merchant's account. This is the most common transaction type by far.
 

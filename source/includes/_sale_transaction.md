@@ -431,63 +431,172 @@ namespace PayHubSamples
   }
 }
 ```
+This topic provides the information about the Sale transaction. Use a Sale transaction to charge a credit card.
 
-The purpose of this document is to provide you with the information you need to understand what you need to run a sale transaction.
+Upon successful sale, you will receive an approval code. Once a sale transaction is settled, the money will be taken from the card holder's account and deposited to the merchant's account. This is the most common transaction type.
 
-Use a Sale transaction to charge a credit card. You will receive an approval code on a successful sale. Once a sale transaction is settled, the money will be taken from the cardholder's account and deposited to the merchant's account. This is the most common transaction type by far.
+## Request Method
+`POST`
 
-
-### Endpoint (URL to Call):
+## Endpoint (URL to Call)
 `POST http://payhub.com/payhubws/api/sale`
 
-As a result you'll receive a 201 code (created) and the Id of the Sale in the Location header. Sample header in the response:
-
-`Location → http:// [payhub-api-server]:8251/payhubws/api/sale/5501b651da06a879ce520d4d`
-
-If you do a GET request to this URL, you will get all the transaction information in JSON format.
-
+##Elements
 
 ### merchant
 
-Key | Value
---- | -----
-organization_id (integer): | The Organization Id of the Merchant. This must match the Organization Id of the Merchant that the passed Oauth Token is associated with.,
-terminal_id (integer): | The Merchant's Virtual Terminal Id for 3rd Party API.
-
-
-### bill
-
-Key | Value
---- | -----
-base_amount (TransactionAmount): | The Base amount of the recurring bill. The total amount charged will be the sum of this amount and (any) 'shipping_amount' and 'tax_amount'.
-shipping_amount (TransactionAmount, optional): | The shipping amount for the transaction. This will be included in the total amount charged.,
-tax_amount (TransactionAmount, optional): | The tax amount for the transaction. This will be included in the total amount charged.,
-invoice_number (string, optional): | The invoice number for the transaction., po_number (string, optional): | The purchase order number for the transaction.
-note (string, optional): | A free format note for the transaction. The note will be readable by the Merchant.
-
-
-### card_data
-
-Key | Value
---- | -----
-tokenized_card (string, optional): | (Required if the 'card_number' property is not present in the request). This is the 16 character PayHub-specific tokenized string representing the card number. The value for the given customer and credit card can be obtained by examining the last Sale by accessing the link to the card data that was successfully created. It is safer (and recommended) for the third party client to store and use this string in any future requests for the same customer. card_number ( string, optional): (Required if the 'tokenized_card' property is not present in the request). This is the 16 character card number. Note that the card number is not stored by the API in plain text - the response will contain a tokenized card number that should always be used in future requests, (for the same Customer) in place of this property.,
-billing_address_1 (string, optional): | The customer's billing street address.
-billing_address_2 ( tring, optional): | The customer's billing street address - line 2.,
-billing_city (string, optional): | The customer's billing city,
-billing_state (string, optional): | The customer's billing (US) State Code (CA, WI, NY, etc.), billing_zip ( string, optional): The customer's billing (US) Zip Code. Must be either 5 digits or 5 plus four separated by a '-'. (Required if the Merchant has the AVS flag turned on.),
-card_expiry_date (string): | The Card Expiry in the form YYYYMM., cvv_data ( string): This is the three or four digit card CVV code.
-
+Key | Type | Value
+--- | ---- | -----
+organization_id | integer | The Organization Id of the Merchant. This must match the Organization Id of the Merchant that the passed Oauth Token is associated with.
+terminal_id | integer | The Merchant's Virtual Terminal Id for 3rd Party API.
+record_format | string, optional | To specify if the sale has to be made over a credit card, debit card or cash payment. If it´s not present, default value "CREDIT_CARD" is assumed. <br>Accepted values are: <ul><li>*CASH_PAYMENT*</li><li>*CREDIT_CARD*</li><li>*DEBIT_CARD*</li></ul>
 
 ### customer
 
-Key | Value
---- | -----
-first_name (string): | The customer's first name.
-last_name (string): | The customer's last name.
-company_name (string, optional): | The customer's company name.
-job_title (string, optional): | The customer's job title.
-email_address (string, optional): | The customer's email address. Must be syntactically correct. If email address is not specified, you must provide a phone_number to identify the customer.
-web_address (string, optional): | The customer's web address. If specified, must be a syntactically valid web address.
-phone_number (string, optional): | The customer's phone number. Must be syntactically correct. Example: (415) 234 5678, or 4152345678, or (415) 234-5678. If phone number is not specified, you must provide an email_address to identify the customer.
-phone_ext (string, optional): | The customer's phone extension.
-phone_type (string, optional) = ['H' or 'W' or 'M']: | The type of the customer's phone number: H (Home), W (Work), M (Mobile).
+Key | Type | Value
+--- | ---- | -----
+first_name | string | The first name of the customer.
+last_name | string | The last name of the customer.
+company_name | string, optional | The company name of the customer.
+job_title | string, optional | The job title of the customer.
+email_address | string, optional | The valid email address of the customer. The email address must be syntactically correct. If you do not specify the email address, you must provide a phone_number to identify the customer.
+web_address | string, optional | The web address of the customer. The web address, if you specify, must be syntactically valid web address.
+phone_number | string, optional | The phone number of the customer. The phone number must be syntactically correct. <br>For example, (415) 234 5678, or 4152345678, or (415) 234-5678. <br>If you do not specify the phone number, you must provide an email_address to identify the customer.
+phone_ext | string, optional | The phone extension number of the customer.
+phone_type | string, optional | The type (['H' or 'W' or 'M']) of the phone number: H (Home), W (Work), M (Mobile).
+
+### card_data
+
+Key | Type | Value
+--- | ---- | -----
+tokenized_card | string, optional | This is the 16 character PayHub-specific tokenized string representing the card number. <br>The value for the given customer and credit card can be obtained by examining the last Sale by accessing the link to the card data that was successfully created. It is safer (and recommended) for the third party client to store and use this string in any future requests for the same customer.
+card_number | string, optional | This is the 16 character card number. <br> The card number is not stored by the API in plain text. The response will contain a tokenized card number that should always be used in future requests, (for the same Customer) in place of this property.
+track1_data | string, optional | This is the string read by the swiper (It contents track 1 data without sentinels).
+track2_data | string, optional | This is the string read by the swiper (It contents track 2 data without sentinels).
+encrypted_track_data | Optional | <ul><li>**encrypted_track** (string, optional): This is the string read by the swiper. This string contains the encrypted track data. </li><li>**swiper_brand** (string, optional): The swiper brand's name with capital letters. Default value is **IDTECH**.</li><li>**swiper_model** (string, optional): The swiper model with capital letters. Default value is **UNIMAGII**.</li></ul>
+billing_address_1 | string, optional | The billing street address of the customer.
+billing_address_2 | tring, optional | The additional billing street address of the customer.
+billing_city | string, optional | The billing city of the customer.
+billing_state | string, optional | The billing state Code of the customer. <br>For example, CA, WI, NY, etc. <br>The sate codes should be for the states in the USA.
+billing_zip | string, optional | The billing Zip Code of the customer. <br>The zip code must be either 5 digits or 5 plus four separated by a '-'. <br>The zip code is required if the merchant has turned ON the AVS flag.
+card_expiry_date | string | The card expiry date in the _YYYYMM_ format.
+cvv_data | string | This is the three or four digit CVV code at the back side of the credit and debit card.
+
+### bill
+
+Key | Type | Value
+--- | ---- | -----
+base_amount | TransactionAmount | The base amount of the recurring bill. <br>The total amount charged will be the sum of this amount and (any) 'shipping_amount' and 'tax_amount'.
+shipping_amount | TransactionAmount, optional | The shipping amount for the transaction. <br>This value will be included in the total amount charged.
+tax_amount | TransactionAmount, optional | The tax amount for the transaction. <br>This value will be included in the total amount charged.
+invoice_number | string, optional | The invoice number for the transaction.
+po_number | string, optional | The purchase order number for the transaction.
+note | string, optional | A free format note for the transaction. The note will be read by the merchant.
+
+## Example of JASON
+```{
+  "merchant": {
+    "organization_id": 10002,
+    "terminal_id": 2
+  },
+  "bill": {
+    "base_amount": {
+      "amount": 10.0
+    },
+    "shipping_amount": {
+      "amount": 1.23
+    },
+    "tax_amount": {
+      "amount": 1.00
+    },
+    "note": "This is a note.",
+    "invoice_number": "328",
+    "po_number": "sample po number"
+  },
+  "card_data": {
+    "card_number": "5466410004374507",
+    "card_expiry_date": "202011",
+    "billing_address_1": "2350 Kerner Blvd",
+    "billing_address_2": "2 floor",
+    "billing_city": "San Rafael",
+    "billing_state": "CA",
+    "billing_zip": "94901",
+    "cvv_data": "998"
+  },
+  "customer": {
+    "first_name": "Miguel",
+    "last_name": "Smith",
+    "company_name": "Payhub Inc",
+    "job_title": "Software Engineer",
+    "email_address": "msmith14567@payhub.com",
+    "web_address": "http://payhub.com",
+    "phone_number": "(415) 479 1349",
+    "phone_ext": "123",
+    "phone_type": "M"
+  }
+}
+```
+
+## Result
+* A 201 code (created)
+* The Id of the Sale in the Location header.
+    <br>Sample header in the response: `Location → http:// [payhub-api-server]:8251/payhubws/api/sale/5501b651da06a879ce520d4d`.
+    <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
+
+##Sample Response
+```
+{
+"version": 0,
+"createdAt": "2015-05-19T12:58:09.863-03:00",
+"lastModified": "2015-05-19T12:58:09.863-03:00",
+"createdBy": "10002",
+"lastModifiedBy": "10002",
+"metaData": null,
+"record_format": null,
+"settlementStatus": "Not settled",
+"saleResponse": {"saleId": "478",
+"approvalCode": "VTLMC1",
+"processedDateTime": null,
+"avsResultCode": "N",
+"verificationResultCode": "M",
+"batchId": "38",
+"responseCode": "00",
+"responseText": "",
+"cisNote": "",
+"riskStatusResponseText": "",
+"riskStatusRespondeCode": "",
+"saleDateTime": "2015-05-19 12:58:09",
+"tokenizedCard": null,
+"customerReference": {"customerId": 1,
+"customerEmail": "msmith14567@payhub.com",
+"customerPhones": [ ]
+
+},
+
+"billingReferences": {"cardObscured": null,
+"tokenizedCard": "9999000000001804",
+"customerId": 1,
+"customerCardId": null,
+"customerBillId": 1
+}
+
+},
+"_links": {"self": {"href": "http://dc1-api.payhub.com/payhubws/api/v2/sale/478"
+},
+
+"merchant": {"href": "http://dc1-api.payhub.com/payhubws/api/v2/sale/478/merchant"
+
+},
+"customer": {"href": "http://dc1-api.payhub.com/payhubws/api/v2/sale/478/customer"
+},
+
+"card_data": {"href": "http://dc1-api.payhub.com/payhubws/api/v2/sale/478/card_data"
+},
+
+"bill": {"href": "http://dc1-api.payhub.com/payhubws/api/v2/sale/478/bill"
+}
+
+}
+
+}
+```

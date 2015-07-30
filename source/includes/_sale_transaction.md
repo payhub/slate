@@ -449,7 +449,7 @@ Key | Type | Value
 --- | ---- | -----
 organization_id | integer | The Organization Id of the Merchant. This must match the Organization Id of the Merchant that the passed Oauth Token is associated with.
 terminal_id | integer | The Merchant's Virtual Terminal Id for 3rd Party API.
-record_format | string, optional | To specify if the sale has to be made over a credit card, debit card or cash payment. If it´s not present, default value "CREDIT_CARD" is assumed. <br>Accepted values are: <ul><li>*CASH_PAYMENT*</li><li>*CREDIT_CARD*</li><li>*DEBIT_CARD*</li></ul>
+record_format | string, optional | To specify if the sale has to be made over a credit card, debit card or cash payment. If it´s not present, default value "CREDIT_CARD" is assumed. <br>Accepted values are: <ul><li>CASH_PAYMENT</li><li>CREDIT_CARD</li><li>DEBIT_CARD</li></ul>
 
 ### customer
 
@@ -492,6 +492,8 @@ tax_amount | TransactionAmount, optional | The tax amount for the transaction. <
 invoice_number | string, optional | The invoice number for the transaction.
 po_number | string, optional | The purchase order number for the transaction.
 note | string, optional | A free format note for the transaction. The note will be read by the merchant.
+
+**Note:** One of the following fields must be present: <ul><li>tokenized_card</li><li>card_number</li><li>track1_data</li><li>track2_data</li><li>encrypted_track_data</li></ul>
 
 ## Example of JASON
 ```{
@@ -600,3 +602,6 @@ note | string, optional | A free format note for the transaction. The note will 
 
 }
 ```
+On the same way you  can query about merchant, customer, bill and card data details using the given URLs.
+
+**Note:** You will need to use the Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.

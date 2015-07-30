@@ -603,7 +603,21 @@ Run a Void when you need to cancel a transaction (either a sale or a refund) tha
 
 ### Elements (All required)
 
-Key | Value
---- | -----
-organization_id (integer): | The merchant's organization id which did the sale you're trying to void.
-terminal_id (integer): | The merchant's terminal's id where the sale was done. transaction_id (integer): | The transaction id of the sale you want to void.
+Key | Type | Value
+--- | ---- | -----
+organization_id | integer | The merchant's organization id which did the sale you're trying to void.
+terminal_id | integer | The merchant's terminal's id where the sale was done. transaction_id (integer): | The transaction id of the sale you want to void.
+transaction_id| integer | The transaction id of the sale that you want to void.
+
+##Example of JSON
+```
+{
+"merchant" : {
+ "organization_id" : 10005,
+ "terminal_id" : 5
+
+ },
+
+ "transaction_id":"114"
+}
+```

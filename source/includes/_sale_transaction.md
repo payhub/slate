@@ -475,7 +475,7 @@ track1_data | string, optional | This is the string read by the swiper (It conte
 track2_data | string, optional | This is the string read by the swiper (It contents track 2 data without sentinels).
 encrypted_track_data | Optional | <ul><li>**encrypted_track** (string, optional): This is the string read by the swiper. This string contains the encrypted track data. </li><li>**swiper_brand** (string, optional): The swiper brand's name with capital letters. Default value is **IDTECH**.</li><li>**swiper_model** (string, optional): The swiper model with capital letters. Default value is **UNIMAGII**.</li></ul>
 billing_address_1 | string, optional | The billing street address of the customer.
-billing_address_2 | tring, optional | The additional billing street address of the customer.
+billing_address_2 | string, optional | The additional billing street address of the customer.
 billing_city | string, optional | The billing city of the customer.
 billing_state | string, optional | The billing state Code of the customer. <br>For example, CA, WI, NY, etc. <br>The sate codes should be for the states in the USA.
 billing_zip | string, optional | The billing Zip Code of the customer. <br>The zip code must be either 5 digits or 5 plus four separated by a '-'. <br>The zip code is required if the merchant has turned ON the AVS flag.

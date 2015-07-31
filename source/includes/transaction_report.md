@@ -1,10 +1,10 @@
 #Transaction Report
 This API allows the merchant to search for transactions filtering by a wide range of optional parameters.
 
-#Request Method
+##Request Method
 `PATCH`
 
-#Endpoint (URL to Call)
+##Endpoint (URL to Call)
 `webservice URL/api/v2/search/transactionReport`
 
 ##Required Headers
@@ -20,7 +20,7 @@ This API allows the merchant to search for transactions filtering by a wide rang
 ```
 
 
-#Parameters
+##Parameters
 All the parameters are optional, they can be sent in no particular order. If one of the parameters is incorrect the server will return an error.
 
 The parameters are case sensitive.

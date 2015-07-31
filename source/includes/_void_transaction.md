@@ -1,4 +1,5 @@
-## Refund Transaction
+## Void Transaction
+
 ```java
 package transactions;
 import java.io.IOException;
@@ -19,24 +20,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class Refund {
+public class Void {
 
-  public static void RunRefund() {
+  public static void RunVoid() {
     try {
       HttpClient client = new DefaultHttpClient();
       HttpParams params = client.getParams();
       HttpConnectionParams.setConnectionTimeout(params, 10000);
 
       JSONObject jsonRequestObject = new JSONObject();
-      String url = "http://payhub.com/payhubws/api/v2/refund";
+      String url = "http://payhub.com/payhubws/api/v2/void";
 
       JSONObject merchant = new JSONObject();
-      merchant.put("organization_id", "10005");//You put your org id here
+      merchant.put("organization_id", "10005"); //You put your org id here
       merchant.put("terminal_id", "5");//You put your terminal id
 
       jsonRequestObject.put("merchant", merchant);
-      jsonRequestObject.put("record_format", "CREDIT_CARD");
-      jsonRequestObject.put("transaction_id", "226");
+      jsonRequestObject.put("transaction_id", "223"); //You put the transaction id of the sale or refund you want to void
 
       HttpPost postCreate = new HttpPost(url);
       postCreate.addHeader("Authorization", "Bearer dfd4f12a-79af-4825-8dba-db27342c8491");//You put your token here
@@ -45,7 +45,7 @@ public class Refund {
 
       StringEntity se = new StringEntity(jsonRequestObject.toString());
       postCreate.setEntity(se);
-      HttpResponse response = client.execute(postCreate);//You return this response and work with it
+      HttpResponse response = client.execute(postCreate); //You return this response and work with it
 
       String json = " ";
       JSONObject jsonResponseObject = null;
@@ -92,12 +92,13 @@ public class Refund {
     }
   }
 
+
 }
 ```
 
 ```php
 <?php
-  $trans_type = "refund";
+  $trans_type = "void";
   $processed = FALSE;
   $ERROR_MESSAGE = '';
 
@@ -105,22 +106,18 @@ public class Refund {
   $WsURL="http://payhub.com/payhubws/api/v2/$trans_type";
 
 
-  //Defining data for the REFUND transaction
+  //Defining data for the VOID transaction
   // Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
   $organization_id = 10002;
   $terminal_id = 2;
   $oauth_token = "22fe3c69-db70-4a8c-9aed-9a33ebb1e9b4";
-
-  //The rest of the data needed
-  $record_format="CREDIT_CARD";
-  $transaction_id="82";
+  $transaction_id="83";
 
 
 
   //Convert data to array to send it to the WS as JSON format
   $data = array();
   $data["merchant"] = array("organization_id" => "$organization_id", "terminal_id" => "$terminal_id");
-  $data["record_format"]=$record_format;
   $data["transaction_id"]=$transaction_id;
 
   //Convert data from Array to JSON
@@ -156,9 +153,9 @@ public class Refund {
   //close connection to the Web Service
   curl_close($ch);
 
-  //Obtain the data from the refund recently created
+  //Obtain the data from the void recently created
   if ($httpcode==201){
-    //find the url of the refund (Location header in the response)
+    //find the url of the void (Location header in the response)
     preg_match("!\r\n(?:Location): *(.*?) *\r\n!", $header, $matches);
     //$url contains the URL to GET the data from the Web Service
     $url = $matches[1];
@@ -196,33 +193,32 @@ public class Refund {
 ```
 
 ```csharp
-using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace PayHubSamples
 {
-    public class Refund
+    public class Void
     {
-        public static void RunRefund()
+        public static void RunVoid()
         {
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create("http://payhub.com/payhubws/api/v2/refund");
+                var request = (HttpWebRequest)WebRequest.Create("http://payhub.com/payhubws/api/v2/void");
                 request.ContentType = "text/json";
                 request.Method = "POST";
 
                 var refund = new
                 {
                     merchant = new
-                     {
-                         organization_id = "10005",
-                         terminal_id = "5",
-                     },
-                    record_format = "CREDIT_CARD",
-                    transaction_id = "228"
-                   };
+                    {
+                        organization_id = "10005",
+                        terminal_id = "5",
+                    },
+                    transaction_id = "238"
+                };
 
                 string json = JsonConvert.SerializeObject(refund);
 
@@ -286,31 +282,24 @@ namespace PayHubSamples
     "organization_id": 10005,
     "terminal_id": 5
   },
-  "record_format": "CREDIT_CARD",
   "transaction_id": "114"
 }
 ```
 
-#Refund Transaction
-This topic provides the information the Refund transaction.
+#Void Transaction
 
-Run the Refund transaction when you want to refund the full amount of a settled sale, which is not yet refunded. The refund amount will be the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.
+Run a Void when you need to cancel a transaction (either a sale or a refund) that has not yet been settled and that has not already been voided. This will avoid the customer being charged any amount at all and will release the pending funds, given the issuer supports doing so.
 
-##Request Method
+## Endpoint (URL to Call):
+`POST http://payhub.com/payhubws/api/void`
 
+## Elements (All required)
 
-##Endpoint (URL to Call)
-`http://payhub.com/payhubws/api/refund`
-
-##Elements
-(All Required)
-
-Element | Type | Value
+Key | Type | Value
 --- | ---- | -----
- organization_id | integer | The organization id of the merchant who did the sale that you are trying to refund.
- terminal_id | integer | The terminal id of the merchant from where the sale is done.
- record_format | string | To specify if the sale has to be made over a credit card, debit card or cash payment. <br>The accepted values are: <ul><li>CASH_PAYMENT</li><li>CREDIT_CARD</li><li>DEBIT_CARD</li></ul>
- transaction_id | integer | The transaction id of the sale you want to refund.
+organization_id | integer | The merchant's organization id which did the sale you're trying to void.
+terminal_id | integer | The merchant's terminal's id where the sale was done.
+transaction_id | integer | The transaction id of the sale that you want to void.
 
 ##Example of JSON
 ```
@@ -321,7 +310,6 @@ Element | Type | Value
 
  },
 
- "record_format":"CREDIT_CARD",
  "transaction_id":"114"
 }
 ```

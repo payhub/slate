@@ -2,13 +2,13 @@
 
 This topic provides the information about the using Verify transaction. Run the Verify transaction when you want to know if the card data you have is valid and ready to run other transactions, such as sale. The amount refunded is the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.
 
-#Request Method
+##Request Method
 `POST`
 
-#Endpoint (URL to Call)
+##Endpoint (URL to Call)
 `http://payhub.com/payhubws/api/v2/verify`
 
-#Elements
+##Elements
 
 ###merchant
 
@@ -43,7 +43,7 @@ company_name | string | The company name of the customer.
 job_title | string, optional | The job title of the customer.
 email_address | string, optional | The valid email address of the customer. <br>The email address must be syntactically correct. If you do not specify the email address, you must provide a phone_number to identify the customer.
 web_address | string, optional | The web address of the customer. <br>The web address, if you specify, must be syntactically valid web address.
-phone_number | stirng, optional | The phone number of the customer. <br> The phone number must be syntactically correct. For example, (415) 234 5678, or 4152345678, or (415) 234-5678. <br>If you do not specify the phone number, you must provide an email_address to identify the customer.
+phone_number | string, optional | The phone number of the customer. <br> The phone number must be syntactically correct. For example, (415) 234 5678, or 4152345678, or (415) 234-5678. <br>If you do not specify the phone number, you must provide an email_address to identify the customer.
 phone_ext | string, optional | The phone extension number of the customer.
 phone_type | string, optional | The type (['H' or 'W' or 'M']) phone number: H (Home), W (Work), M (Mobile).
 

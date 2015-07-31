@@ -9,21 +9,21 @@ The sale is considered complete when you successfully complete both the Capture 
 
 When the AuthOnly transaction is successfully executed, you will receive a 201 Created code on a successful AuthOnly. This code also includes the transaction ID. You can use this transaction ID to run the Capture transaction.
 
-#Request Method
+##Request Method
 `POST`
 
-#Endpoint (URL to Call)
+##Endpoint (URL to Call)
 `POST http://payhub.com/payhubws/api/v2/authOnly`
 
-#Elements
+##Elements
 
-##merchant
+###merchant
 Key | Type | Value
 --- | ---- | -----
 organization_id | integer | The Organization Id of the Merchant. <br>This value must match with the Organization Id of the Merchant with which the passed Oauth Token is associated.
 terminal_id | integer | The virtual Terminal Id of the merchant for the 3rd Party API.
 
-##bill
+###bill
 Key | Type | Value
 --- | ---- | -----
 base_amount | TransactionAmount | The Base amount of the recurring bill. <br>The total amount charged will be the sum of this amount and (any) 'shipping_amount' and 'tax_amount'.
@@ -33,7 +33,7 @@ invoice_number | string, optional | The invoice number for the transaction.
 po_number | string, optional | The purchase order number for the transaction.
 note | string, optional | A free format note for the transaction. The note will be read by the merchant.
 
-##card_data
+###card_data
 Key | Type | Value
 --- | ---- | -----
 tokenized_card | string, optional | This is the 16 character PayHub-specific tokenized string that represents the card number.<br>You can obtain the value for the given customer and credit card by examining the last sale, by accessing the link to the card data that was successfully created. It is safer (and recommended) method for the third party client to store and use this string in any future requests for the same customer. <br>This value is required if the 'card_number' property is not present in the request.
@@ -46,7 +46,7 @@ billing_zip | string, optional | The billing (US) Zip Code of the customer. <br>
 card_expiry_date | string | The card expiry date in the _YYYYMM_ format.
 cvv_data | string | A three or four digit CVV code on the card.
 
-##customer
+###customer
 Key | Type | Value
 --- | ---- | -----
 first_name | string | The first name of the customer.

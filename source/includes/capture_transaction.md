@@ -3,30 +3,30 @@ This topic provides information about the **Capture** transaction.
 
 Use the Capture transaction as the final step to collect the funds that you had asked for authorization through the AuthOnly transaction. You need to provide the transaction ID that you receive when you run the **AuthOnly** transaction.
 
-In case the order fulfillment process, such as *shipping goods some days after they were ordered*, is delayed you might want to first run the AuthOnly transaction and then capture the respective funds. You might also need to change the amount that you got an authorization for. In that case, you need to provide a new bill section, including base amount and, if required, shipping amount, tax amount, invoice number, PO number, and note.
+In case the order fulfilment process, such as *shipping goods some days after they were ordered*, is delayed you might want to first run the AuthOnly transaction and then capture the respective funds. You might also need to change the amount that you got an authorization for. In that case, you need to provide a new bill section, including base amount and, if required, shipping amount, tax amount, invoice number, PO number, and note.
 
 If the Capture transaction executes successfully, you will receive a 201 Created code. This code will include the transaction id. This transaction ID should be the same ID that you provided, which means, the same transaction id of the AuthOnly transaction that you just captured.
 
 After capturing the amount for the AuthOnly transaction, the transaction will become a sale. The money will be taken from the card holder’s account and credited to your account during the settlement of the sale.
 
-#Request Method
+##Request Method
 
 
-#Endpoint (URL to Call)
+##Endpoint (URL to Call)
 `http://payhub.com/payhubws/api/v2/capture`
 
-#Elements
+##Elements
 
-##merchant (required)
+###merchant (required)
 Key | Type | Value
 --- | ---- | -----
 organization_id | integer | The organization id of the merchant who did the AuthOnly that you are trying to capture.
 terminal_id | integer | The terminal's id of the merchant where the AuthOnly was done.
 
-##transaction_id (integer, required)
+###transaction_id (integer, required)
 The transaction id of the AuthOnly that you want to capture.
 
-##bill (optiona)
+###bill (optional)
 Key | Type | Value
 --- | ---- | -----
 base_amount | TransactionAmount | The base amount of the recurring bill. The total amount charged will be the sum of this amount and the 'shipping_amount', 'tax_amount' if any.

@@ -476,7 +476,7 @@ Use the recurring billing transaction when you want to periodically charge certa
 ##Request Method
 `POST`
 
-## Endpoint (URL to Call):
+## Endpoint (URL to Call)
 
 `http://payhub.com/payhubws/api/recurring-bill`
 

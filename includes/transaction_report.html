@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Documentation</title>
+
+    <link href="../stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="../javascripts/all_nosearch.js" type="text/javascript"></script>
+
+  </head>
+
+  <body class="includes includes_transaction_report">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="../images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="../images/logo.jpg" />
+      <div id="toc">
+      </div>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="transaction-report">Transaction Report</h1>
+
+<p>This API allows the merchant to search for transactions filtering by a wide range of optional parameters.</p>
+
+<h2 id="request-method">Request Method</h2>
+
+<p><code class="prettyprint">PATCH</code></p>
+
+<h2 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h2>
+
+<p><code class="prettyprint">webservice URL/api/v2/search/transactionReport</code></p>
+
+<h2 id="required-headers">Required Headers</h2>
+
+<ul>
+<li><strong>Content-Type</strong>: application/json</li>
+<li><strong>Accept</strong>: application/json</li>
+<li><strong>Authorization</strong>: Bearer {auth_token}</li>
+</ul>
+
+<h2 id="payload-(json-format)">Payload (JSON Format)</h2>
+<pre><code class="highlight json"><span class="p">{</span><span class="err">“parameter1”</span><span class="p">:</span><span class="err">”value”</span><span class="p">,</span><span class="w">
+</span><span class="err">“parameter2”</span><span class="p">:</span><span class="err">”value”</span><span class="p">,</span><span class="w">
+</span><span class="err">“parameter3”</span><span class="p">:</span><span class="err">”value”</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="parameters">Parameters</h2>
+
+<p>All the parameters are optional, they can be sent in no particular order. If one of the parameters is incorrect the server will return an error.</p>
+
+<p>The parameters are case sensitive.</p>
+
+<p>Below is an explanation of the parameters.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>batchIdFrom, batchIdTo</td>
+<td>Allows the merchant to look for transactions where the <strong>batchId</strong> is between the batchIdFrom and batchIdTo. <br>You can also use any one of the two parameters. In that case, the result will be the transactions with the batchId greater than <strong>batchIdFrom</strong>, or the batchId less than <strong>batchIdTo</strong>.</td>
+</tr>
+<tr>
+<td>transactionType</td>
+<td>Allows the merchant to look for transactions where the transaction type is any one of the following:<ul><li>Void</li><li>Sale</li><li>Refund</li><li>Verify</li></ul></td>
+</tr>
+<tr>
+<td>responseCode</td>
+<td>Allows the merchant to look for transactions where the response code is equal to a specific code. For example, the code “00” means a successful transaction.</td>
+</tr>
+<tr>
+<td>amountFrom, amountTo</td>
+<td>Allows the merchant to look for transactions where the amount of the transaction is between the <strong>amountFrom</strong> and <strong>amountTo</strong>. <br>You can use any one of the two parameters. In that case, the result will be the transactions with the amount greater than <strong>amountFrom</strong>, or the amount less than <strong>amountTo</strong>.</td>
+</tr>
+<tr>
+<td>firstName</td>
+<td>Allows the merchant to look for transactions where the customer’s first name contains the value of the parameter.</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>Allows the merchant to look for transactions where the customer’s first name contains the value of the parameter.</td>
+</tr>
+<tr>
+<td>phoneNumber</td>
+<td>Allows the merchant to look for transactions where the customer’s phone number contains the value of the parameter.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>This parameter allows the merchant to look for transactions where the customer’s email address contains the value of the parameter.</td>
+</tr>
+<tr>
+<td>trnDateFrom, trnDateTo</td>
+<td>Allows the merchant to look for transactions where the date of the transaction is between the trnDateFrom and trnDateTo. <br>You can use any one of the two parameters. In that case, the result will be the transactions with the date later than the trnDateFrom, or the date earlier than trnDateTo.<br>Format: “yyyy-mm-dd hh:mm:ss”.</td>
+</tr>
+<tr>
+<td>cardType</td>
+<td>This parameter allows the merchant to look for transactions where the card type matches the value of the parameter. <br>For instance: MasterCard, Visa.</td>
+</tr>
+<tr>
+<td>cardLast4Digits</td>
+<td>Allows the merchant to look for transactions where the credit card’s last four digits matches the value of the parameter. <br>Format: “XXXX”.</td>
+</tr>
+<tr>
+<td>cardToken</td>
+<td>Allows the merchant to look for transactions where the credit card’s token matches the value of the parameter. <br>Format: “XXXXXXXXXXXXXXXX”.</td>
+</tr>
+<tr>
+<td>authAmountFrom, authAmountTo</td>
+<td>Allows the merchant to look for transactions where the authorized amount of the transaction is between the authAmountFrom and authAmountTo. <br>You can use any one of the two parameters. In that case the result will be the transactions with the authorization amount is greater than <strong>authAmountFrom</strong>, or the authorization amount less than <strong>authAmountTo</strong>.</td>
+</tr>
+<tr>
+<td>swiped</td>
+<td>Allows the merchant to look for transactions that where performed with a swiper device. <br>Valid values: true, false</td>
+</tr>
+<tr>
+<td>source</td>
+<td>Allows the merchant to look for transactions where the source matches the value of the parameter. <br>For instance: “3rd Party API”</td>
+</tr>
+<tr>
+<td>note</td>
+<td>Allows the merchant to look for transactions where the note matches the value of the parameter.</td>
+</tr>
+<tr>
+<td>transactionStatus</td>
+<td>Allows the merchant to look for transactions where the transaction status matches the value of the parameter. <br>For instance: “Approved”</td>
+</tr>
+</tbody></table>
+
+<h2 id="result-data">Result Data</h2>
+
+<p>The result data is an array of objects in JSON format.</p>
+
+<h4 id="sample-object-in-json-format">Sample Object in JSON Format</h4>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.0"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"authAmount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.0"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"batchID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1311"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cardLast4Digits"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XXXXXXXXXXXX4500"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cardToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999000000002145"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cardType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MasterCard"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"customerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"First Contact"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"first.contact@gmail.com"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"(415) 122 4567"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"responseCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"responseText"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VER UNAVAILABLE"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3rd Party API"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"swiped"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-04-02 11:46:57"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"180836"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Approved"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sale"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+      </div>
+      <div class="dark-box">
+      </div>
+    </div>
+  </body>
+</html>

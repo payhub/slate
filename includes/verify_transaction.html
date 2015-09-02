@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Documentation</title>
+
+    <link href="../stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="../javascripts/all_nosearch.js" type="text/javascript"></script>
+
+  </head>
+
+  <body class="includes includes_verify_transaction">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="../images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="../images/logo.jpg" />
+      <div id="toc">
+      </div>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="verify-transaction">Verify Transaction</h1>
+
+<p>This topic provides the information about the using Verify transaction. Run the Verify transaction when you want to know if the card data you have is valid and ready to run other transactions, such as sale. The amount refunded is the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.</p>
+
+<h2 id="request-method">Request Method</h2>
+
+<p><code class="prettyprint">POST</code></p>
+
+<h2 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h2>
+
+<p><code class="prettyprint">http://payhub.com/payhubws/api/v2/verify</code></p>
+
+<h2 id="elements">Elements</h2>
+
+<h3 id="merchant">merchant</h3>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>organization_id</td>
+<td>integer</td>
+<td>The Organization Id of the Merchant. This must match the Organization Id of the Merchant that the passed Oauth Token is associated with.</td>
+</tr>
+<tr>
+<td>terminal_id</td>
+<td>integer</td>
+<td>The merchant&rsquo;s virtual terminal Id for 3rd Party API.</td>
+</tr>
+</tbody></table>
+
+<h3 id="card_data">card_data</h3>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tokenized_card</td>
+<td>string, optional</td>
+<td>This is the 16 character PayHub-specific tokenized string representing the card number. <br>The value for the given customer and credit card can be obtained by examining the last Sale by accessing the link to the card data that was successfully created. It is safer (and recommended) for the third party client to store and use this string in any future requests for the same customer. <br>This value is required if the &lsquo;card_number&rsquo; property is not present in the request.</td>
+</tr>
+<tr>
+<td>card_number</td>
+<td>string, optional</td>
+<td>This is the 16 character card number. <br>This value is required if the &#39;tokenized_card&rsquo; property is not present in the request.<br><strong>Note:</strong> The card number is not stored by the API in plain text. The response will contain a tokenized card number that should always be used in future requests, (for the same Customer) in place of this property.</td>
+</tr>
+<tr>
+<td>track1_data</td>
+<td>string, optional</td>
+<td>This is the string read by the swiper (It contents track 1 data without sentinels).</td>
+</tr>
+<tr>
+<td>track2_data</td>
+<td>string, optional</td>
+<td>This is the string read by the swiper (It contents track 2 data without sentinels).</td>
+</tr>
+<tr>
+<td>encrypted_track_data</td>
+<td>optional</td>
+<td><ul><li><strong>encrypted_track</strong> (string, optional): This is the string read by the swiper. This string contains the encrypted track data.</li><li><strong>swiper_brand</strong> (string, optional): The swiper brand&rsquo;s name with capital letters. Default value is <strong>IDTECH</strong>.</li><li><strong>swiper_model</strong> (string, optional): The swiper model with capital letters. Default value is <strong>UNIMAGII</strong>.</li></ul></td>
+</tr>
+<tr>
+<td>billing_address_1</td>
+<td>string, optional</td>
+<td>The billing street address of the customer.</td>
+</tr>
+<tr>
+<td>billing_address_2</td>
+<td>string, optional</td>
+<td>The additional billing street address of the customer.</td>
+</tr>
+<tr>
+<td>billing_city</td>
+<td>string, optional</td>
+<td>The billing city of the customer.</td>
+</tr>
+<tr>
+<td>billing_state</td>
+<td>string, optional</td>
+<td>The billing state Code of the customer. For example, CA, WI, NY, etc. <br>The sate codes should be for the states in the USA.</td>
+</tr>
+<tr>
+<td>billing_zip</td>
+<td>string, optional</td>
+<td>The billing Zip Code of the customer. The zip code must be either 5 digits or 5 plus four separated by a &rsquo;-&rsquo;. <br>The zip code is required if the merchant has turned ON the AVS flag.</td>
+</tr>
+<tr>
+<td>card_expiry_date</td>
+<td>string</td>
+<td>The card expiry in the YYYYMM format.</td>
+</tr>
+<tr>
+<td>cvv_data</td>
+<td>string</td>
+<td>This is the three or four digit CVV code on the credit and debit card.</td>
+</tr>
+</tbody></table>
+
+<h2 id="customer">customer</h2>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>first_name</td>
+<td>string</td>
+<td>The first name of the customer.</td>
+</tr>
+<tr>
+<td>last_name</td>
+<td>string</td>
+<td>The last name of the customer.</td>
+</tr>
+<tr>
+<td>company_name</td>
+<td>string</td>
+<td>The company name of the customer.</td>
+</tr>
+<tr>
+<td>job_title</td>
+<td>string, optional</td>
+<td>The job title of the customer.</td>
+</tr>
+<tr>
+<td>email_address</td>
+<td>string, optional</td>
+<td>The valid email address of the customer. <br>The email address must be syntactically correct. If you do not specify the email address, you must provide a phone_number to identify the customer.</td>
+</tr>
+<tr>
+<td>web_address</td>
+<td>string, optional</td>
+<td>The web address of the customer. <br>The web address, if you specify, must be syntactically valid web address.</td>
+</tr>
+<tr>
+<td>phone_number</td>
+<td>string, optional</td>
+<td>The phone number of the customer. <br> The phone number must be syntactically correct. For example, (415) 234 5678, or 4152345678, or (415) 234-5678. <br>If you do not specify the phone number, you must provide an email_address to identify the customer.</td>
+</tr>
+<tr>
+<td>phone_ext</td>
+<td>string, optional</td>
+<td>The phone extension number of the customer.</td>
+</tr>
+<tr>
+<td>phone_type</td>
+<td>string, optional</td>
+<td>The type ([&#39;H&rsquo; or &#39;W&rsquo; or &rsquo;M&rsquo;]) phone number: H (Home), W (Work), M (Mobile).</td>
+</tr>
+</tbody></table>
+
+<h4 id="sample-object-in-json-format">Sample Object in JSON Format</h4>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+   </span><span class="s2">"merchant"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"organization_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">10005</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"terminal_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+
+   </span><span class="s2">"card_data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"card_number"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"5466410004374507"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"card_expiry_date"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"202011"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"billing_address_1"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2350 Kerner Blvd"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"billing_address_2"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"On the corner"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"billing_city"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"San Rafael"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"billing_state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CA"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"billing_zip"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"94901"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cvv_data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"998"</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="s2">"customer"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"first_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Adam"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"company_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Go Capitalism Inc"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"job_title"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Author"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"email_address"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"adam@smith.com"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"web_address"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"http://gocaptilaism.com"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phone_number"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"(415) 479 1349"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phone_ext"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phone_type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"M"</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="response">Response</h2>
+
+<ul>
+<li>A 201 Created status if the card data is correct. That&rsquo;s all you need to know if card data is valid.</li>
+</ul>
+
+<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.</p>
+
+      </div>
+      <div class="dark-box">
+      </div>
+    </div>
+  </body>
+</html>

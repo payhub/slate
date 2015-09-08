@@ -1,18 +1,18 @@
-#Transaction Report
+# Transaction Report
 This API allows the merchant to search for transactions filtering by a wide range of optional parameters.
 
-##Request Method
+## Request Method
 `PATCH`
 
-##Endpoint (URL to Call)
+## Endpoint (URL to Call)
 `webservice URL/api/v2/search/transactionReport`
 
-##Required Headers
+## Required Headers
 * **Content-Type**: application/json
 * **Accept**: application/json
 * **Authorization**: Bearer {auth_token}
 
-##Payload (JSON Format)
+## Payload (JSON Format)
 ```
 {“parameter1”:”value”,
 “parameter2”:”value”,
@@ -20,7 +20,7 @@ This API allows the merchant to search for transactions filtering by a wide rang
 ```
 
 
-##Parameters
+## Parameters
 All the parameters are optional, they can be sent in no particular order. If one of the parameters is incorrect the server will return an error.
 
 The parameters are case sensitive.
@@ -47,10 +47,10 @@ source | Allows the merchant to look for transactions where the source matches t
 note | Allows the merchant to look for transactions where the note matches the value of the parameter.
 transactionStatus | Allows the merchant to look for transactions where the transaction status matches the value of the parameter. <br>For instance: “Approved”
 
-##Result Data
+## Result Data
 The result data is an array of objects in JSON format.
 
-####Sample Object in JSON Format
+#### Sample Object in JSON Format
 ```
 {
       "amount": "3.0",

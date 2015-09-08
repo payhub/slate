@@ -1,6 +1,6 @@
-#Reporting Methods
+# Reporting Methods
 
-##AVAILABLE RESOURCES
+## AVAILABLE RESOURCES
 
 The Safyer Web Service provides the following resources to report on merchant activity.
 
@@ -14,17 +14,17 @@ deposit	| GET
 statementReport | POST
 chargebackReport | POST
 
-##batchReport
+## batchReport
 
 Retrieves information from all transactions of a Merchant for a specific date range. The date range cannot be greater than 30 days. The response will include the IdBatch element, which can be referenced using the GET batch method.
 
-####Request Method:
+#### Request Method:
 POST
 
-####Endpoint (URL to Call):
+#### Endpoint (URL to Call):
 `https://ws.safyer.com/api/v1/batchReport`
 
-####Parameters
+#### Parameters
 All these parameters are in a JSON:
 
 Parameter | Type | Description
@@ -33,7 +33,7 @@ mid	| String |
 dateCreateFrom | Date, Optional |	Format mm-dd-yyyy
 dateCreateTo | Date, Optional |	Format mm-dd-yyyy
 
-####Example JSON
+#### Example JSON
 ```
 {
     "BatchReport": {
@@ -44,49 +44,49 @@ dateCreateTo | Date, Optional |	Format mm-dd-yyyy
 }
 ```
 
-##batch
+## batch
 
 Retrieves information from all transactions for a Batch ID (for a specific day and Merchant). The response will include the transactionId element which can be referenced using the GET transaction method.
 
-####Request Method:
+#### Request Method:
 GET
 
-####Endpoint (URL to Call):
+#### Endpoint (URL to Call):
 `https://ws.safyer.com/api/v1/batch/{{batchId}}`
 
-####Parameters
+#### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
 iBatch | Numeric | A number that identifies a single batch.<br>**Note:** The idBatch element can be found using the POST batchReport method.
 
-##transaction
+## transaction
 
 Retrieves all information of a specific transaction.
 
-####Request Method:
+#### Request Method:
 GET
 
-####Endpoint (URL to Call):
+#### Endpoint (URL to Call):
 `https://ws.safyer.com/api/v1/transaction/{{transactionId}}`
 
-####Parameters
+#### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
 idTransaction | Numeric | A number that identifies a single transaction.<br>**Note:** The idTransaction element can be found using the GET batch method.
 
-##depositReport
+## depositReport
 
 Retrieves information from all deposits of a Merchant, between a range of dates. The response will include the idDeposit element, which can be referenced using the GET deposit method.
 
-####Request Method:
+#### Request Method:
 POST
 
-####Endpoint (URL to Call):
+#### Endpoint (URL to Call):
 `https://ws.safyer.com/api/v1/depositReport`
 
-####Parameters
+#### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
@@ -94,7 +94,7 @@ mid | string |
 dateFrom | date, optional | Format mm-dd-yyyy.
 dateTo | date, optional | Format mm-dd-yyyy.
 
-####Example JSON
+#### Example JSON
 ```
 {
     "Deposit": {
@@ -110,33 +110,33 @@ dateTo | date, optional | Format mm-dd-yyyy.
 * If you omit the dateFrom element, the web service will assume a dateFrom of 31 days prior to the dateFrom value.
 * If you do not indicate the date range, the web service will return deposits from the current date.
 
-##deposit
+## deposit
 
 Retrieves all information of a specific deposit.
 
-####Request Method:
+#### Request Method:
 GET
 
-####Endpoint (URL to Call):
+#### Endpoint (URL to Call):
 `https://ws.safyer.com/api/v1/deposit/{{depositId}}`
 
-####Parameters
+#### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
 iDeposit | numeric | A number that identifies a single transaction.<br>**Note:** The idDeposit element can be found using the POST depositReport method.
 
-##statementReport
+## statementReport
 
 Returns the Merchant Statement XML for a specific month and year. This XML is received from the merchant's processor and relayed as it is.
 
-####Request Method:
+#### Request Method:
 POST
 
-####Endpoint (URL to Call):
+#### Endpoint (URL to Call):
 `https://ws.safyer.com/api/v1/statementReport`
 
-####Parameters
+#### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
@@ -144,7 +144,7 @@ mid | string | The number of a merchant.
 stmtMonth | numeric | A number between 1 and 12.
 stmtYear | numeric | A number between 0000 and 9999.
 
-####Example JSON
+#### Example JSON
 ```
 {
    "Statement": {
@@ -155,17 +155,17 @@ stmtYear | numeric | A number between 0000 and 9999.
 }
 ```
 
-##chargebackReport
+## chargebackReport
 
 Returns information, the chargebacks for the specified merchant.
 
-####Request Method:
+#### Request Method:
 POST
 
-####Endpoint (URL to Call):
+#### Endpoint (URL to Call):
 `https://ws.safyer.com/api/v1/chargeback`
 
-####Parameters
+#### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
@@ -177,7 +177,7 @@ receivedDateTo | date, optional | Format mm-dd-yyyy.
 cardNumlast4 | numeric, optional | A number between 0000 and 9999.
 authorizationCode | string, optional | A string of 6 characters.
 
-####Example JSON
+#### Example JSON
 ```
 {
     "Chargeback": {

@@ -291,18 +291,17 @@ namespace PayHubSamples
 }
 ```
 
-#Refund Transaction
 This topic provides the information the Refund transaction.
 
 Run the Refund transaction when you want to refund the full amount of a settled sale, which is not yet refunded. The refund amount will be the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.
 
-##Request Method
+## Request Method
 
 
-##Endpoint (URL to Call)
+## Endpoint (URL to Call)
 `http://payhub.com/payhubws/api/refund`
 
-##Elements
+## Elements
 (All Required)
 
 Element | Type | Value
@@ -312,7 +311,7 @@ Element | Type | Value
  record_format | string | To specify if the sale has to be made over a credit card, debit card or cash payment. <br>The accepted values are: <ul><li>CASH_PAYMENT</li><li>CREDIT_CARD</li><li>DEBIT_CARD</li></ul>
  transaction_id | integer | The transaction id of the sale you want to refund.
 
-##Example of JSON
+## Example of JSON
 ```
 {
 "merchant" : {

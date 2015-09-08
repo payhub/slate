@@ -1,16 +1,16 @@
-#Boarding Webhook
+# Boarding Webhook
 
 This topic provides the information about the web service that you need to create to receive requests from the Boarding WebHook. Using this WebHook, you can make your system aware of the PayHub login credentials whenever a merchant is boarded through a Frictionless Application.
 
 Refer the information in this topic as the Request and Response format specification for the Boarding Webhook, which runs and queries the system for new merchants that have been boarded to PayHub.
 
-##Request Method
+## Request Method
 `POST`
 
-##End Point URL
+## End Point URL
 Specified by the Sales Office in the Manage Frictionless Links section.
 
-##Request Elements (from Safyer)
+## Request Elements (from Safyer)
 All fields are required unless indicated otherwise
 
 Parameter | Type | Description
@@ -24,13 +24,13 @@ payHub_Password | string, 5 - 20 characters | The password generated for the def
 payHub_AuthToken | string, optional, 0 - 100 characters | The OAuth Token used to authenticate the PayHub v2 API.
 termID | string, 4 - 20 characters | The terminal number associated with the PayHub account.
 
-##Response Elements (to Safyer)
+## Response Elements (to Safyer)
 Parameter | Type | Description
 --- | --- | ---
 code | string, 1 digit | The response code returned in the response.<br><ul><li>0: ‘Success’</li><li>1: ‘Error’</li></ul>
 msg	| string, 2 - 5 characters | If code is 0 then msg is ‘OK’. Otherwise, msg is ‘ERROR’.
 
-##Response Example
+## Response Example
 ```
 <?xml version="1.0" encoding="UTF-8" ?>
 <Response>

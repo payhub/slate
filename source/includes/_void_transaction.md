@@ -1,4 +1,4 @@
-## Void Transaction
+# Void Transaction
 
 ```java
 package transactions;
@@ -286,7 +286,7 @@ namespace PayHubSamples
 }
 ```
 
-#Void Transaction
+# Void Transaction
 
 Run a Void when you need to cancel a transaction (either a sale or a refund) that has not yet been settled and that has not already been voided. This will avoid the customer being charged any amount at all and will release the pending funds, given the issuer supports doing so.
 
@@ -301,7 +301,7 @@ organization_id | integer | The merchant's organization id which did the sale yo
 terminal_id | integer | The merchant's terminal's id where the sale was done.
 transaction_id | integer | The transaction id of the sale that you want to void.
 
-##Example of JSON
+## Example of JSON
 ```
 {
 "merchant" : {

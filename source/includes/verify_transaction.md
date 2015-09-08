@@ -1,23 +1,23 @@
-#Verify Transaction
+# Verify Transaction
 
 This topic provides the information about the using Verify transaction. Run the Verify transaction when you want to know if the card data you have is valid and ready to run other transactions, such as sale. The amount refunded is the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.
 
-##Request Method
+## Request Method
 `POST`
 
-##Endpoint (URL to Call)
+## Endpoint (URL to Call)
 `http://payhub.com/payhubws/api/v2/verify`
 
-##Elements
+## Elements
 
-###merchant
+### merchant
 
 Key | Type | Description
 --- | ---- | -----
 organization_id	| integer | The Organization Id of the Merchant. This must match the Organization Id of the Merchant that the passed Oauth Token is associated with.
 terminal_id | integer | The merchant's virtual terminal Id for 3rd Party API.
 
-###card_data
+### card_data
 
 Key | Type | Description
 --- | ---- | -----
@@ -34,7 +34,7 @@ billing_zip | string, optional | The billing Zip Code of the customer. The zip c
 card_expiry_date | string | The card expiry in the YYYYMM format.
 cvv_data | string | This is the three or four digit CVV code on the credit and debit card.
 
-##customer
+## customer
 Key | Type | Description
 --- | ---- | -----
 first_name	| string | The first name of the customer.
@@ -48,7 +48,7 @@ phone_ext | string, optional | The phone extension number of the customer.
 phone_type | string, optional | The type (['H' or 'W' or 'M']) phone number: H (Home), W (Work), M (Mobile).
 
 
-####Sample Object in JSON Format
+#### Sample Object in JSON Format
 ```
 {
    "merchant" : {
@@ -79,8 +79,7 @@ phone_type | string, optional | The type (['H' or 'W' or 'M']) phone number: H (
    }
 }
 ```
-
-##Response
+## Response
 * A 201 Created status if the card data is correct. That's all you need to know if card data is valid.
 
 **Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.

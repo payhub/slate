@@ -1,8 +1,5 @@
 # Authentication
 
-## Using OAuth 2.0 Access Tokens to Access your Merchants' Resources
-<aside>This document is in progress as of 03/13/2015. This line will be removed when complete - please see text in bolded-italic font that needs to be addressed before we can publish....</aside>
-
 ## Introduction
 The purpose of this document is to provide you with information on how you can get started using PayHub RESTful Web Services to access certain resources associated with a Merchant's PayHUb account. PayHub's RESTfulWeb Services allow you and your applications to act on a Merchant's behalf to do useful things like:
 

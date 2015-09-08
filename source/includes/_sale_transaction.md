@@ -441,7 +441,7 @@ Upon successful sale, you will receive an approval code. Once a sale transaction
 ## Endpoint (URL to Call)
 `POST http://payhub.com/payhubws/api/sale`
 
-##Elements
+## Elements
 
 ### merchant
 
@@ -545,7 +545,7 @@ note | string, optional | A free format note for the transaction. The note will 
     <br>Sample header in the response: `Location → http:// [payhub-api-server]:8251/payhubws/api/sale/5501b651da06a879ce520d4d`.
     <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
 
-##Sample Response
+## Sample Response
 ```
 {
 "version": 0,

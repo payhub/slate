@@ -1,6 +1,5 @@
 # Recurring Bill Transaction
 
-## POST
 ```java
 package transactions;
 
@@ -468,19 +467,17 @@ namespace PayHubSamples
   }
 }
 ```
-
 This topic provides information about the Recurring Bill transaction.
 
 Use the recurring billing transaction when you want to periodically charge certain amount to the customer. You can use this feature for subscriptions or for any ongoing product or service you offer. You can setup a recurring billing by calling our RESTful API through an HTTP post containing a JSON.
 
-##Request Method
+## Request Method
 `POST`
 
 ## Endpoint (URL to Call)
-
 `http://payhub.com/payhubws/api/recurring-bill`
 
-##Elements
+## Elements
 
 ### RecurringBillInput
 
@@ -493,7 +490,7 @@ bill | BillInput |  Bill-related data to use in the recurring bill.
 schedule | ScheduleInput |  Schedule detail.
 metaData | MetaData, optional |  A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
-####Example
+#### Example
 ```
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -513,7 +510,7 @@ phone_ext | string, optional | The phone extension number of the customer.
 phone_type | string, optional | The type of the phone number: ['H' or 'W' or 'M']: H (Home), W (Work), M (Mobile).
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
-####Example
+#### Example
 ```
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -537,7 +534,7 @@ billing_state | string, optional | The billing state Code of the customer. The c
 billing_zip | string, optional | The billing zip code of the customer. The codes are for the states in the USA. <br>The code must be either 5 digits or 5 plus four separated by a '-'. <br>This value is required if the Merchant has the AVS flag turned on.
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent the data in the client's domain, which can be associated with this entity.
 
-####Example
+#### Example
 ```
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -550,7 +547,7 @@ organization_id | integer | The organization Id (['range[0-]']) of the merchant.
 terminal_id | integer | The Virtual Terminal Id (['range[0-]']) for 3rd Party API of the merchant.
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
-####Example
+#### Example
 ```
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -567,7 +564,7 @@ invoice_number | string, optional | The invoice number for the transaction.
 note | string, optional | A free format note for the transaction. <br>The note will be read by the Merchant.
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain, which can be associated with this entity.
 
-####Example
+#### Example
 ```
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -579,7 +576,7 @@ Key | Type | Value
 amount | Number | The amount expressed as a decimal number with at most two decimal places (example: 1.23),
 currency | string, optional | The ISO 4217 currency code for this amount. <br>['USD']: Currently only 'USD' is accepted.
 
-####Example
+#### Example
 ```
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -597,7 +594,7 @@ schedule_start_and_end | ScheduleStartAndEnd, optional | Required if the schedul
 yearly_schedule | YearlySchedule, optional | Required if the schedule_type is 'Y' (='Yearly').
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
-####Example
+#### Example
 ```
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -718,7 +715,7 @@ Code | Meaning | Sample code
 403 | Forbidden. The server does not permit you to use this URI. | `Void {}`
 500 | Internal server error due to encoding the data, or to a PayHub server failure. Contact PayHub. | `Void {}`
 
-##Get
+## Get
 You can also send a GET  to http://payhub.com/payhubws/api/recurring-bill to list all recurring bills and associated operations in compact form.
 
 The response will look like:

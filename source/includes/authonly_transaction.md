@@ -61,7 +61,7 @@ phone_type | string, optional | The type of the phone the customer is using. <br
 record_format | string, optional | The value that indicates whether the sale has to be made over a credit card, debit card or cash payment. <br>The default value is "CREDIT_CARD". <br>Following are the accepted values:<ul><li>CASH_PAYMENT</li><li>CREDIT_CARD</li><li>DEBIT_CARD</li></ul>
 
 ## Example of JSON
-```
+```json
 {
 "merchant" : {
     "organization_id" : 10002,
@@ -108,6 +108,7 @@ record_format | string, optional | The value that indicates whether the sale has
 "record_format" : "CREDIT_CARD"
 }
 ```
+
 ## Result
 * 201 code (created)
 * The Id of the AuthOnly in the Location header <br>Sample header in the response:Location: http://payhub.com/payhubws/api/v2/authOnly/234

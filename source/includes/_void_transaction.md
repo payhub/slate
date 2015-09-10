@@ -302,7 +302,7 @@ terminal_id | integer | The merchant's terminal's id where the sale was done.
 transaction_id | integer | The transaction id of the sale that you want to void.
 
 ## Example of JSON
-```
+```json
 {
 "merchant" : {
  "organization_id" : 10005,

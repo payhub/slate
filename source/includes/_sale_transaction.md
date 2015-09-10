@@ -495,8 +495,9 @@ note | string, optional | A free format note for the transaction. The note will 
 
 **Note:** One of the following fields must be present: <ul><li>tokenized_card</li><li>card_number</li><li>track1_data</li><li>track2_data</li><li>encrypted_track_data</li></ul>
 
-## Example of JASON
-```{
+## Example of JSON
+```Json
+{
   "merchant": {
     "organization_id": 10002,
     "terminal_id": 2
@@ -546,7 +547,7 @@ note | string, optional | A free format note for the transaction. The note will 
     <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
 
 ## Sample Response
-```
+```Json
 {
 "version": 0,
 "createdAt": "2015-05-19T12:58:09.863-03:00",

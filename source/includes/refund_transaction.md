@@ -312,7 +312,7 @@ Element | Type | Value
  transaction_id | integer | The transaction id of the sale you want to refund.
 
 ## Example of JSON
-```
+```json
 {
 "merchant" : {
  "organization_id" : 10005,

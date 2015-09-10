@@ -49,7 +49,7 @@ phone_type | string, optional | The type (['H' or 'W' or 'M']) phone number: H (
 
 
 #### Sample Object in JSON Format
-```
+```json
 {
    "merchant" : {
       "organization_id" : 10005,

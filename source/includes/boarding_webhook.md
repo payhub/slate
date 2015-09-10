@@ -31,7 +31,7 @@ code | string, 1 digit | The response code returned in the response.<br><ul><li>
 msg	| string, 2 - 5 characters | If code is 0 then msg is ‘OK’. Otherwise, msg is ‘ERROR’.
 
 ## Response Example
-```
+```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <Response>
 <code>0</code>

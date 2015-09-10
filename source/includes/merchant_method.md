@@ -41,7 +41,7 @@ ssn | string (1 - 50 digits) | The Social Security Number of the merchant.
 ip | Alphanumeric YYY.XXX.XXX.XXX | The IP address of the system from where the merchant is submitting the application. <ul><li>YYY: Number between 1 - 223</li><li>XXX: Number between 0 - 255</li></ul>
 
 #### Examle JSON
-```
+```json
 {
     "merchantInformation": {
         "quickID": "W3Rg6CjtyIfasvdT/bCYRL6Opyg==",
@@ -72,6 +72,7 @@ ip | Alphanumeric YYY.XXX.XXX.XXX | The IP address of the system from where the 
     }
 }
 ```
+
 ## Business Categories
 BUSINESS TYPE | BUSINESS CATEGORY | DESCRIPTION
 :---: | :---: | ---
@@ -263,7 +264,8 @@ When posting a merchant, we confirm that the following fields contain real data:
 * Address
 
 As these fields go beyond basic validation, it is recommended that you handle the responses from Safyer in a user friendly way. If you would like to test the validation on these fields, you can use the following test values to return an error response that has matched basic validation, but has been identified as dummy data.
-```
+
+```json
 "phone": "1232342456"
 "address1": "1 testing st", "address2": "", "zip": "12345"
 "bankRouting": "123123123"

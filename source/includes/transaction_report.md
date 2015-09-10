@@ -13,7 +13,7 @@ This API allows the merchant to search for transactions filtering by a wide rang
 * **Authorization**: Bearer {auth_token}
 
 ## Payload (JSON Format)
-```
+```json
 {“parameter1”:”value”,
 “parameter2”:”value”,
 “parameter3”:”value”}
@@ -51,7 +51,7 @@ transactionStatus | Allows the merchant to look for transactions where the trans
 The result data is an array of objects in JSON format.
 
 #### Sample Object in JSON Format
-```
+```json
 {
       "amount": "3.0",
       "authAmount": "3.0",

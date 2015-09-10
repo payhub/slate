@@ -34,7 +34,7 @@ dateCreateFrom | Date, Optional |	Format mm-dd-yyyy
 dateCreateTo | Date, Optional |	Format mm-dd-yyyy
 
 #### Example JSON
-```
+```json
 {
     "BatchReport": {
         "mid": "7620000000000002",
@@ -95,7 +95,7 @@ dateFrom | date, optional | Format mm-dd-yyyy.
 dateTo | date, optional | Format mm-dd-yyyy.
 
 #### Example JSON
-```
+```json
 {
     "Deposit": {
         "mid": "7620000000000002",
@@ -145,7 +145,7 @@ stmtMonth | numeric | A number between 1 and 12.
 stmtYear | numeric | A number between 0000 and 9999.
 
 #### Example JSON
-```
+```json
 {
    "Statement": {
         "mid": "7620000000000002",
@@ -160,7 +160,7 @@ stmtYear | numeric | A number between 0000 and 9999.
 Returns information, the chargebacks for the specified merchant.
 
 #### Request Method:
-POST
+`POST`
 
 #### Endpoint (URL to Call):
 `https://ws.safyer.com/api/v1/chargeback`
@@ -178,7 +178,7 @@ cardNumlast4 | numeric, optional | A number between 0000 and 9999.
 authorizationCode | string, optional | A string of 6 characters.
 
 #### Example JSON
-```
+```json
 {
     "Chargeback": {
         "mid": "7620000000000002",

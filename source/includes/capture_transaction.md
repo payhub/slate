@@ -36,7 +36,7 @@ po_number | string, optional | The purchase order number of the transaction.
 note | string, optional | A free format note for the transaction. The note will be read by the Merchant.
 
 ## Example of JSON - Code without new amount
-```
+```json
 {
 "merchant" : {
  "organization_id" : 10005,
@@ -48,7 +48,7 @@ note | string, optional | A free format note for the transaction. The note will 
 }
 ```
 ## Example of JSON - Code with new amount
-```
+```json
 {
      "merchant" : {
          "organization_id" : 10005,

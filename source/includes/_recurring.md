@@ -491,7 +491,7 @@ schedule | ScheduleInput |  Schedule detail.
 metaData | MetaData, optional |  A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
 #### Example
-```
+```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
 
@@ -511,7 +511,7 @@ phone_type | string, optional | The type of the phone number: ['H' or 'W' or 'M'
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
 #### Example
-```
+```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
 
@@ -535,7 +535,7 @@ billing_zip | string, optional | The billing zip code of the customer. The codes
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent the data in the client's domain, which can be associated with this entity.
 
 #### Example
-```
+```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
 
@@ -548,7 +548,7 @@ terminal_id | integer | The Virtual Terminal Id (['range[0-]']) for 3rd Party AP
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
 #### Example
-```
+```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
 
@@ -565,7 +565,7 @@ note | string, optional | A free format note for the transaction. <br>The note w
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain, which can be associated with this entity.
 
 #### Example
-```
+```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
 
@@ -577,7 +577,7 @@ amount | Number | The amount expressed as a decimal number with at most two deci
 currency | string, optional | The ISO 4217 currency code for this amount. <br>['USD']: Currently only 'USD' is accepted.
 
 #### Example
-```
+```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
 
@@ -595,7 +595,7 @@ yearly_schedule | YearlySchedule, optional | Required if the schedule_type is 'Y
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
 #### Example
-```
+```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
 
@@ -643,7 +643,7 @@ yearly_bill_on_day_of_month | string | The day of the month (['range[1-31]']) on
 
 ## Example of JSON code
 
-```
+```Json
 {
 "merchant" : {
  "organization_id" : 10005,
@@ -720,7 +720,7 @@ You can also send a GET  to http://payhub.com/payhubws/api/recurring-bill to lis
 
 The response will look like:
 
-```
+```csharp
 Resources«object» {
 content (Collection«object», optional),
 links (array[Link], optional)

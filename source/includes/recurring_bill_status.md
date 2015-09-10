@@ -15,7 +15,7 @@ Key | Type | Value
  recurring_bill_status | string | The status of the recurring bill: ['ACTIVE' or 'PAUSED' or 'COMPLETED' or 'CANCELED' or 'DELINQUENT' or 'UNKNOWN']. <br>The possible values to change to are:<ul><li>**ACTIVE**: The recurring bill will be charged on the next bill date. You can change it to ACTIVE only if it is currently PAUSED.</li><li>**PAUSED**: The recurring bill will NOT be charged while in this state. You can change it to PAUSED only if it is currently ACTIVE. Once the bill is in PAUSE state, any bill dates that pass while a bill is paused will NOT be charged. It will be charged only when it is 'unpaused' or changed it back to ACTIVE state.</li><li>**CANCELLED**: The recurring bill will be stopped. It will not be charged again. You can change to CANCELLED only if it is currently ACTIVE or PAUSED. Once the bill is cancelled, you cannot change its status.</li></ul> **Note:** You cannot use the COMPLETED status to stop a recurring bill from charging in the future. You should use CANCELLED to stop a recurring bill.
 
 ## Example of JSON
-```
+```json
 {
  "recurring_bill_status": "CANCELED"
 }

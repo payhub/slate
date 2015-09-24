@@ -18,13 +18,16 @@ chargebackReport | POST
 
 Retrieves information from all transactions of a Merchant for a specific date range. The date range cannot be greater than 30 days. The response will include the IdBatch element, which can be referenced using the GET batch method.
 
-#### Request Method:
+### Request Method:
+
 POST
 
-#### Endpoint (URL to Call):
+### Endpoint (URL to Call):
+
 `https://ws.safyer.com/api/v1/batchReport`
 
-#### Parameters
+### Parameters
+
 All these parameters are in a JSON:
 
 Parameter | Type | Description
@@ -33,7 +36,6 @@ mid	| String |
 dateCreateFrom | Date, Optional |	Format mm-dd-yyyy
 dateCreateTo | Date, Optional |	Format mm-dd-yyyy
 
-#### Example JSON
 ```json
 {
     "BatchReport": {
@@ -48,13 +50,15 @@ dateCreateTo | Date, Optional |	Format mm-dd-yyyy
 
 Retrieves information from all transactions for a Batch ID (for a specific day and Merchant). The response will include the transactionId element which can be referenced using the GET transaction method.
 
-#### Request Method:
+### Request Method:
+
 GET
 
-#### Endpoint (URL to Call):
+### Endpoint (URL to Call):
+
 `https://ws.safyer.com/api/v1/batch/{{batchId}}`
 
-#### Parameters
+### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
@@ -64,13 +68,14 @@ iBatch | Numeric | A number that identifies a single batch.<br>**Note:** The idB
 
 Retrieves all information of a specific transaction.
 
-#### Request Method:
+### Request Method:
 GET
 
-#### Endpoint (URL to Call):
+### Endpoint (URL to Call):
+
 `https://ws.safyer.com/api/v1/transaction/{{transactionId}}`
 
-#### Parameters
+### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
@@ -80,13 +85,14 @@ idTransaction | Numeric | A number that identifies a single transaction.<br>**No
 
 Retrieves information from all deposits of a Merchant, between a range of dates. The response will include the idDeposit element, which can be referenced using the GET deposit method.
 
-#### Request Method:
+### Request Method:
+
 POST
 
-#### Endpoint (URL to Call):
+### Endpoint (URL to Call):
 `https://ws.safyer.com/api/v1/depositReport`
 
-#### Parameters
+### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
@@ -94,7 +100,6 @@ mid | string |
 dateFrom | date, optional | Format mm-dd-yyyy.
 dateTo | date, optional | Format mm-dd-yyyy.
 
-#### Example JSON
 ```json
 {
     "Deposit": {
@@ -114,13 +119,13 @@ dateTo | date, optional | Format mm-dd-yyyy.
 
 Retrieves all information of a specific deposit.
 
-#### Request Method:
+### Request Method:
 GET
 
-#### Endpoint (URL to Call):
+### Endpoint (URL to Call):
 `https://ws.safyer.com/api/v1/deposit/{{depositId}}`
 
-#### Parameters
+### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
@@ -130,13 +135,14 @@ iDeposit | numeric | A number that identifies a single transaction.<br>**Note:**
 
 Returns the Merchant Statement XML for a specific month and year. This XML is received from the merchant's processor and relayed as it is.
 
-#### Request Method:
+### Request Method:
+
 POST
 
-#### Endpoint (URL to Call):
+### Endpoint (URL to Call):
 `https://ws.safyer.com/api/v1/statementReport`
 
-#### Parameters
+### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
@@ -144,7 +150,6 @@ mid | string | The number of a merchant.
 stmtMonth | numeric | A number between 1 and 12.
 stmtYear | numeric | A number between 0000 and 9999.
 
-#### Example JSON
 ```json
 {
    "Statement": {
@@ -159,13 +164,15 @@ stmtYear | numeric | A number between 0000 and 9999.
 
 Returns information, the chargebacks for the specified merchant.
 
-#### Request Method:
+### Request Method:
+
 `POST`
 
-#### Endpoint (URL to Call):
+### Endpoint (URL to Call):
+
 `https://ws.safyer.com/api/v1/chargeback`
 
-#### Parameters
+### Parameters
 
 Parameter | Type | Description
 --- | --- | ---
@@ -177,7 +184,6 @@ receivedDateTo | date, optional | Format mm-dd-yyyy.
 cardNumlast4 | numeric, optional | A number between 0000 and 9999.
 authorizationCode | string, optional | A string of 6 characters.
 
-#### Example JSON
 ```json
 {
     "Chargeback": {

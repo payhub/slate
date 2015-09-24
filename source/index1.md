@@ -8,6 +8,8 @@ language_tabs:
   - csharp
   - json
 
+title: PayHub RESTful Web Services
+
 includes:
 
   - authonly_transaction
@@ -20,12 +22,18 @@ includes:
   - recurring
   - recurring_bill_status
   - errors
+
+title: Safyer RESTful Web Services
+
+includes:
   - merchant_method
   - reporting_methods
   - boarding_webhook
   - oauth
 
-toc_footers:
+title: SDK Download
+
+toc_footer:
  <a href='https://github.com/payhub/payhubws-public-sdk'>SDK Download</a>
 
 search: true

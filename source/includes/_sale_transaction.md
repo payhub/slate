@@ -1,4 +1,5 @@
 # Sale Transaction
+
 ```java
 package transactions;
 
@@ -6,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -431,14 +431,17 @@ namespace PayHubSamples
   }
 }
 ```
+
 This topic provides the information about the Sale transaction. Use a Sale transaction to charge a credit card.
 
 Upon successful sale, you will receive an approval code. Once a sale transaction is settled, the money will be taken from the card holder's account and deposited to the merchant's account. This is the most common transaction type.
 
 ## Request Method
+
 `POST`
 
 ## Endpoint (URL to Call)
+
 `POST http://payhub.com/payhubws/api/sale`
 
 ## Elements
@@ -495,7 +498,6 @@ note | string, optional | A free format note for the transaction. The note will 
 
 **Note:** One of the following fields must be present: <ul><li>tokenized_card</li><li>card_number</li><li>track1_data</li><li>track2_data</li><li>encrypted_track_data</li></ul>
 
-## Example of JSON
 ```Json
 {
   "merchant": {
@@ -541,12 +543,12 @@ note | string, optional | A free format note for the transaction. The note will 
 ```
 
 ## Result
+
 * A 201 code (created)
 * The Id of the Sale in the Location header.
     <br>Sample header in the response: `Location → http:// [payhub-api-server]:8251/payhubws/api/sale/5501b651da06a879ce520d4d`.
     <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
 
-## Sample Response
 ```Json
 {
 "version": 0,
@@ -603,6 +605,7 @@ note | string, optional | A free format note for the transaction. The note will 
 
 }
 ```
+
 On the same way you  can query about merchant, customer, bill and card data details using the given URLs.
 
 **Note:** You will need to use the Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.

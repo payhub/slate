@@ -1,4 +1,5 @@
-## Refund Transaction
+# Refund Transaction
+
 ```java
 package transactions;
 import java.io.IOException;
@@ -297,11 +298,12 @@ Run the Refund transaction when you want to refund the full amount of a settled 
 
 ## Request Method
 
-
 ## Endpoint (URL to Call)
+
 `http://payhub.com/payhubws/api/refund`
 
 ## Elements
+
 (All Required)
 
 Element | Type | Value
@@ -311,7 +313,6 @@ Element | Type | Value
  record_format | string | To specify if the sale has to be made over a credit card, debit card or cash payment. <br>The accepted values are: <ul><li>CASH_PAYMENT</li><li>CREDIT_CARD</li><li>DEBIT_CARD</li></ul>
  transaction_id | integer | The transaction id of the sale you want to refund.
 
-## Example of JSON
 ```json
 {
 "merchant" : {

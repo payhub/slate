@@ -467,14 +467,17 @@ namespace PayHubSamples
   }
 }
 ```
+
 This topic provides information about the Recurring Bill transaction.
 
 Use the recurring billing transaction when you want to periodically charge certain amount to the customer. You can use this feature for subscriptions or for any ongoing product or service you offer. You can setup a recurring billing by calling our RESTful API through an HTTP post containing a JSON.
 
 ## Request Method
+
 `POST`
 
 ## Endpoint (URL to Call)
+
 `http://payhub.com/payhubws/api/recurring-bill`
 
 ## Elements
@@ -490,7 +493,6 @@ bill | BillInput |  Bill-related data to use in the recurring bill.
 schedule | ScheduleInput |  Schedule detail.
 metaData | MetaData, optional |  A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
-#### Example
 ```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -510,7 +512,6 @@ phone_ext | string, optional | The phone extension number of the customer.
 phone_type | string, optional | The type of the phone number: ['H' or 'W' or 'M']: H (Home), W (Work), M (Mobile).
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
-#### Example
 ```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -518,7 +519,6 @@ metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON str
 ### MetaData
 
 No parameters
-
 
 ### CardDataInput
 
@@ -534,7 +534,6 @@ billing_state | string, optional | The billing state Code of the customer. The c
 billing_zip | string, optional | The billing zip code of the customer. The codes are for the states in the USA. <br>The code must be either 5 digits or 5 plus four separated by a '-'. <br>This value is required if the Merchant has the AVS flag turned on.
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent the data in the client's domain, which can be associated with this entity.
 
-#### Example
 ```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -547,7 +546,6 @@ organization_id | integer | The organization Id (['range[0-]']) of the merchant.
 terminal_id | integer | The Virtual Terminal Id (['range[0-]']) for 3rd Party API of the merchant.
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
-#### Example
 ```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -564,7 +562,6 @@ invoice_number | string, optional | The invoice number for the transaction.
 note | string, optional | A free format note for the transaction. <br>The note will be read by the Merchant.
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain, which can be associated with this entity.
 
-#### Example
 ```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -576,7 +573,6 @@ Key | Type | Value
 amount | Number | The amount expressed as a decimal number with at most two decimal places (example: 1.23),
 currency | string, optional | The ISO 4217 currency code for this amount. <br>['USD']: Currently only 'USD' is accepted.
 
-#### Example
 ```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -594,7 +590,6 @@ schedule_start_and_end | ScheduleStartAndEnd, optional | Required if the schedul
 yearly_schedule | YearlySchedule, optional | Required if the schedule_type is 'Y' (='Yearly').
 metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
 
-#### Example
 ```java
 {'order': {'id': 1, 'invoice':'a123', 'lines': [{'item': 'part 1'}, {'item': 'part 2'}]}}
 ```
@@ -622,7 +617,6 @@ monthly_each_days | array[integer], optional | An array of integers that must ha
 monthly_on_the_day_of_week_in_month | integer, optional | A value (['range[1-5]']) of 1 means 'first of month', 2 means 'second of month' and so on, with a value of 5 meaning 'last of month'. Must be specified in combination with monthly_day_of_week which supplies the day of week (Monday, Tuesday, etc.) that this applies to. <br>This value is applicable to monthly_type of 'O' (='On the').
 monthly_day_of_week | integer, optional | The day of week (['range[1-7]']) on which the bill recurs, where 1 is Sunday and 7 is Saturday. <br>The value must be specified in combination with monthly_on_the_day_of_week_in_month which supplies the 'position' (First, Second, etc.) of the day in the month (First Monday, Second Friday, Last Saturday, etc.). <br>This value is applicable to monthly_type of 'O' (='On the').
 
-
 ### ScheduleStartAndEnd
 
 Key | Type | Value
@@ -640,8 +634,6 @@ year_to_start | string | The year (in YYYY format) in which the schedule starts.
 yearly_bill_on_day_of_month | integer | The month number ( ['range[1-12]']) on which the bill will recur, where 1 is January and 12 is December. Must be specified in combination with year_to_start and yearly_bill_on_day_of_month.
 yearly_bill_on_day_of_month | string | The day of the month (['range[1-31]']) on which the yearly bill will recur, where 1 is the 1st, 2 is the 2nd, etc. <br>If you specify a day of month that is invalid for the month specified by yearly_bill_on_month_number, then the last day of the month is used. Must be specified in combination with year_to_start and yearly_bill_on_month_number.
 
-
-## Example of JSON code
 
 ```Json
 {

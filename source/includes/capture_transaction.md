@@ -1,4 +1,5 @@
 # Capture Transaction
+
 This topic provides information about the **Capture** transaction.
 
 Use the Capture transaction as the final step to collect the funds that you had asked for authorization through the AuthOnly transaction. You need to provide the transaction ID that you receive when you run the **AuthOnly** transaction.
@@ -12,20 +13,24 @@ After capturing the amount for the AuthOnly transaction, the transaction will be
 ## Request Method
 
 ## Endpoint (URL to Call)
+
 `http://payhub.com/payhubws/api/v2/capture`
 
 ## Elements
 
 ### merchant (required)
+
 Key | Type | Value
 --- | ---- | -----
 organization_id | integer | The organization id of the merchant who did the AuthOnly that you are trying to capture.
 terminal_id | integer | The terminal's id of the merchant where the AuthOnly was done.
 
 ### transaction_id (integer, required)
+
 The transaction id of the AuthOnly that you want to capture.
 
 ### bill (optional)
+
 Key | Type | Value
 --- | ---- | -----
 base_amount | TransactionAmount | The base amount of the recurring bill. The total amount charged will be the sum of this amount and the 'shipping_amount', 'tax_amount' if any.
@@ -35,7 +40,8 @@ invoice_number | string, optional | The invoice number of the transaction.
 po_number | string, optional | The purchase order number of the transaction.
 note | string, optional | A free format note for the transaction. The note will be read by the Merchant.
 
-## Example of JSON - Code without new amount
+## Code without new amount
+
 ```json
 {
 "merchant" : {
@@ -47,7 +53,7 @@ note | string, optional | A free format note for the transaction. The note will 
  "transaction_id":"114"
 }
 ```
-## Example of JSON - Code with new amount
+## Code with new amount
 ```json
 {
      "merchant" : {
@@ -77,5 +83,6 @@ note | string, optional | A free format note for the transaction. The note will 
 ```
 
 ## Result
+
 * 201 code (created)
 * The Id of the Capture in the Location header. This ID should be the same that you provided. <br>Sample header in the response:Location: http://payhub.com/payhubws/api/v2/authOnly/234

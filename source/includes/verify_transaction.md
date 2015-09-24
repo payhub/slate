@@ -3,9 +3,11 @@
 This topic provides the information about the using Verify transaction. Run the Verify transaction when you want to know if the card data you have is valid and ready to run other transactions, such as sale. The amount refunded is the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.
 
 ## Request Method
+
 `POST`
 
 ## Endpoint (URL to Call)
+
 `http://payhub.com/payhubws/api/v2/verify`
 
 ## Elements
@@ -35,6 +37,7 @@ card_expiry_date | string | The card expiry in the YYYYMM format.
 cvv_data | string | This is the three or four digit CVV code on the credit and debit card.
 
 ## customer
+
 Key | Type | Description
 --- | ---- | -----
 first_name	| string | The first name of the customer.
@@ -47,8 +50,6 @@ phone_number | string, optional | The phone number of the customer. <br> The pho
 phone_ext | string, optional | The phone extension number of the customer.
 phone_type | string, optional | The type (['H' or 'W' or 'M']) phone number: H (Home), W (Work), M (Mobile).
 
-
-#### Sample Object in JSON Format
 ```json
 {
    "merchant" : {
@@ -79,7 +80,9 @@ phone_type | string, optional | The type (['H' or 'W' or 'M']) phone number: H (
    }
 }
 ```
+
 ## Response
+
 * A 201 Created status if the card data is correct. That's all you need to know if card data is valid.
 
 **Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.

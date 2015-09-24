@@ -5,12 +5,15 @@ This topic provides the information about the web service that you need to creat
 Refer the information in this topic as the Request and Response format specification for the Boarding Webhook, which runs and queries the system for new merchants that have been boarded to PayHub.
 
 ## Request Method
+
 `POST`
 
 ## End Point URL
+
 Specified by the Sales Office in the Manage Frictionless Links section.
 
 ## Request Elements (from Safyer)
+
 All fields are required unless indicated otherwise
 
 Parameter | Type | Description
@@ -25,12 +28,12 @@ payHub_AuthToken | string, optional, 0 - 100 characters | The OAuth Token used t
 termID | string, 4 - 20 characters | The terminal number associated with the PayHub account.
 
 ## Response Elements (to Safyer)
+
 Parameter | Type | Description
 --- | --- | ---
 code | string, 1 digit | The response code returned in the response.<br><ul><li>0: ‘Success’</li><li>1: ‘Error’</li></ul>
 msg	| string, 2 - 5 characters | If code is 0 then msg is ‘OK’. Otherwise, msg is ‘ERROR’.
 
-## Response Example
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <Response>

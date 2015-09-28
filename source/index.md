@@ -26,7 +26,7 @@ includes:
   - oauth
 
 toc_footers:
- <a href='https://github.com/payhub/payhubws-public-sdk'>SDK Download</a>
+ - <a href='https://github.com/payhub/payhubws-public-sdk'>SDK Download</a>
 
 search: true
 ---

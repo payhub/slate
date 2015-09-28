@@ -34,7 +34,7 @@ includes:
 title: SDK Download
 
 toc_footer:
- <a href='https://github.com/payhub/payhubws-public-sdk'>SDK Download</a>
+ - <a href='https://github.com/payhub/payhubws-public-sdk'>SDK Download</a>
 
 search: true
 ---

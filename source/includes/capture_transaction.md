@@ -10,9 +10,9 @@ If the Capture transaction executes successfully, you will receive a 201 Created
 
 After capturing the amount for the AuthOnly transaction, the transaction will become a sale. The money will be taken from the card holder’s account and credited to your account during the settlement of the sale.
 
-## Request Method
+### Request Method
 
-## Endpoint (URL to Call)
+### Endpoint (URL to Call)
 
 `http://payhub.com/payhubws/api/v2/capture`
 
@@ -40,7 +40,7 @@ invoice_number | string, optional | The invoice number of the transaction.
 po_number | string, optional | The purchase order number of the transaction.
 note | string, optional | A free format note for the transaction. The note will be read by the Merchant.
 
-## Code without new amount
+### Code without new amount
 
 ```json
 {

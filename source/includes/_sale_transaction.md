@@ -1,5 +1,4 @@
 # Sale Transaction
-
 ```java
 package transactions;
 
@@ -436,11 +435,11 @@ This topic provides the information about the Sale transaction. Use a Sale trans
 
 Upon successful sale, you will receive an approval code. Once a sale transaction is settled, the money will be taken from the card holder's account and deposited to the merchant's account. This is the most common transaction type.
 
-## Request Method
+### Request Method
 
 `POST`
 
-## Endpoint (URL to Call)
+### Endpoint (URL to Call)
 
 `POST http://payhub.com/payhubws/api/sale`
 

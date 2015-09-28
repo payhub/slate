@@ -2,11 +2,11 @@
 
 This topic provides the information about the Recurring Bill Status API. Use the Recurring Billing Status API to change the status of any recurring bill.
 
-## Request Method
+### Request Method
 
 `PATCH`
 
-## Endpoint (URL to Call)
+### Endpoint (URL to Call)
 
 `http://payhub.com/payhubws/api/recurring-bill-status/{id}`
 

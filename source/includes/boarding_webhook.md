@@ -4,11 +4,11 @@ This topic provides the information about the web service that you need to creat
 
 Refer the information in this topic as the Request and Response format specification for the Boarding Webhook, which runs and queries the system for new merchants that have been boarded to PayHub.
 
-## Request Method
+### Request Method
 
 `POST`
 
-## End Point URL
+### End Point URL
 
 Specified by the Sales Office in the Manage Frictionless Links section.
 

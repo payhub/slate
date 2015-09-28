@@ -2,15 +2,15 @@
 
 This API allows the merchant to search for transactions filtering by a wide range of optional parameters.
 
-## Request Method
+### Request Method
 
 `PATCH`
 
-## Endpoint (URL to Call)
+### Endpoint (URL to Call)
 
 `webservice URL/api/v2/search/transactionReport`
 
-## Required Headers
+### Required Headers
 * **Content-Type**: application/json
 * **Accept**: application/json
 * **Authorization**: Bearer {auth_token}

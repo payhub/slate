@@ -14,7 +14,7 @@ deposit	| GET
 statementReport | POST
 chargebackReport | POST
 
-## batchReport
+### batchReport
 
 Retrieves information from all transactions of a Merchant for a specific date range. The date range cannot be greater than 30 days. The response will include the IdBatch element, which can be referenced using the GET batch method.
 

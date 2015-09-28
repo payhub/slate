@@ -2,11 +2,11 @@
 
 This topic provides the information about the using Verify transaction. Run the Verify transaction when you want to know if the card data you have is valid and ready to run other transactions, such as sale. The amount refunded is the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.
 
-## Request Method
+### Request Method
 
 `POST`
 
-## Endpoint (URL to Call)
+### Endpoint (URL to Call)
 
 `http://payhub.com/payhubws/api/v2/verify`
 
@@ -36,7 +36,7 @@ billing_zip | string, optional | The billing Zip Code of the customer. The zip c
 card_expiry_date | string | The card expiry in the YYYYMM format.
 cvv_data | string | This is the three or four digit CVV code on the credit and debit card.
 
-## customer
+### customer
 
 Key | Type | Description
 --- | ---- | -----

@@ -10,11 +10,11 @@ The sale is considered complete when you successfully complete both the Capture 
 
 When the AuthOnly transaction is successfully executed, you will receive a 201 Created code on a successful AuthOnly. This code also includes the transaction ID. You can use this transaction ID to run the Capture transaction.
 
-## Request Method
+### Request Method
 
 `POST`
 
-## Endpoint (URL to Call)
+### Endpoint (URL to Call)
 
 `POST http://payhub.com/payhubws/api/v2/authOnly`
 

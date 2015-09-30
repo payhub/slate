@@ -1,5 +1,7 @@
 # Capture Transaction
 
+## Introduction
+
 This topic provides information about the **Capture** transaction.
 
 Use the Capture transaction as the final step to collect the funds that you had asked for authorization through the AuthOnly transaction. You need to provide the transaction ID that you receive when you run the **AuthOnly** transaction.
@@ -53,7 +55,9 @@ note | string, optional | A free format note for the transaction. The note will 
  "transaction_id":"114"
 }
 ```
-## Code with new amount
+
+### Code with new amount
+
 ```json
 {
      "merchant" : {

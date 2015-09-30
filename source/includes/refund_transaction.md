@@ -292,6 +292,8 @@ namespace PayHubSamples
 }
 ```
 
+## Introduction
+
 This topic provides the information the Refund transaction.
 
 Run the Refund transaction when you want to refund the full amount of a settled sale, which is not yet refunded. The refund amount will be the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.

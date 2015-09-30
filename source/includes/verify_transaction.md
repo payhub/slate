@@ -1,5 +1,7 @@
 # Verify Transaction
 
+## Introduction
+
 This topic provides the information about the using Verify transaction. Run the Verify transaction when you want to know if the card data you have is valid and ready to run other transactions, such as sale. The amount refunded is the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.
 
 ### Request Method
@@ -83,6 +85,6 @@ phone_type | string, optional | The type (['H' or 'W' or 'M']) phone number: H (
 
 ## Response
 
-* A 201 Created status if the card data is correct. That's all you need to know if card data is valid.
+A 201 Created status if the card data is correct. That's all you need to know if card data is valid.
 
 **Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.

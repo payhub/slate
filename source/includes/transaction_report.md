@@ -1,5 +1,7 @@
 # Transaction Report
 
+## Introduction
+
 This API allows the merchant to search for transactions filtering by a wide range of optional parameters.
 
 ### Request Method
@@ -16,6 +18,7 @@ This API allows the merchant to search for transactions filtering by a wide rang
 * **Authorization**: Bearer {auth_token}
 
 ## Payload (JSON Format)
+
 ```json
 {“parameter1”:”value”,
 “parameter2”:”value”,

@@ -468,15 +468,17 @@ namespace PayHubSamples
 }
 ```
 
+## Introduction
+
 This topic provides information about the Recurring Bill transaction.
 
 Use the recurring billing transaction when you want to periodically charge certain amount to the customer. You can use this feature for subscriptions or for any ongoing product or service you offer. You can setup a recurring billing by calling our RESTful API through an HTTP post containing a JSON.
 
-## Request Method
+### Request Method
 
 `POST`
 
-## Endpoint (URL to Call)
+### Endpoint (URL to Call)
 
 `http://payhub.com/payhubws/api/recurring-bill`
 
@@ -635,13 +637,12 @@ yearly_bill_on_day_of_month | integer | The month number ( ['range[1-12]']) on w
 yearly_bill_on_day_of_month | string | The day of the month (['range[1-31]']) on which the yearly bill will recur, where 1 is the 1st, 2 is the 2nd, etc. <br>If you specify a day of month that is invalid for the month specified by yearly_bill_on_month_number, then the last day of the month is used. Must be specified in combination with year_to_start and yearly_bill_on_month_number.
 
 
-```Json
+```json
 {
 "merchant" : {
  "organization_id" : 10005,
  "terminal_id" : 5  
  },
-
 
 "bill" : {
 "base_amount" : {

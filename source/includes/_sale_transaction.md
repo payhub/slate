@@ -1,4 +1,5 @@
 # Sale Transaction
+
 ```java
 package transactions;
 
@@ -430,6 +431,8 @@ namespace PayHubSamples
   }
 }
 ```
+
+## Introduction
 
 This topic provides the information about the Sale transaction. Use a Sale transaction to charge a credit card.
 

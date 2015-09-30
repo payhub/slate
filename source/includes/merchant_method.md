@@ -1,5 +1,7 @@
 # Merchant Method
 
+## Introduction
+
 This topic provides you the information about Merchant method that you can use to board a merchant to Safyer using the Safyer Web Service.
 
 ### Request Method

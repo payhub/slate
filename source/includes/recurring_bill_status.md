@@ -1,5 +1,7 @@
 # Recurring Bill Status
 
+## Introduction
+
 This topic provides the information about the Recurring Bill Status API. Use the Recurring Billing Status API to change the status of any recurring bill.
 
 ### Request Method

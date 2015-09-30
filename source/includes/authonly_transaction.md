@@ -1,5 +1,7 @@
 # AuthOnly Transaction
 
+## Introduction
+
 This topic provides the information about the **AuthOnly** transaction.
 
 You can use the AuthOnly transaction to authorize an amount on your customer's credit card without making the actual settlement of that amount. With the AuthOnly transaction, you actually reserve an amount for a certain period against the credit limit of the card holder.
@@ -120,4 +122,4 @@ record_format | string, optional | The value that indicates whether the sale has
 * 201 code (created)
 * The Id of the AuthOnly in the Location header <br>Sample header in the response:Location: http://payhub.com/payhubws/api/v2/authOnly/234
 
-> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the [OAUTH]https://payhub.atlassian.net/wiki/display/MM/OAuth+2.0+Access+Tokens section.
+**Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the [OAUTH]https://payhub.atlassian.net/wiki/display/MM/OAuth+2.0+Access+Tokens section.

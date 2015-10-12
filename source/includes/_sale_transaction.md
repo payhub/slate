@@ -1,5 +1,12 @@
 # Sale Transaction
 
+## Introduction
+
+This topic provides the information about the Sale transaction. Use a Sale transaction to charge a credit card.
+
+Upon successful sale, you will receive an approval code. Once a sale transaction is settled, the money will be taken from the card holder's account and deposited to the merchant's account. This is the most common transaction type.
+
+
 ```java
 package transactions;
 
@@ -431,12 +438,6 @@ namespace PayHubSamples
   }
 }
 ```
-
-## Introduction
-
-This topic provides the information about the Sale transaction. Use a Sale transaction to charge a credit card.
-
-Upon successful sale, you will receive an approval code. Once a sale transaction is settled, the money will be taken from the card holder's account and deposited to the merchant's account. This is the most common transaction type.
 
 ### Request Method
 

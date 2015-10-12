@@ -1,5 +1,10 @@
 # Void Transaction
 
+## Introduction
+
+Run a Void when you need to cancel a transaction (either a sale or a refund) that has not yet been settled and that has not already been voided. This will avoid the customer being charged any amount at all and will release the pending funds, given the issuer supports doing so.
+
+
 ```java
 package transactions;
 import java.io.IOException;
@@ -285,10 +290,6 @@ namespace PayHubSamples
   "transaction_id": "114"
 }
 ```
-
-## Introduction
-
-Run a Void when you need to cancel a transaction (either a sale or a refund) that has not yet been settled and that has not already been voided. This will avoid the customer being charged any amount at all and will release the pending funds, given the issuer supports doing so.
 
 ### Endpoint (URL to Call):
 

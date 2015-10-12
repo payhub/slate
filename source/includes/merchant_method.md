@@ -14,7 +14,26 @@ Using this method, you can board a merchant associated with a previously generat
 
 `https://ws.safyer.com/api/v1/merchant`
 
-### Parameters
+### Enhanced Merchant Validation
+
+When posting a merchant, we confirm that the following fields contain real data:
+* Routing Number
+* Phone Number
+* Email
+* Address
+
+As these fields go beyond basic validation, it is recommended that you handle the responses from Safyer in a user friendly way. If you would like to test the validation on these fields, you can use the following test values to return an error response that has matched basic validation, but has been identified as dummy data.
+
+```json
+
+"phone": "1232342456"
+"address1": "1 testing st", "address2": "", "zip": "12345"
+"bankRouting": "123123123"
+"email": "john.doe@rlyfakenmehere.com"
+```
+
+
+## Parameters
 
 Parameter | Type | Description
 --- | ---- | -----
@@ -76,7 +95,7 @@ ip | Alphanumeric YYY.XXX.XXX.XXX | The IP address of the system from where the 
 }
 ```
 
-### Business Categories
+## Business Categories
 
 BUSINESS TYPE | BUSINESS CATEGORY | DESCRIPTION
 :---: | :---: | ---
@@ -244,7 +263,7 @@ All | 0000 | OTHER (indicate name "otherBusinessDesc" in JSON)
   | 7011 | HOTELS, MOTELS, & RESORTS
 13 | 4511 | AIRLINES
 
-### Business Types
+## Business Types
 
 Business Type | Description
 --- | ----
@@ -260,21 +279,3 @@ Business Type | Description
 11 | Miscellaneous
 12 | Lodging
 13 | Travel
-
-### Enhanced Merchant Validation
-
-When posting a merchant, we confirm that the following fields contain real data:
-* Routing Number
-* Phone Number
-* Email
-* Address
-
-As these fields go beyond basic validation, it is recommended that you handle the responses from Safyer in a user friendly way. If you would like to test the validation on these fields, you can use the following test values to return an error response that has matched basic validation, but has been identified as dummy data.
-
-```json
-
-"phone": "1232342456"
-"address1": "1 testing st", "address2": "", "zip": "12345"
-"bankRouting": "123123123"
-"email": "john.doe@rlyfakenmehere.com"
-```

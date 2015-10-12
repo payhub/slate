@@ -1,5 +1,12 @@
 # Recurring Bill Transaction
 
+## Introduction
+
+This topic provides information about the Recurring Bill transaction.
+
+Use the recurring billing transaction when you want to periodically charge certain amount to the customer. You can use this feature for subscriptions or for any ongoing product or service you offer. You can setup a recurring billing by calling our RESTful API through an HTTP post containing a JSON.
+
+
 ```java
 package transactions;
 
@@ -140,14 +147,15 @@ public class RecurringBill {
 }
 ```
 
+
 ```php
+
 <?php
   $processed = FALSE;
   $ERROR_MESSAGE = '';
 
   //Defining the Web Service URL
   $WsURL="http://payhub.com/payhubws/api/v2/$trans_type";
-
 
   //Defining data for the RECURRING BILL transaction
   // Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
@@ -467,12 +475,6 @@ namespace PayHubSamples
   }
 }
 ```
-
-## Introduction
-
-This topic provides information about the Recurring Bill transaction.
-
-Use the recurring billing transaction when you want to periodically charge certain amount to the customer. You can use this feature for subscriptions or for any ongoing product or service you offer. You can setup a recurring billing by calling our RESTful API through an HTTP post containing a JSON.
 
 ### Request Method
 

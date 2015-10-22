@@ -298,7 +298,42 @@ namespace PayHubSamples
   "transaction_id": "114"
 }
 ```
+```ruby
+    
+    require 'uri'
+    require 'net/http'
+    require 'json'
+    
+    url = URI("http://payhub.com/payhubws/api/v2/refund")
+    
+    http = Net::HTTP.new(url.host, url.port)
+    
+    request = Net::HTTP::Post.new(url)
+    request["content-type"] = 'application/json'
+    request["accept"] = 'application/json'
+    request["authorization"] = 'Bearer 2a5d6a73-d294-4fba-bfba-957a4948d4a3'
+    request["cache-control"] = 'no-cache'
+    
+    
+    
+    merchant = {
+            "organization_id"=>10074,
+            "terminal_id"=>134
+    }
+    #Record Format 
+    record_format="CREDIT_CARD"
+    
+    #transaction Id
+    transaction_id="114"
+   
+    informationToSend = {"merchant"=>merchant,"record_format"=>record_format,"transaction_id"=>transaction_id}
+    
+    request.body = JSON.generate(informationToSend)
+    
+    response = http.request(request)
+    puts response.read_body
 
+```
 ### Request Method
 
 ### Endpoint (URL to Call)

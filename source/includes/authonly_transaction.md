@@ -117,6 +117,70 @@ record_format | string, optional | The value that indicates whether the sale has
 }
 ```
 
+```ruby
+
+    require 'uri'
+    require 'net/http'
+    require 'json'
+    
+    url = URI("http://payhub.com/payhubws/api/v2/authonly")
+    
+    http = Net::HTTP.new(url.host, url.port)
+    
+    request = Net::HTTP::Post.new(url)
+    request["content-type"] = 'application/json'
+    request["accept"] = 'application/json'
+    request["authorization"] = 'Bearer 2a5d6a73-d294-4fba-bfba-957a4948d4a3'
+    request["cache-control"] = 'no-cache'
+    
+    
+    
+    merchant = {
+                "organization_id"=>10074,
+                "terminal_id"=>134
+                }
+    
+    # bill data
+    bill= {
+                "base_amount"=>"1.00",
+                "shipping_amount"=>"1.00",
+                "tax_amount"=>"1.00",
+                "note"=>"this a sample note",
+                "invoice_number"=>"this is an invoice",
+                "po_number"=>"a test po number"
+                }
+    #Credit card data
+    card_data = {
+                "card_number"=>"4055011111111111",
+                "card_expiry_date"=>"202012",
+                "cvv_data"=>"999",
+                "billing_address_1"=>"2350 Kerner Blvd",
+                "billing_address_2"=>"On the corner",
+                "billing_city"=>"San Rafael",
+                "billing_state"=>"CA",
+                "billing_zip"=>"99997-0003"
+                }
+    # Customer data
+    customer = {"first_name"=>"First",
+                "last_name"=>"Contact",
+                "company_name"=>"Payhub Inc",
+                "job_title"=>"Software Engineer",
+                "email_address"=>"jhon@company.com",
+                "web_address"=>"http://payhub.com",
+                "phone_number"=>"(415) 479 1349",
+                "phone_ext"=>"123",
+                "phone_type"=>"M"
+    }
+    
+    
+    informationToSend = {"merchant"=>merchant,"bill"=>bill,"customer"=>customer,"card_data"=>card_data}
+    
+    request.body = JSON.generate(informationToSend)
+    
+    response = http.request(request)
+    puts response.read_body
+```
+
 ## Result
 
 * 201 code (created)

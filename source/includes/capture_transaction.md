@@ -59,31 +59,74 @@ note | string, optional | A free format note for the transaction. The note will 
 ### Code with new amount
 
 ```json
-{
-     "merchant" : {
-         "organization_id" : 10005,
-         "terminal_id" : 5
-
-     },
-
-     "transaction_id":"365",
-
-     "bill" : {
-
-         "base_amount" : {
-             "amount" : 6.00
+    {
+         "merchant" : {
+             "organization_id" : 10005,
+             "terminal_id" : 5
+    
          },
-         "shipping_amount" : {
-             "amount" : 1.5
-         },
-         "tax_amount" : {
-             "amount" : 0.5
-         },
-         "note" : "Nice guest, giving him 20% discount.",
-         "invoice_number" : "789468",
-         "po_number" : "789468-CAP"
-     }
-}
+    
+         "transaction_id":"365",
+    
+         "bill" : {
+    
+             "base_amount" : {
+                 "amount" : 6.00
+             },
+             "shipping_amount" : {
+                 "amount" : 1.5
+             },
+             "tax_amount" : {
+                 "amount" : 0.5
+             },
+             "note" : "Nice guest, giving him 20% discount.",
+             "invoice_number" : "789468",
+             "po_number" : "789468-CAP"
+         }
+    }
+```
+
+```ruby
+
+    require 'uri'
+    require 'net/http'
+    require 'json'
+    
+    url = URI("http://payhub.com/payhubws/api/v2/capture")
+    
+    http = Net::HTTP.new(url.host, url.port)
+    
+    request = Net::HTTP::Post.new(url)
+    request["content-type"] = 'application/json'
+    request["accept"] = 'application/json'
+    request["authorization"] = 'Bearer 2a5d6a73-d294-4fba-bfba-957a4948d4a3'
+    request["cache-control"] = 'no-cache'
+    
+    
+    
+    merchant = {
+                "organization_id"=>10074,
+                "terminal_id"=>134
+                }
+    
+    # bill data
+    bill= {
+                "base_amount"=>"1.00",
+                "shipping_amount"=>"1.00",
+                "tax_amount"=>"1.00",
+                "note"=>"this a sample note",
+                "invoice_number"=>"this is an invoice",
+                "po_number"=>"a test po number"
+                }
+    #transaction Id
+    transaction_id="114"
+    
+    informationToSend = {"merchant"=>merchant,"bill"=>bill,"transaction_id"=>transaction_id}
+    
+    request.body = JSON.generate(informationToSend)
+    
+    response = http.request(request)
+    puts response.read_body
 ```
 
 ## Result

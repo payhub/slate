@@ -3,10 +3,12 @@ title: PayHub API Reference
 
 language_tabs:
 
-  - java
-  - php
-  - csharp
-  - json
+  - java: Java
+  - php: php
+  - csharp: CSharp
+  - ruby: Ruby 
+  - json: Json
+
 
 includes:
 
@@ -23,7 +25,7 @@ includes:
   - merchant_method
   - reporting_methods
   - boarding_webhook
-  - oauth
+  - oauth 
 
 toc_footers:
  - <a href='https://github.com/payhub/payhubws-public-sdk'>SDK Download</a>

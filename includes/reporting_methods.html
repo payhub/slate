@@ -30,7 +30,7 @@
       <div class="content">
         <h1 id="reporting-methods">Reporting Methods</h1>
 
-<h2 id="available-resources">AVAILABLE RESOURCES</h2>
+<h2 id="available-resources">Available Resources</h2>
 
 <p>The Safyer Web Service provides the following resources to report on merchant activity.</p>
 
@@ -70,19 +70,19 @@
 </tr>
 </tbody></table>
 
-<h2 id="batchreport">batchReport</h2>
+<h3 id="batchreport">batchReport</h3>
 
 <p>Retrieves information from all transactions of a Merchant for a specific date range. The date range cannot be greater than 30 days. The response will include the IdBatch element, which can be referenced using the GET batch method.</p>
 
-<h4 id="request-method:">Request Method:</h4>
+<h3 id="request-method:">Request Method:</h3>
 
 <p>POST</p>
 
-<h4 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h4>
+<h3 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h3>
 
 <p><code class="prettyprint">https://ws.safyer.com/api/v1/batchReport</code></p>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <p>All these parameters are in a JSON:</p>
 
@@ -109,8 +109,6 @@
 <td>Format mm-dd-yyyy</td>
 </tr>
 </tbody></table>
-
-<h4 id="example-json">Example JSON</h4>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"BatchReport"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"mid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7620000000000002"</span><span class="p">,</span><span class="w">
@@ -124,15 +122,15 @@
 
 <p>Retrieves information from all transactions for a Batch ID (for a specific day and Merchant). The response will include the transactionId element which can be referenced using the GET transaction method.</p>
 
-<h4 id="request-method:">Request Method:</h4>
+<h3 id="request-method:">Request Method:</h3>
 
 <p>GET</p>
 
-<h4 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h4>
+<h3 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h3>
 
 <p><code class="prettyprint">https://ws.safyer.com/api/v1/batch/{{batchId}}</code></p>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -152,15 +150,15 @@
 
 <p>Retrieves all information of a specific transaction.</p>
 
-<h4 id="request-method:">Request Method:</h4>
+<h3 id="request-method:">Request Method:</h3>
 
 <p>GET</p>
 
-<h4 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h4>
+<h3 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h3>
 
 <p><code class="prettyprint">https://ws.safyer.com/api/v1/transaction/{{transactionId}}</code></p>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -180,15 +178,15 @@
 
 <p>Retrieves information from all deposits of a Merchant, between a range of dates. The response will include the idDeposit element, which can be referenced using the GET deposit method.</p>
 
-<h4 id="request-method:">Request Method:</h4>
+<h3 id="request-method:">Request Method:</h3>
 
 <p>POST</p>
 
-<h4 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h4>
+<h3 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h3>
 
 <p><code class="prettyprint">https://ws.safyer.com/api/v1/depositReport</code></p>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -213,8 +211,6 @@
 <td>Format mm-dd-yyyy.</td>
 </tr>
 </tbody></table>
-
-<h4 id="example-json">Example JSON</h4>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"Deposit"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"mid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7620000000000002"</span><span class="p">,</span><span class="w">
@@ -236,15 +232,15 @@
 
 <p>Retrieves all information of a specific deposit.</p>
 
-<h4 id="request-method:">Request Method:</h4>
+<h3 id="request-method:">Request Method:</h3>
 
 <p>GET</p>
 
-<h4 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h4>
+<h3 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h3>
 
 <p><code class="prettyprint">https://ws.safyer.com/api/v1/deposit/{{depositId}}</code></p>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -264,15 +260,15 @@
 
 <p>Returns the Merchant Statement XML for a specific month and year. This XML is received from the merchant&rsquo;s processor and relayed as it is.</p>
 
-<h4 id="request-method:">Request Method:</h4>
+<h3 id="request-method:">Request Method:</h3>
 
 <p>POST</p>
 
-<h4 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h4>
+<h3 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h3>
 
 <p><code class="prettyprint">https://ws.safyer.com/api/v1/statementReport</code></p>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -297,8 +293,6 @@
 <td>A number between 0000 and 9999.</td>
 </tr>
 </tbody></table>
-
-<h4 id="example-json">Example JSON</h4>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
    </span><span class="s2">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"mid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7620000000000002"</span><span class="p">,</span><span class="w">
@@ -312,15 +306,15 @@
 
 <p>Returns information, the chargebacks for the specified merchant.</p>
 
-<h4 id="request-method:">Request Method:</h4>
+<h3 id="request-method:">Request Method:</h3>
 
-<p>POST</p>
+<p><code class="prettyprint">POST</code></p>
 
-<h4 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h4>
+<h3 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h3>
 
 <p><code class="prettyprint">https://ws.safyer.com/api/v1/chargeback</code></p>
 
-<h4 id="parameters">Parameters</h4>
+<h3 id="parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -365,8 +359,6 @@
 <td>A string of 6 characters.</td>
 </tr>
 </tbody></table>
-
-<h4 id="example-json">Example JSON</h4>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"Chargeback"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"mid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7620000000000002"</span><span class="p">,</span><span class="w">

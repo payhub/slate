@@ -13,7 +13,7 @@
 
   </head>
 
-  <body class="includes includes_transaction_report">
+  <body class="includes includes_transaction_report_samples">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -28,9 +28,7 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="transaction-report">Transaction Report</h1>
-
-<pre><code class="highlight java">
+        <pre><code class="highlight java">
 <span class="kn">package</span> <span class="n">transactions</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
@@ -126,7 +124,6 @@
 
 <span class="o">}</span>
 </code></pre>
-
 <pre><code class="highlight php"><span class="cp">&lt;?php</span>
   <span class="nv">$processed</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
   <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
@@ -229,7 +226,6 @@
 
 <span class="cp">?&gt;</span>
 </code></pre>
-
 <pre><code class="highlight csharp"><span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
@@ -318,7 +314,6 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
-
 <pre><code class="highlight ruby">
     <span class="nb">require</span> <span class="s1">'uri'</span>
     <span class="nb">require</span> <span class="s1">'net/http'</span>
@@ -354,7 +349,6 @@
     <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
     <span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">read_body</span>
 </code></pre>
-
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"batchIdFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"batchIdTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
@@ -371,163 +365,6 @@
   </span><span class="s2">"cardType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Visa"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-
-<h2 id="introduction">Introduction</h2>
-
-<p>This API allows the merchant to search for transactions filtering by a wide range of optional parameters.</p>
-
-<h3 id="request-method">Request Method</h3>
-
-<p><code class="prettyprint">PATCH</code></p>
-
-<h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
-
-<p><code class="prettyprint">webservice URL/api/v2/search/transactionReport</code></p>
-
-<h3 id="required-headers">Required Headers</h3>
-
-<ul>
-<li><strong>Content-Type</strong>: application/json</li>
-<li><strong>Accept</strong>: application/json</li>
-<li><strong>Authorization</strong>: Bearer {auth_token}</li>
-</ul>
-
-<h2 id="parameters">Parameters</h2>
-
-<p>All the parameters are optional, they can be sent in no particular order. If one of the parameters is incorrect the server will return an error.</p>
-
-<p>The parameters are case sensitive.</p>
-
-<p>Below is an explanation of the parameters.</p>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>batchIdFrom, batchIdTo</td>
-<td>Allows the merchant to look for transactions where the <strong>batchId</strong> is between the batchIdFrom and batchIdTo. <br>You can also use any one of the two parameters. In that case, the result will be the transactions with the batchId greater than <strong>batchIdFrom</strong>, or the batchId less than <strong>batchIdTo</strong>.</td>
-</tr>
-<tr>
-<td>transactionType</td>
-<td>Allows the merchant to look for transactions where the transaction type is any one of the following:<ul><li>Void</li><li>Sale</li><li>Refund</li><li>Verify</li></ul></td>
-</tr>
-<tr>
-<td>responseCode</td>
-<td>Allows the merchant to look for transactions where the response code is equal to a specific code. For example, the code “00” means a successful transaction.</td>
-</tr>
-<tr>
-<td>amountFrom, amountTo</td>
-<td>Allows the merchant to look for transactions where the amount of the transaction is between the <strong>amountFrom</strong> and <strong>amountTo</strong>. <br>You can use any one of the two parameters. In that case, the result will be the transactions with the amount greater than <strong>amountFrom</strong>, or the amount less than <strong>amountTo</strong>.</td>
-</tr>
-<tr>
-<td>firstName</td>
-<td>Allows the merchant to look for transactions where the customer’s first name contains the value of the parameter.</td>
-</tr>
-<tr>
-<td>lastName</td>
-<td>Allows the merchant to look for transactions where the customer’s first name contains the value of the parameter.</td>
-</tr>
-<tr>
-<td>phoneNumber</td>
-<td>Allows the merchant to look for transactions where the customer’s phone number contains the value of the parameter.</td>
-</tr>
-<tr>
-<td>email</td>
-<td>This parameter allows the merchant to look for transactions where the customer’s email address contains the value of the parameter.</td>
-</tr>
-<tr>
-<td>trnDateFrom, trnDateTo</td>
-<td>Allows the merchant to look for transactions where the date of the transaction is between the trnDateFrom and trnDateTo. <br>You can use any one of the two parameters. In that case, the result will be the transactions with the date later than the trnDateFrom, or the date earlier than trnDateTo.<br>Format: “yyyy-mm-dd hh:mm:ss”.</td>
-</tr>
-<tr>
-<td>cardType</td>
-<td>This parameter allows the merchant to look for transactions where the card type matches the value of the parameter. <br>For instance: MasterCard, Visa.</td>
-</tr>
-<tr>
-<td>cardLast4Digits</td>
-<td>Allows the merchant to look for transactions where the credit card’s last four digits matches the value of the parameter. <br>Format: “XXXX”.</td>
-</tr>
-<tr>
-<td>cardToken</td>
-<td>Allows the merchant to look for transactions where the credit card’s token matches the value of the parameter. <br>Format: “XXXXXXXXXXXXXXXX”.</td>
-</tr>
-<tr>
-<td>authAmountFrom, authAmountTo</td>
-<td>Allows the merchant to look for transactions where the authorized amount of the transaction is between the authAmountFrom and authAmountTo. <br>You can use any one of the two parameters. In that case the result will be the transactions with the authorization amount is greater than <strong>authAmountFrom</strong>, or the authorization amount less than <strong>authAmountTo</strong>.</td>
-</tr>
-<tr>
-<td>swiped</td>
-<td>Allows the merchant to look for transactions that where performed with a swiper device. <br>Valid values: true, false</td>
-</tr>
-<tr>
-<td>source</td>
-<td>Allows the merchant to look for transactions where the source matches the value of the parameter. <br>For instance: “3rd Party API”</td>
-</tr>
-<tr>
-<td>note</td>
-<td>Allows the merchant to look for transactions where the note matches the value of the parameter.</td>
-</tr>
-<tr>
-<td>transactionStatus</td>
-<td>Allows the merchant to look for transactions where the transaction status matches the value of the parameter. <br>For instance: “Approved”</td>
-</tr>
-<tr>
-<td>recurringBillId</td>
-<td>Allows the merchant to look for transactions that were scheduled.</td>
-</tr>
-</tbody></table>
-
-<h2 id="result-data">Result Data</h2>
-<pre><code class="highlight shell"><span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"amount"</span>: <span class="s2">"99.25"</span>,
-    <span class="s2">"authAmount"</span>: <span class="s2">"99.25"</span>,
-    <span class="s2">"batchID"</span>: <span class="s2">"1302"</span>,
-    <span class="s2">"cardLast4Digits"</span>: <span class="s2">"XXXXXXXXXXXX8888"</span>,
-    <span class="s2">"cardToken"</span>: <span class="s2">"9999000000001838"</span>,
-    <span class="s2">"cardType"</span>: <span class="s2">"Visa"</span>,
-    <span class="s2">"customerName"</span>: <span class="s2">"Joe Tester"</span>,
-    <span class="s2">"email"</span>: <span class="s2">"lsun@payhub.com"</span>,
-    <span class="s2">"note"</span>: <span class="s2">""</span>,
-    <span class="s2">"phoneNumber"</span>: <span class="s2">"(917) 823-4567"</span>,
-    <span class="s2">"recurringBillId"</span>: <span class="s2">"2108"</span>,
-    <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>,
-    <span class="s2">"responseText"</span>: <span class="s2">"NO  MATCH"</span>,
-    <span class="s2">"source"</span>: <span class="s2">"Recurring"</span>,
-    <span class="s2">"swiped"</span>: <span class="s2">"true"</span>,
-    <span class="s2">"transactionDate"</span>: <span class="s2">"2015-02-15 01:10:19"</span>,
-    <span class="s2">"transactionID"</span>: <span class="s2">"180628"</span>,
-    <span class="s2">"transactionStatus"</span>: <span class="s2">"Approved"</span>,
-    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>
-  <span class="o">}</span>,
-  <span class="o">{</span>
-    <span class="s2">"amount"</span>: <span class="s2">"99.25"</span>,
-    <span class="s2">"authAmount"</span>: <span class="s2">"99.25"</span>,
-    <span class="s2">"batchID"</span>: <span class="s2">"1302"</span>,
-    <span class="s2">"cardLast4Digits"</span>: <span class="s2">"XXXXXXXXXXXX8888"</span>,
-    <span class="s2">"cardToken"</span>: <span class="s2">"9999000000001838"</span>,
-    <span class="s2">"cardType"</span>: <span class="s2">"Visa"</span>,
-    <span class="s2">"customerName"</span>: <span class="s2">"Joe Tester"</span>,
-    <span class="s2">"email"</span>: <span class="s2">"lsun@payhub.com"</span>,
-    <span class="s2">"note"</span>: <span class="s2">""</span>,
-    <span class="s2">"phoneNumber"</span>: <span class="s2">"(917) 823-4567"</span>,
-    <span class="s2">"recurringBillId"</span>: <span class="s2">"2109"</span>,
-    <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>,
-    <span class="s2">"responseText"</span>: <span class="s2">"NO  MATCH"</span>,
-    <span class="s2">"source"</span>: <span class="s2">"Recurring"</span>,
-    <span class="s2">"swiped"</span>: <span class="s2">"true"</span>,
-    <span class="s2">"transactionDate"</span>: <span class="s2">"2015-02-15 01:10:21"</span>,
-    <span class="s2">"transactionID"</span>: <span class="s2">"180629"</span>,
-    <span class="s2">"transactionStatus"</span>: <span class="s2">"Approved"</span>,
-    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-</code></pre>
-
-<p>The result data is an array of objects in JSON format.</p>
 
       </div>
       <div class="dark-box">

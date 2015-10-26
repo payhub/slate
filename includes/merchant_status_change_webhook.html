@@ -13,7 +13,7 @@
 
   </head>
 
-  <body class="includes includes_boarding_webhook">
+  <body class="includes includes_merchant_status_change_webhook">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -28,25 +28,21 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="boarding-webhook">Boarding Webhook</h1>
+        <h1 id="merchant-status-change-webhook">Merchant Status Change Webhook</h1>
 
-<h2 id="introduction">Introduction</h2>
+<p>This topic provides the information about the web service that you need to create to receive requests from Chargebacks.</p>
 
-<p>This topic provides the information about the web service that you need to create to receive requests from the Boarding WebHook. Using this WebHook, you can make your system aware of the PayHub login credentials whenever a merchant is boarded through a Frictionless Application.</p>
+<h2 id="request-method:">Request Method:</h2>
 
-<p>Refer the information in this topic as the Request and Response format specification for the Boarding Webhook, which runs and queries the system for new merchants that have been boarded to PayHub.</p>
+<h3 id="post">POST</h3>
 
-<h3 id="request-method">Request Method</h3>
+<h2 id="end-point-url">End Point URL</h2>
 
-<p><code class="prettyprint">POST</code></p>
-
-<h3 id="end-point-url">End Point URL</h3>
-
-<p>Specified by the Sales Office in the Manage Frictionless Links section.</p>
+<p>Speciefied by the Sales Office in My Office Admin - MyOffice</p>
 
 <h2 id="request-elements-(from-safyer)">Request Elements (from Safyer)</h2>
 
-<p>All fields are required unless indicated otherwise</p>
+<aside class='warning'>All fields are required unless indicated otherwise</aside>
 
 <table><thead>
 <tr>
@@ -57,43 +53,33 @@
 </thead><tbody>
 <tr>
 <td>internalID</td>
-<td>string, 5 - 20 digits</td>
+<td>String 5 - 20 digits</td>
 <td>The unique system identifier for the merchant issued by Safyer.</td>
 </tr>
 <tr>
 <td>mid</td>
-<td>string, 5 - 20 digits</td>
+<td>String 5 - 20 digits</td>
 <td>The unique Merchant Identification Number (MID) issued by the processor.</td>
 </tr>
 <tr>
-<td>detail</td>
-<td>string, optional, (0 - 100 characters)</td>
-<td>A string of data sent by the Sales Office in the query string.</td>
+<td>statusFrom</td>
+<td>String  6 - 30 characters</td>
+<td><br>Old state.<br>Visa/Mastercard status.<br> Possible values:<br><ul><li>Approved</li><li>Closed</li><li>Closed with Fees</li><li>Declined</li><li>Not Submitted</li><li>Pending</li><li>Pre-Approved</li><li>Pre-Approved First Transaction</li><li>Submitted</li><li>Withdrawn</li></td>
 </tr>
 <tr>
-<td>payHub_OrgID</td>
-<td>string, 1 - 11 numbers</td>
-<td>The unique system identifier for the merchant issued by PayHub.</td>
+<td>statusTo</td>
+<td>String 6 - 30 characters</td>
+<td><br>New state.<br>Visa/Mastercard status.<br> Possible values:<br><ul><li>Approved</li><li>Closed</li><li>Closed with Fees</li><li>Declined</li><li>Not Submitted</li><li>Pending</li><li>Pre-Approved</li><li>Pre-Approved First Transaction</li><li>Submitted</li><li>Withdrawn</li></td>
 </tr>
 <tr>
-<td>payHub_UserID</td>
-<td>string, 8 - 20 characters</td>
-<td>The username generated for the default PayHub user.</td>
+<td>statusDateChange</td>
+<td>Date Date format<br> (MM-dd-yyyy)</td>
+<td>Date of change state.</td>
 </tr>
 <tr>
-<td>payHub_Password</td>
-<td>string, 5 - 20 characters</td>
-<td>The password generated for the default PayHub user.</td>
-</tr>
-<tr>
-<td>payHub_AuthToken</td>
-<td>string, optional, 0 - 100 characters</td>
-<td>The OAuth Token used to authenticate the PayHub v2 API.</td>
-</tr>
-<tr>
-<td>termID</td>
-<td>string, 4 - 20 characters</td>
-<td>The terminal number associated with the PayHub account.</td>
+<td>userName</td>
+<td>String 6 - 30 characters</td>
+<td>User name that produced the status change.</td>
 </tr>
 </tbody></table>
 
@@ -108,15 +94,17 @@
 </thead><tbody>
 <tr>
 <td>code</td>
-<td>string, 1 digit</td>
-<td>The response code returned in the response.<br><ul><li>0: ‘Success’</li><li>1: ‘Error’</li></ul></td>
+<td>String<br>1 digit</td>
+<td>The response code returned in the response.<br><ul><li> 0: Success</li><li>1: Error</li></ul></td>
 </tr>
 <tr>
 <td>msg</td>
-<td>string, 2 - 5 characters</td>
-<td>If code is 0 then msg is ‘OK’. Otherwise, msg is ‘ERROR’.</td>
+<td>String 2 - 5 characters</td>
+<td>If code is 0 then msg is &lsquo;OK&rsquo;. Otherwise, msg is &#39;ERROR&rsquo;</td>
 </tr>
 </tbody></table>
+
+<h2 id="response-examples">Response Examples</h2>
 
 <pre style="float: left;background-color: rgb(234, 242, 246);color: black;text-shadow: 0px 1px 2px rgba(0,0,0,0);">
 <code class="highlight xml"><span class="cp" style="color: black;">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
@@ -124,6 +112,13 @@
     <span class="nt" style="color: black;">&lt;code&gt;0</span><span class="nt" style="color: black;">&lt;/code&gt;</span> <span class="nt" style="color: black;">Successfully</span>
     <span class="nt" style="color: black;">&lt;msg&gt;OK</span><span class="nt" style="color: black;">&lt;/msg&gt;</span>
 <span class="nt" style="color: black;">&lt;/Response&gt;</span>
+
+<span class="cp" style="color: black;">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="nt" style="color: black;">&lt;Response&gt;</span>
+    <span class="nt" style="color: black;">&lt;code&gt;1</span><span class="nt" style="color: black;">&lt;/code&gt;</span> <span class="nt" style="color: black;">Error</span>
+    <span class="nt" style="color: black;">&lt;msg&gt;Error</span><span class="nt" style="color: black;">&lt;/msg&gt;</span>
+<span class="nt" style="color: black;">&lt;/Response&gt;</span>
+
 </code>
 </pre>
 

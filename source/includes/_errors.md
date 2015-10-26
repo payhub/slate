@@ -1,8 +1,5 @@
 # Errors
 
-The Kittn API uses the following error codes:
-
-
 Error Code | Meaning
 ---------- | -------
 00 | VALID_OPERATION

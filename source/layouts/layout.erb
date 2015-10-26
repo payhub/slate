@@ -80,8 +80,11 @@ under the License.
       <div class="dark-box"></div>
       <div class="content">
         <%= yield %>
-        <% current_page.data.includes && current_page.data.includes.each do |include| %>
+        <% current_page.data.includes_gateway && current_page.data.includes_gateway.each do |include| %>
           <%= partial "includes/#{include}" %>
+        <% end %>
+        <% current_page.data.includes_safyer && current_page.data.includes_safyer.each do |include| %>
+            <%= partial "includes/#{include}" %>
         <% end %>
       </div>
       <div class="dark-box">

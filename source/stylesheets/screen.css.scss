@@ -155,7 +155,6 @@ html, body {
     }
   }
 
-
   .tocify-item>a, .toc-footer li {
     padding: 0 $nav-padding 0 $nav-padding;
     display: block;
@@ -176,6 +175,15 @@ html, body {
 
   li {
     color: $nav-text;
+    @include transition-property('background');
+    @include transition-timing-function('linear');
+    @include transition-duration(230ms);
+  }
+  li[data-unique="payhub-gateway"] , li[data-unique="safyer-boarding-settlement"]{
+    color: whitesmoke;
+    background-color: $aside-success-bg;
+    border-top: 1px dashed #666;
+    margin-top:10px;
     @include transition-property('background');
     @include transition-timing-function('linear');
     @include transition-duration(230ms);
@@ -227,6 +235,14 @@ html, body {
     }
   }
 
+}
+// Section headers
+.tocify-item [data-unique="payhub-gateway"], .tocify-item[data-unique="safyer-boarding-settlement"] {
+  moz-box-shadow: 0px 1px 0px #000;
+  -webkit-box-shadow: 0px 1px 0px #000;
+  box-shadow: 0px 1px 0px #000;
+  background-color: #2467af;
+  color: #fff;
 }
 
 // button to show navigation on mobile devices
@@ -358,9 +374,13 @@ html, body {
     padding-left: $main-padding + 15px;
   }
 
+
   // the div is the tocify hidden div for placeholding stuff
-  &>h1, &>h2, &>div {
-    clear:both;
+  &>h1, &>div {
+    clear:right;
+  }
+  &>h2, &>div {
+    clear:left;
   }
 
   h1 {
@@ -376,6 +396,33 @@ html, body {
       linear-gradient(top, #fff, #f9f9f9)
     );
   }
+  #payhub-gateway{
+    @extend %header-font;
+    font-size: 30px;
+    text-align: center;
+    //text-decoration: underline;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: $h1-margin-bottom;
+    border-top: 1px solid #ddd;
+    background: $aside-success-bg;
+    color:black;
+  }
+  #safyer-boarding-settlement{
+    @extend %header-font;
+    font-size: 30px;
+    text-align: center;
+    //text-decoration: underline;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: $h1-margin-bottom;
+    margin-top: 2em;
+    border-top: 1px solid #ddd;
+    background: $aside-success-bg;
+    color:black;
+  }
+
 
   h1:first-child, div:first-child + h1 {
     border-top-width: 0;
@@ -385,7 +432,7 @@ html, body {
   h2 {
     @extend %header-font;
     font-size: 20px;
-    margin-top: 4em;
+    //margin-top: 4em;
     margin-bottom: 0;
     border-top: 1px solid #ccc;
     padding-top: 1.2em;

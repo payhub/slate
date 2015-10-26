@@ -1,0 +1,41 @@
+# Refund Transaction
+<%= partial "includes/refund_transaction_samples" %>
+## Introduction
+
+This topic provides the information the Refund transaction.
+
+Run the Refund transaction when you want to refund the full amount of a settled sale, which is not yet refunded. The refund amount will be the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.
+
+### Request Method
+
+### Endpoint (URL to Call)
+
+`http://payhub.com/payhubws/api/refund`
+
+## Elements (All Required)
+
+### merchant
+Element | Type | Value
+--- | ---- | -----
+ organization_id | integer | The organization id of the merchant who did the sale that you are trying to refund.
+ terminal_id | integer | The terminal id of the merchant from where the sale is done.
+ record_format | string | To specify if the sale has to be made over a credit card, debit card or cash payment. <br>The accepted values are: <ul><li>CASH_PAYMENT</li><li>CREDIT_CARD</li><li>DEBIT_CARD</li></ul>
+ 
+### Transaction
+Key | Type | Value
+--- | ---- | ----- 
+ transaction_id | integer | The transaction id of the sale you want to refund.
+
+<h2 id="response" style="clear: right;">Response</h2>
+<%= partial "includes/refund_transaction_result" %>
+
+###Result
+* A 201 code (created)
+* The Id of the Refund in the Location header.
+    <br>Sample header in the response: `Location ? http:// [payhub-api-server]:8251/payhubws/api/refund/5501b651da06a879ce520d4d`.
+    <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
+
+On the same way you  can query about merchant, customer, bill and card data details using the given URLs.
+
+**Note:** You will need to use the Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.
+

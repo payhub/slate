@@ -1,5 +1,5 @@
 # Transaction Report
-
+<%= partial "includes/transaction_report_samples" %>
 ## Introduction
 
 This API allows the merchant to search for transactions filtering by a wide range of optional parameters.
@@ -16,14 +16,6 @@ This API allows the merchant to search for transactions filtering by a wide rang
 * **Content-Type**: application/json
 * **Accept**: application/json
 * **Authorization**: Bearer {auth_token}
-
-## Payload (JSON Format)
-
-```json
-{“parameter1”:”value”,
-“parameter2”:”value”,
-“parameter3”:”value”}
-```
 
 ## Parameters
 All the parameters are optional, they can be sent in no particular order. If one of the parameters is incorrect the server will return an error.
@@ -51,30 +43,55 @@ swiped | Allows the merchant to look for transactions that where performed with 
 source | Allows the merchant to look for transactions where the source matches the value of the parameter. <br>For instance: “3rd Party API”
 note | Allows the merchant to look for transactions where the note matches the value of the parameter.
 transactionStatus | Allows the merchant to look for transactions where the transaction status matches the value of the parameter. <br>For instance: “Approved”
+recurringBillId | Allows the merchant to look for transactions that were scheduled.
 
 ## Result Data
-
+```shell
+[
+  {
+    "amount": "99.25",
+    "authAmount": "99.25",
+    "batchID": "1302",
+    "cardLast4Digits": "XXXXXXXXXXXX8888",
+    "cardToken": "9999000000001838",
+    "cardType": "Visa",
+    "customerName": "Joe Tester",
+    "email": "lsun@payhub.com",
+    "note": "",
+    "phoneNumber": "(917) 823-4567",
+    "recurringBillId": "2108",
+    "responseCode": "00",
+    "responseText": "NO  MATCH",
+    "source": "Recurring",
+    "swiped": "true",
+    "transactionDate": "2015-02-15 01:10:19",
+    "transactionID": "180628",
+    "transactionStatus": "Approved",
+    "transactionType": "Sale"
+  },
+  {
+    "amount": "99.25",
+    "authAmount": "99.25",
+    "batchID": "1302",
+    "cardLast4Digits": "XXXXXXXXXXXX8888",
+    "cardToken": "9999000000001838",
+    "cardType": "Visa",
+    "customerName": "Joe Tester",
+    "email": "lsun@payhub.com",
+    "note": "",
+    "phoneNumber": "(917) 823-4567",
+    "recurringBillId": "2109",
+    "responseCode": "00",
+    "responseText": "NO  MATCH",
+    "source": "Recurring",
+    "swiped": "true",
+    "transactionDate": "2015-02-15 01:10:21",
+    "transactionID": "180629",
+    "transactionStatus": "Approved",
+    "transactionType": "Sale"
+  }
+]
+```
 The result data is an array of objects in JSON format.
 
-```json
-{
-      "amount": "3.0",
-      "authAmount": "3.0",
-      "batchID": "1311",
-      "cardLast4Digits": "XXXXXXXXXXXX4500",
-      "cardToken": "9999000000002145",
-      "cardType": "MasterCard",
-      "customerName": "First Contact",
-      "email": "first.contact@gmail.com",
-      "note": "",
-      "phoneNumber": "(415) 122 4567",
-      "responseCode": "00",
-      "responseText": "VER UNAVAILABLE",
-      "source": "3rd Party API",
-      "swiped": "true",
-      "transactionDate": "2015-04-02 11:46:57",
-      "transactionID": "180836",
-      "transactionStatus": "Approved",
-      "transactionType": "Sale"
-  }
-```
+

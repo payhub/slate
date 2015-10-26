@@ -1,6 +1,6 @@
 # Reporting Methods
 
-## AVAILABLE RESOURCES
+## Available Resources
 
 The Safyer Web Service provides the following resources to report on merchant activity.
 

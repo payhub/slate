@@ -35,11 +35,11 @@ Parameter | Type | Description
 --- | --- | ---
 code | string, 1 digit | The response code returned in the response.<br><ul><li>0: ‘Success’</li><li>1: ‘Error’</li></ul>
 msg	| string, 2 - 5 characters | If code is 0 then msg is ‘OK’. Otherwise, msg is ‘ERROR’.
-
-`xml
-<?xml version="1.0" encoding="UTF-8" ?>
-<Response>
-<code>0</code>
-<msg>OK</msg>
-</Response>
-`
+<pre style="float: left;background-color: rgb(234, 242, 246);color: black;text-shadow: 0px 1px 2px rgba(0,0,0,0);">
+<code class="highlight xml"><span class="cp" style="color: black;">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="nt" style="color: black;">&lt;Response&gt;</span>
+    <span class="nt" style="color: black;">&lt;code&gt;0</span><span class="nt" style="color: black;">&lt;/code&gt;</span> <span class="nt" style="color: black;">Successfully</span>
+    <span class="nt" style="color: black;">&lt;msg&gt;OK</span><span class="nt" style="color: black;">&lt;/msg&gt;</span>
+<span class="nt" style="color: black;">&lt;/Response&gt;</span>
+</code>
+</pre>

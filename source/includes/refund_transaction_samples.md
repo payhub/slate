@@ -1,10 +1,3 @@
-# Void Transaction
-
-## Introduction
-
-Run a Void when you need to cancel a transaction (either a sale or a refund) that has not yet been settled and that has not already been voided. This will avoid the customer being charged any amount at all and will release the pending funds, given the issuer supports doing so.
-
-
 ```java
 package transactions;
 import java.io.IOException;
@@ -25,23 +18,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class Void {
+public class Refund {
 
-  public static void RunVoid() {
+  public static void RunRefund() {
     try {
       HttpClient client = new DefaultHttpClient();
       HttpParams params = client.getParams();
       HttpConnectionParams.setConnectionTimeout(params, 10000);
 
       JSONObject jsonRequestObject = new JSONObject();
-      String url = "http://payhub.com/payhubws/api/v2/void";
+      String url = "http://payhub.com/payhubws/api/v2/refund";
 
       JSONObject merchant = new JSONObject();
-      merchant.put("organization_id", "10005"); //You put your org id here
+      merchant.put("organization_id", "10005");//You put your org id here
       merchant.put("terminal_id", "5");//You put your terminal id
 
       jsonRequestObject.put("merchant", merchant);
-      jsonRequestObject.put("transaction_id", "223"); //You put the transaction id of the sale or refund you want to void
+      jsonRequestObject.put("record_format", "CREDIT_CARD");
+      jsonRequestObject.put("transaction_id", "226");
 
       HttpPost postCreate = new HttpPost(url);
       postCreate.addHeader("Authorization", "Bearer dfd4f12a-79af-4825-8dba-db27342c8491");//You put your token here
@@ -50,7 +44,7 @@ public class Void {
 
       StringEntity se = new StringEntity(jsonRequestObject.toString());
       postCreate.setEntity(se);
-      HttpResponse response = client.execute(postCreate); //You return this response and work with it
+      HttpResponse response = client.execute(postCreate);//You return this response and work with it
 
       String json = " ";
       JSONObject jsonResponseObject = null;
@@ -97,13 +91,12 @@ public class Void {
     }
   }
 
-
 }
 ```
 
 ```php
 <?php
-  $trans_type = "void";
+  $trans_type = "refund";
   $processed = FALSE;
   $ERROR_MESSAGE = '';
 
@@ -111,18 +104,22 @@ public class Void {
   $WsURL="http://payhub.com/payhubws/api/v2/$trans_type";
 
 
-  //Defining data for the VOID transaction
+  //Defining data for the REFUND transaction
   // Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
   $organization_id = 10002;
   $terminal_id = 2;
   $oauth_token = "22fe3c69-db70-4a8c-9aed-9a33ebb1e9b4";
-  $transaction_id="83";
+
+  //The rest of the data needed
+  $record_format="CREDIT_CARD";
+  $transaction_id="82";
 
 
 
   //Convert data to array to send it to the WS as JSON format
   $data = array();
   $data["merchant"] = array("organization_id" => "$organization_id", "terminal_id" => "$terminal_id");
+  $data["record_format"]=$record_format;
   $data["transaction_id"]=$transaction_id;
 
   //Convert data from Array to JSON
@@ -158,9 +155,9 @@ public class Void {
   //close connection to the Web Service
   curl_close($ch);
 
-  //Obtain the data from the void recently created
+  //Obtain the data from the refund recently created
   if ($httpcode==201){
-    //find the url of the void (Location header in the response)
+    //find the url of the refund (Location header in the response)
     preg_match("!\r\n(?:Location): *(.*?) *\r\n!", $header, $matches);
     //$url contains the URL to GET the data from the Web Service
     $url = $matches[1];
@@ -198,32 +195,33 @@ public class Void {
 ```
 
 ```csharp
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net;
-using Newtonsoft.Json;
 
 namespace PayHubSamples
 {
-    public class Void
+    public class Refund
     {
-        public static void RunVoid()
+        public static void RunRefund()
         {
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create("http://payhub.com/payhubws/api/v2/void");
+                var request = (HttpWebRequest)WebRequest.Create("http://payhub.com/payhubws/api/v2/refund");
                 request.ContentType = "text/json";
                 request.Method = "POST";
 
                 var refund = new
                 {
                     merchant = new
-                    {
-                        organization_id = "10005",
-                        terminal_id = "5",
-                    },
-                    transaction_id = "238"
-                };
+                     {
+                         organization_id = "10005",
+                         terminal_id = "5",
+                     },
+                    record_format = "CREDIT_CARD",
+                    transaction_id = "228"
+                   };
 
                 string json = JsonConvert.SerializeObject(refund);
 
@@ -281,13 +279,23 @@ namespace PayHubSamples
 }
 ```
 
+```json
+{
+  "merchant": {
+    "organization_id": 10005,
+    "terminal_id": 5
+  },
+  "record_format": "CREDIT_CARD",
+  "transaction_id": "114"
+}
+```
 ```ruby
-
+    
     require 'uri'
     require 'net/http'
     require 'json'
     
-    url = URI("http://payhub.com/payhubws/api/v2/void")
+    url = URI("http://payhub.com/payhubws/api/v2/refund")
     
     http = Net::HTTP.new(url.host, url.port)
     
@@ -300,52 +308,20 @@ namespace PayHubSamples
     
     
     merchant = {
-                "organization_id"=>10074,
-                "terminal_id"=>134
-                }
+            "organization_id"=>10074,
+            "terminal_id"=>134
+    }
+    #Record Format 
+    record_format="CREDIT_CARD"
     
     #transaction Id
     transaction_id="114"
-    
-    
-    informationToSend = {"merchant"=>merchant,"transaction_id"=>transaction_id}
+   
+    informationToSend = {"merchant"=>merchant,"record_format"=>record_format,"transaction_id"=>transaction_id}
     
     request.body = JSON.generate(informationToSend)
     
     response = http.request(request)
     puts response.read_body
-```
 
-```json
-{
-  "merchant": {
-    "organization_id": 10005,
-    "terminal_id": 5
-  },
-  "transaction_id": "114"
-}
-```
-
-### Endpoint (URL to Call):
-
-`POST http://payhub.com/payhubws/api/void`
-
-### Elements (All required)
-
-Key | Type | Value
---- | ---- | -----
-organization_id | integer | The merchant's organization id which did the sale you're trying to void.
-terminal_id | integer | The merchant's terminal's id where the sale was done.
-transaction_id | integer | The transaction id of the sale that you want to void.
-
-```json
-{
-"merchant" : {
- "organization_id" : 10005,
- "terminal_id" : 5
-
- },
-
- "transaction_id":"114"
-}
 ```

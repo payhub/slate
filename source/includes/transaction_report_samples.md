@@ -1,19 +1,11 @@
-# Refund Transaction
-
-## Introduction
-
-This topic provides the information the Refund transaction.
-
-Run the Refund transaction when you want to refund the full amount of a settled sale, which is not yet refunded. The refund amount will be the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.
-
-
 ```java
+
 package transactions;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -26,25 +18,31 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+public class Transactions {
 
-public class Refund {
-
-  public static void RunRefund() {
+  public static void findTransactions() {
     try {
       HttpClient client = new DefaultHttpClient();
       HttpParams params = client.getParams();
       HttpConnectionParams.setConnectionTimeout(params, 10000);
 
       JSONObject jsonRequestObject = new JSONObject();
-      String url = "http://payhub.com/payhubws/api/v2/refund";
+      String url = "http://payhub.com/payhubws/api/v2/report/transactionReport";
 
-      JSONObject merchant = new JSONObject();
-      merchant.put("organization_id", "10005");//You put your org id here
-      merchant.put("terminal_id", "5");//You put your terminal id
-
-      jsonRequestObject.put("merchant", merchant);
-      jsonRequestObject.put("record_format", "CREDIT_CARD");
-      jsonRequestObject.put("transaction_id", "226");
+      jsonRequestObject.put("batchIdFrom", "5");
+      jsonRequestObject.put("batchIdTo", "10");
+      jsonRequestObject.put("transactionType", "Sale");
+      jsonRequestObject.put("responseCode", "00");
+      jsonRequestObject.put("amountFrom", "1");
+      jsonRequestObject.put("amountTo", "2");
+      jsonRequestObject.put("firstName", "First");
+      jsonRequestObject.put("lastName", "Contact");
+      jsonRequestObject.put("phoneNumber", "(415) 479 1349");
+      jsonRequestObject.put("email", "jhon@company.com");
+      jsonRequestObject.put("trnDateFrom", "2015-06-06 00:00:00");
+      jsonRequestObject.put("trnDateTo", "2015-07-07 23:59:59");
+      jsonRequestObject.put("cardType", "Visa");
+                        
 
       HttpPost postCreate = new HttpPost(url);
       postCreate.addHeader("Authorization", "Bearer dfd4f12a-79af-4825-8dba-db27342c8491");//You put your token here
@@ -53,40 +51,35 @@ public class Refund {
 
       StringEntity se = new StringEntity(jsonRequestObject.toString());
       postCreate.setEntity(se);
-      HttpResponse response = client.execute(postCreate);//You return this response and work with it
+      HttpResponse response = client.execute(postCreate); //You return this response and work with it
 
       String json = " ";
       JSONObject jsonResponseObject = null;
-
+      int statusCode = responseDataRequest.getResponseCode();
       InputStream in = response.getEntity().getContent();
-      int cnt = 0;
-      while ((cnt = in.read()) > -1) {
-        json += (char) cnt;
-      }
-      if (json.charAt(0) != '<') {
-        jsonResponseObject = new JSONObject(
-            (json.equalsIgnoreCase("")
-                || json.equalsIgnoreCase(" ") ? "{\"MESSAGE\":\"NO RESPONSE...\"}"
-                : json));
-      }
-      String result = response.getStatusLine().getReasonPhrase();
-      System.out.println(result);
-      if (result.equals("Created")){
-        Header[] headers = response.getAllHeaders();
-        for (Header header : headers) {
-          if (header.getName().equals("Location")){
-            URL location = new URL(header.getValue());
-            String path = location.getPath();
-            int lastSlash = path.lastIndexOf("/");
-            String transactionId = path.substring(lastSlash+1);
-            System.out.println("Transaction Id: " + transactionId );
-          }
-
-        }
-      }
-      else{
-        System.out.println(jsonResponseObject.toString());
-      }
+      if (statusCode >= 200 && statusCode < 400) {
+      			BufferedReader in = new BufferedReader(new InputStreamReader(responseDataRequest.getInputStream()));
+              	String line;
+              	while ((line = in.readLine()) != null){ 
+              		response.append(line); 
+              	}
+              		in.close();
+                      System.out.println(response.toString());   	
+      		}else{
+      			BufferedReader er = new BufferedReader(new InputStreamReader(responseDataRequest.getErrorStream()));
+               	String line;
+               	try {
+               		int c = 0;
+      			     while((c = er.read()) != -1) {					         
+      			          response.append((char)c);
+      			     }					    
+      						 
+      				} catch (IOException e) {
+      					// TODO Auto-generated catch block
+      					e.printStackTrace();
+      				}
+                  System.out.println(response.toString());
+      		}  
 
 
     } catch (JSONException e){
@@ -105,32 +98,36 @@ public class Refund {
 
 ```php
 <?php
-  $trans_type = "refund";
   $processed = FALSE;
   $ERROR_MESSAGE = '';
 
   //Defining the Web Service URL
-  $WsURL="http://payhub.com/payhubws/api/v2/$trans_type";
+  $WsURL="http://payhub.com/payhubws/api/v2/report/transactionReport";
 
 
-  //Defining data for the REFUND transaction
-  // Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
-  $organization_id = 10002;
-  $terminal_id = 2;
-  $oauth_token = "22fe3c69-db70-4a8c-9aed-9a33ebb1e9b4";
-
-  //The rest of the data needed
-  $record_format="CREDIT_CARD";
-  $transaction_id="82";
-
+  $batchIdFrom= "5";
+  $batchIdTo= "10";
+  $transactionType= "Sale";
+  $responseCode= "00";
+  $amountFrom= "1";
+  $amountTo= "2";
+  $firstName= "First";
+  $lastName= "Contact";
+  $phoneNumber= "(415) 479 1349";
+  $email= "jhon@company.com";
+  $trnDateFrom= "2015-06-06 00:00:00";
+  $trnDateTo= "2015-07-07 23:59:59";
+  $cardType= "Visa";
 
 
   //Convert data to array to send it to the WS as JSON format
   $data = array();
-  $data["merchant"] = array("organization_id" => "$organization_id", "terminal_id" => "$terminal_id");
-  $data["record_format"]=$record_format;
-  $data["transaction_id"]=$transaction_id;
-
+  $data= array("batchIdFrom" => "$batchIdFrom", "batchIdTo" => "$batchIdTo",
+                  "transactionType" => "$transactionType", "responseCode" => "$responseCode",
+                  "amountFrom" => "$amountFrom", "amountTo" => "$amountTo",
+                  "firstName" => "$firstName", "lastName" => "$lastName",
+                  "phoneNumber" => "$phoneNumber", "email" => "$email",
+                  "trnDateFrom" => "$trnDateFrom", "trnDateTo" => "$trnDateTo","cardType"=>"$cardType");
   //Convert data from Array to JSON
   $data_string = json_encode($data);
 
@@ -164,9 +161,9 @@ public class Refund {
   //close connection to the Web Service
   curl_close($ch);
 
-  //Obtain the data from the refund recently created
+  //Obtain the data from the sale recently created
   if ($httpcode==201){
-    //find the url of the refund (Location header in the response)
+    //find the url of the sale (Location header in the response)
     preg_match("!\r\n(?:Location): *(.*?) *\r\n!", $header, $matches);
     //$url contains the URL to GET the data from the Web Service
     $url = $matches[1];
@@ -211,28 +208,34 @@ using System.Net;
 
 namespace PayHubSamples
 {
-    public class Refund
+    public class Transactions
     {
-        public static void RunRefund()
+        public static void findTransactions()
         {
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create("http://payhub.com/payhubws/api/v2/refund");
+                var request = (HttpWebRequest)WebRequest.Create("http://payhub.com/payhubws/api/v2/report/transactionReport");
                 request.ContentType = "text/json";
                 request.Method = "POST";
 
-                var refund = new
+                var transaction = new
                 {
-                    merchant = new
-                     {
-                         organization_id = "10005",
-                         terminal_id = "5",
-                     },
-                    record_format = "CREDIT_CARD",
-                    transaction_id = "228"
-                   };
+                    batchIdFrom= "5",
+                    batchIdTo= "10",
+                    transactionType= "Sale",
+                    responseCode= "00",
+                    amountFrom= "1",
+                    amountTo= "2",
+                    firstName= "First",
+                    lastName= "Contact",
+                    phoneNumber= "(415) 479 1349",
+                    email= "jhon@company.com",
+                    trnDateFrom= "2015-06-06 00:00:00",
+                    trnDateTo= "2015-07-07 23:59:59",
+                    cardType= "Visa"
+                };
 
-                string json = JsonConvert.SerializeObject(refund);
+                string json = JsonConvert.SerializeObject(transaction);
 
                 request.Headers.Add("Authorization", "Bearer dfd4f12a-79af-4825-8dba-db27342c8491");
                 request.ContentType = "application/json";
@@ -245,22 +248,21 @@ namespace PayHubSamples
                     streamWriter.Close();
                 }
 
-                try
+                 try
                 {
-                    var response = (HttpWebResponse)request.GetResponse();//You return this response.
-                    using (var reader = new StreamReader(response.GetResponseStream()))
+                    var response = (HttpWebResponse)request.GetResponse();
+                    Console.WriteLine("\nSending 'Put' request to URL");
+                    Console.WriteLine("Response Code : " + response.StatusCode);
+                    if (HttpStatusCode.OK == response.StatusCode)
                     {
-                        string result = reader.ReadToEnd();
-                        Console.WriteLine(response.StatusCode);//Created
-                        for (int i = 0; i < response.Headers.Count; ++i)
+                        using (var reader = new StreamReader(response.GetResponseStream()))
+                            result = reader.ReadToEnd();
+                    }
+                    else
+                    {
+                        using (var reader = new StreamReader(response.GetResponseStream()))
                         {
-                            if (response.Headers.Keys[i] == "Location")
-                            {
-                                string path = response.Headers[i];
-                                int lastSlash = path.LastIndexOf("/");
-                                string transactionId = path.Substring(lastSlash + 1);
-                                Console.WriteLine("Transaction Id: " + transactionId);
-                            }
+                            result = reader.ReadToEnd();
                         }
                     }
                 }
@@ -272,12 +274,12 @@ namespace PayHubSamples
                         {
                             using (var reader = new StreamReader(errorResponse.GetResponseStream()))
                             {
-                                string result = reader.ReadToEnd();
-                                Console.WriteLine(result);
+                                result = reader.ReadToEnd();
                             }
                         }
                     }
                 }
+                Console.WriteLine(return result);
             }
             catch (IOException e)
             {
@@ -288,23 +290,13 @@ namespace PayHubSamples
 }
 ```
 
-```json
-{
-  "merchant": {
-    "organization_id": 10005,
-    "terminal_id": 5
-  },
-  "record_format": "CREDIT_CARD",
-  "transaction_id": "114"
-}
-```
 ```ruby
-    
+
     require 'uri'
     require 'net/http'
     require 'json'
     
-    url = URI("http://payhub.com/payhubws/api/v2/refund")
+    url = URI("http://payhub.com/payhubws/api/v2/report/transactionReport")
     
     http = Net::HTTP.new(url.host, url.port)
     
@@ -313,53 +305,43 @@ namespace PayHubSamples
     request["accept"] = 'application/json'
     request["authorization"] = 'Bearer 2a5d6a73-d294-4fba-bfba-957a4948d4a3'
     request["cache-control"] = 'no-cache'
-    
-    
-    
-    merchant = {
-            "organization_id"=>10074,
-            "terminal_id"=>134
-    }
-    #Record Format 
-    record_format="CREDIT_CARD"
-    
-    #transaction Id
-    transaction_id="114"
-   
-    informationToSend = {"merchant"=>merchant,"record_format"=>record_format,"transaction_id"=>transaction_id}
+
+    informationToSend = {"batchIdFrom"=> "5",
+                         "batchIdTo"=> "10",
+                         "transactionType"=> "Sale",
+                         "responseCode"=> "00",
+                         "amountFrom"=> "1",
+                         "amountTo"=> "2",
+                         "firstName"=> "First",
+                         "lastName"=> "Contact",
+                         "phoneNumber"=> "(415) 479 1349",
+                         "email"=> "jhon@company.com",
+                         "trnDateFrom"=> "2015-06-06 00:00:00",
+                         "trnDateTo"=> "2015-07-07 23:59:59",
+                         "cardType"=> "Visa"
+                         }                         
     
     request.body = JSON.generate(informationToSend)
     
     response = http.request(request)
     puts response.read_body
-
 ```
-### Request Method
 
-### Endpoint (URL to Call)
-
-`http://payhub.com/payhubws/api/refund`
-
-### Elements
-
-(All Required)
-
-Element | Type | Value
---- | ---- | -----
- organization_id | integer | The organization id of the merchant who did the sale that you are trying to refund.
- terminal_id | integer | The terminal id of the merchant from where the sale is done.
- record_format | string | To specify if the sale has to be made over a credit card, debit card or cash payment. <br>The accepted values are: <ul><li>CASH_PAYMENT</li><li>CREDIT_CARD</li><li>DEBIT_CARD</li></ul>
- transaction_id | integer | The transaction id of the sale you want to refund.
 
 ```json
 {
-"merchant" : {
- "organization_id" : 10005,
- "terminal_id" : 5
-
- },
-
- "record_format":"CREDIT_CARD",
- "transaction_id":"114"
+  "batchIdFrom": "5",
+  "batchIdTo": "10",
+  "transactionType": "Sale",
+  "responseCode": "00",
+  "amountFrom": "1",
+  "amountTo": "2",
+  "firstName": "First",
+  "lastName": "Contact",
+  "phoneNumber": "(415) 479 1349",
+  "email": "jhon@company.com",
+  "trnDateFrom": "2015-06-06 00:00:00",
+  "trnDateTo": "2015-07-07 23:59:59",
+  "cardType": "Visa"
 }
 ```

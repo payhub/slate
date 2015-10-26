@@ -1,5 +1,5 @@
 # AuthOnly Transaction
-
+<%= partial "includes/authonly_transaction_samples" %>
 ## Introduction
 
 This topic provides the information about the **AuthOnly** transaction.
@@ -69,120 +69,9 @@ phone_ext | string, optional | The phone extension number of the customer.
 phone_type | string, optional | The type of the phone the customer is using. <br>The phone type can be ['H' or 'W' or 'M']: H (Home), W (Work), M (Mobile).
 record_format | string, optional | The value that indicates whether the sale has to be made over a credit card, debit card or cash payment. <br>The default value is "CREDIT_CARD". <br>Following are the accepted values:<ul><li>CASH_PAYMENT</li><li>CREDIT_CARD</li><li>DEBIT_CARD</li></ul>
 
-```json
-{
-"merchant" : {
-    "organization_id" : 10002,
-     "terminal_id" : 2
-},
-
-"bill" : {
-    "base_amount" : {
-          "amount" : 10.0
-     },
-     "shipping_amount" : {
-          "amount" : 1.23
-      },
-     "tax_amount" : {
-          "amount" : 1.00
-     },
-     "note" : "Send as a gift.",
-     "invoice_number" : "328742",
-     "po_number" : "2474-6975"
-},
-
-"card_data" : {
-    "card_number" : "5466410004374507",
-    "card_expiry_date" : "202011",
-    "billing_address_1" : "2350 Kerner Blvd",
-    "billing_address_2" : "2 floor",
-    "billing_city" : "San Rafael",
-    "billing_state" : "CA",
-    "billing_zip" : "94901",
-    "cvv_data" : "998"
-},
-
-"customer" : {
-    "first_name" : "Miguel",
-     "last_name" : "Smith",
-     "company_name" : "Payhub Inc",
-     "job_title" : "Software Engineer",
-     "email_address" : "msmith14567@payhub.com",
-     "web_address" : "http://payhub.com",
-     "phone_number" : "(415) 479 1349",
-     "phone_ext" : "123",
-      "phone_type" : "M"
-},
-"record_format" : "CREDIT_CARD"
-}
-```
-
-```ruby
-
-    require 'uri'
-    require 'net/http'
-    require 'json'
-    
-    url = URI("http://payhub.com/payhubws/api/v2/authonly")
-    
-    http = Net::HTTP.new(url.host, url.port)
-    
-    request = Net::HTTP::Post.new(url)
-    request["content-type"] = 'application/json'
-    request["accept"] = 'application/json'
-    request["authorization"] = 'Bearer 2a5d6a73-d294-4fba-bfba-957a4948d4a3'
-    request["cache-control"] = 'no-cache'
-    
-    
-    
-    merchant = {
-                "organization_id"=>10074,
-                "terminal_id"=>134
-                }
-    
-    # bill data
-    bill= {
-                "base_amount"=>"1.00",
-                "shipping_amount"=>"1.00",
-                "tax_amount"=>"1.00",
-                "note"=>"this a sample note",
-                "invoice_number"=>"this is an invoice",
-                "po_number"=>"a test po number"
-                }
-    #Credit card data
-    card_data = {
-                "card_number"=>"4055011111111111",
-                "card_expiry_date"=>"202012",
-                "cvv_data"=>"999",
-                "billing_address_1"=>"2350 Kerner Blvd",
-                "billing_address_2"=>"On the corner",
-                "billing_city"=>"San Rafael",
-                "billing_state"=>"CA",
-                "billing_zip"=>"99997-0003"
-                }
-    # Customer data
-    customer = {"first_name"=>"First",
-                "last_name"=>"Contact",
-                "company_name"=>"Payhub Inc",
-                "job_title"=>"Software Engineer",
-                "email_address"=>"jhon@company.com",
-                "web_address"=>"http://payhub.com",
-                "phone_number"=>"(415) 479 1349",
-                "phone_ext"=>"123",
-                "phone_type"=>"M"
-    }
-    
-    
-    informationToSend = {"merchant"=>merchant,"bill"=>bill,"customer"=>customer,"card_data"=>card_data}
-    
-    request.body = JSON.generate(informationToSend)
-    
-    response = http.request(request)
-    puts response.read_body
-```
-
+#
+<%= partial "includes/authonly_transaction_result" %>
 ## Result
-
 * 201 code (created)
 * The Id of the AuthOnly in the Location header <br>Sample header in the response:Location: http://payhub.com/payhubws/api/v2/authOnly/234
 

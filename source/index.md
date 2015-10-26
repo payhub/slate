@@ -10,22 +10,31 @@ language_tabs:
   - json: Json
 
 
-includes:
-
-  - authonly_transaction
+includes_gateway:
+  - gateway
+  - oauth   
   - sale_transaction
-  - verify_transaction
-  - void_transaction
-  - refund_transaction
+  - authonly_transaction   
   - capture_transaction
-  - transaction_report
+  - void_transaction 
+  - refund_transaction
   - recurring
   - recurring_bill_status
+  - transaction_report
+  - response_codes  
   - errors
+  
+includes_safyer:
+  - safyer
+  - authentication_safyer  
   - merchant_method
   - reporting_methods
+  - reserve_funding
+  - reserve_funding_report
   - boarding_webhook
-  - oauth 
+  - reserve_balance
+  - chargeback_webhook
+  - merchant_status_change_webhook
 
 toc_footers:
  - <a href='https://github.com/payhub/payhubws-public-sdk'>SDK Download</a>

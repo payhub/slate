@@ -1,0 +1,38 @@
+# Void Transaction
+<%= partial "includes/void_transaction_samples" %>
+## Introduction
+
+Run a Void when you need to cancel a transaction (either a sale or a refund) that has not yet been settled and that has not already been voided. This will avoid the customer being charged any amount at all and will release the pending funds, given the issuer supports doing so.
+
+### Endpoint (URL to Call):
+
+`POST http://payhub.com/payhubws/api/void`
+
+## Elements
+
+### merchant
+
+Key | Type | Value
+--- | ---- | -----
+organization_id | integer | The Organization Id of the Merchant. This must match the Organization Id of the Merchant that the passed Oauth Token is associated with.
+terminal_id | integer | The Merchant's Virtual Terminal Id for 3rd Party API.
+
+### Transaction
+Key | Type | Value
+--- | ---- | -----
+transaction_id | string | The Transaction Id to be voided.
+
+
+<h2 id="response" style="clear: right;">Response</h2>
+<%= partial "includes/void_transaction_result" %>
+
+###Result
+* A 201 code (created)
+* The Id of the Void in the Location header.
+    <br>Sample header in the response: `Location ? http:// [payhub-api-server]:8251/payhubws/api/verify/5501b651da06a879ce520d4d`.
+    <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
+
+On the same way you  can query about merchant, customer, bill and card data details using the given URLs.
+
+**Note:** You will need to use the Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.
+

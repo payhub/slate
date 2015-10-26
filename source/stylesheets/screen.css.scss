@@ -181,7 +181,7 @@ html, body {
   }
   li[data-unique="payhub-gateway"] , li[data-unique="safyer-boarding-settlement"]{
     color: whitesmoke;
-    background-color: $aside-success-bg;
+    background-color: $aside-nav-bar-titles;
     border-top: 1px dashed #666;
     margin-top:10px;
     @include transition-property('background');
@@ -192,7 +192,7 @@ html, body {
   // This is the currently selected ToC entry
   .tocify-focus {
     @include box-shadow(0px 1px 0px $nav-active-shadow);
-    background-color: $nav-active-bg;
+    background-color: $nav-active-bg-payhub;
     color: $nav-active-text;
   }
 
@@ -405,7 +405,7 @@ html, body {
     border-bottom: 1px solid #ccc;
     margin-bottom: $h1-margin-bottom;
     border-top: 1px solid #ddd;
-    background: $aside-success-bg;
+    background: $aside-nav-bar-titles;
     color:black;
   }
   #safyer-boarding-settlement{

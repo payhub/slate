@@ -1,0 +1,54 @@
+# Transaction Webhook
+##Configuration Process:
+
+**With this new service you can receive a notification for each transaction in your account.**
+ 
+Go to your Merchant Administration and select "Webhook Configuration".
+
+ <%= image_tag "webhook-admin.png" %>
+Now, you are seeing your first configuration.
+
+From this page you can enter your website url, and select those services for  receive notifications. 
+Also, once that the webhook is configurated, you can disable/enable it at any moment.
+
+##Requirements:
+
+* The enpoint validation only allows HTTPS.
+* The controller for your endpoint must be implemented with POST method.
+* The controller for your endpoint must to accept json.
+
+
+ <%= image_tag "webhook-admin-config.png" %>
+
+After Save your configuration, our service will notify you for each transaction on your account at the endpoint that you have chosen.
+
+##Response:
+
+The Json Messaje is at follows:
+
+<pre style='float:left; background: none;'><code class="shell" style='color: black;background: none;'>
+<span class="o">{</span>
+<span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>,
+<span class="s2">"recurringBillId"</span>: <span class="s2">""</span>,
+<span class="s2">"cardObsucred"</span>: <span class="s2">"9999000000001705"</span>,
+<span class="s2">"responseText"</span>: <span class="s2">"NO MATCH"</span>,
+<span class="s2">"source"</span>: <span class="s2">"3rd Party API"</span>,
+<span class="s2">"orgId"</span>: <span class="s2">"10002"</span>,
+<span class="s2">"transactionId"</span>: <span class="s2">"42819"</span>,
+<span class="s2">"responseCode"</span>: <span class="s2">"00"</span>
+<span class="o">}</span>
+</code></pre>
+
+##Fields Meaning:
+
+|Key | Type | Value|
+|--- | ---- | -----|
+|"transactionType"|String|Posible values: <br><ul><li> "Sale" </li><li> "Authorization Only" </li><li> "Offline" </li> <li>"Void"</li><li>"Refund"</li></ul>|
+|"source"|String| Posible values: <br><ul><li>"Virtual Terminal"</li><li>"3rd Party API"</li><li>"Recurring"</li><li>"Mobile VT"</li></ul>|
+|"orgId"|String|String| your organization Id.|
+|"transactionId"|String| the transaction id.|
+|"recurringBillId"|String| the recurring bill id if the transaction was scheduled.|
+|"cardObsucred"|String| the card obscured entered for the transaction.|
+|"responseText"|String| a descriptive text of the transaction result.|
+|"responseCode"|String| the code for the transaction result.|
+

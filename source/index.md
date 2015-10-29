@@ -21,6 +21,7 @@ includes_gateway:
   - recurring
   - recurring_bill_status
   - transaction_report
+  - webhook_for_integrators
   - response_codes  
   - errors
   

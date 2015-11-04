@@ -38,19 +38,19 @@
           },
           "_links": {
               "self": {
-                  "href": "http://dc1-api.payhub.com/payhubws/api/v2/sale/478"
+                  "href": "http://payhub.com/payhubws/api/v2/sale/478"
               },
               "merchant": {
-                  "href": "http://dc1-api.payhub.com/payhubws/api/v2/sale/478/merchant"
+                  "href": "http://payhub.com/payhubws/api/v2/sale/478/merchant"
               },
               "customer": {
-                  "href": "http://dc1-api.payhub.com/payhubws/api/v2/sale/478/customer"
+                  "href": "http://payhub.com/payhubws/api/v2/sale/478/customer"
               },
               "card_data": {
-                  "href": "http://dc1-api.payhub.com/payhubws/api/v2/sale/478/card_data"
+                  "href": "http://payhub.com/payhubws/api/v2/sale/478/card_data"
               },
               "bill": {
-                  "href": "http://dc1-api.payhub.com/payhubws/api/v2/sale/478/bill"
+                  "href": "http://payhub.com/payhubws/api/v2/sale/478/bill"
               }
           }
       }

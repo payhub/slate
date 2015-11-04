@@ -39,7 +39,7 @@ All fields are required unless indicated otherwise. All these parameters are in 
 ###POST
 
 ##Endpoint (URL to Call): 
-[https://ws.safyer.com/api/v1/reserveFunding/{{reserveFundingId}}](https://ws.safyer.com/api/v1/reserveFunding/{{reserveFundingId}})
+[https://ws.safyer.com/api/v1/reserveFunding/ {{reserveFundingId}}](https://ws.safyer.com/api/v1/reserveFunding/{{reserveFundingId}})
 
 ##Parameters
 | Parameter | Type | Description |

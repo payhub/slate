@@ -7,7 +7,7 @@ Retrieves information from a balance for a Merchant.
 ###GET
 
 ##Endpoint (URL to Call): 
-[https://ws.safyer.com/api/v1/reserveBalance/{{merchantId}}](https://ws.safyer.com/api/v1/reserveBalance/{{merchantId}})
+[https://ws.safyer.com/api/v1/reserveBalance/ {{merchantId}}](https://ws.safyer.com/api/v1/reserveBalance/{{merchantId}})
 
 ##Parameters
 All these parameters are in a JSON:

@@ -27,9 +27,9 @@ $nav-bg: #5C5D61;
 $examples-bg: #5C5D61;
 $code-bg: #292929;
 $code-annotation-bg: #1c1c1c;
-$nav-subitem-bg: #262626;
-$nav-active-bg: #2467af;
-$nav-active-bg-payhub: #F36C38;
+$nav-subitem-bg: #5C5D61;
+$nav-active-bg: #828285;
+$nav-active-bg-payhub: #828285;
 $lang-select-border: #000;
 $lang-select-bg: #222;
 $lang-select-active-bg: $examples-bg; // feel free to change this to blue or something
@@ -58,6 +58,7 @@ $nav-width: 230px; // width of the navbar
 $examples-width: 50%; // portion of the screen taken up by code examples
 $logo-margin: 20px; // margin between nav items and logo, ignored if search is active
 $main-padding: 28px; // padding to left and right of content & examples
+$table-padding:15px; // padding to left and right of tables
 $nav-padding: 15px; // padding to left and right of navbar
 $nav-v-padding: 10px; // padding used vertically around search boxes and results
 $nav-indent: 10px; // extra padding for ToC subitems
@@ -84,7 +85,12 @@ $phone-width: $tablet-width - $nav-width; // min width before reverting to mobil
   font-size: 12px;
   line-height: 1.5;
 }
-
+%pre-code-font{
+  font-family: Consolas, Monaco, "Menlo", MONOSPACE , serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
 
 // OTHER
 ////////////////////

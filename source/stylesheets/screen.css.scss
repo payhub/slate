@@ -359,7 +359,6 @@ html, body {
     display: block;
     clear: both;
   }
-
   &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
     margin-right: $examples-width;
     padding: 0 $main-padding;
@@ -369,7 +368,9 @@ html, body {
 
     @extend %left-col;
   }
-
+  &>table{
+    padding: 0px $table-padding;
+  }
   &>ul, &>ol {
     padding-left: $main-padding + 15px;
   }
@@ -407,6 +408,7 @@ html, body {
     border-top: 1px solid #ddd;
     background: $aside-nav-bar-titles;
     color:black;
+    text-shadow: none;
   }
   #safyer-boarding-settlement{
     @extend %header-font;
@@ -419,8 +421,9 @@ html, body {
     margin-bottom: $h1-margin-bottom;
     margin-top: 2em;
     border-top: 1px solid #ddd;
-    background: $aside-success-bg;
+    background: $aside-nav-bar-titles;
     color:black;
+    text-shadow: none;
   }
 
 
@@ -521,7 +524,7 @@ html, body {
     padding: 3px;
     border-radius: 3px;
     @extend %break-words;
-    @extend %code-font;
+    @extend %pre-code-font;
   }
 
   pre>code {
@@ -610,7 +613,7 @@ html, body {
   }
 
   pre {
-    @extend %code-font;
+    @extend %pre-code-font;
   }
 
   blockquote {

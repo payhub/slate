@@ -1,0 +1,164 @@
+# Recurring Bill Transaction
+<%= partial "includes/recurring_bill_samples" %>
+## Introduction
+
+This topic provides information about the Recurring Bill transaction.
+
+Use the recurring billing transaction when you want to periodically charge certain amount to the customer. You can use this feature for subscriptions or for any ongoing product or service you offer. You can setup a recurring billing by calling our RESTful API through an HTTP post containing a JSON.
+
+### Request Method
+
+`POST`
+
+### Endpoint (URL to Call)
+
+`http://payhub.com/payhubws/api/recurring-bill`
+
+## Elements
+
+### RecurringBillInput
+
+Key | Type | Value
+--- | ---- | -----
+customer | CustomerInput |  Customer detail.
+card_data | CardDataInput | Card data to use in the bill.
+merchant | MerchantInput |  Merchant detail.
+bill | BillInput |  Bill-related data to use in the recurring bill.
+schedule | ScheduleInput |  Schedule detail.
+metaData | MetaData, optional |  A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
+
+
+### CustomerInput
+
+Key | Type | Value
+--- | ---- | -----
+first_name | string |  The first name of the customer.
+last_name | string |  The last name of the customer.
+company_name | string, optional |  The company name of the customer.
+job_title | string, optional |  The job title of the customer.
+email_address | string, optional |  The email address of the customer. <br>The email address must be syntactically correct. If email address is not specified, you must provide a phone_number to identify the customer.
+web_address | string, optional |  The web address of the customer. <br>The web address if specified, must be a syntactically valid web address.
+phone_number | string, optional |  The phone number of the customer. <br>The phone number must be syntactically correct. For example: (415) 234 5678, or 4152345678, or (415) 234-5678. <br>If phone number is not specified, you must provide an email_address to identify the customer.
+phone_ext | string, optional | The phone extension number of the customer.
+phone_type | string, optional | The type of the phone number: ['H' or 'W' or 'M']: H (Home), W (Work), M (Mobile).
+metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
+
+
+### MetaData
+
+No parameters
+
+### CardDataInput
+
+Key | Type | Value
+--- | ---- | -----
+card_expiry_date | string | The card expiry date in YYYYMM format.
+tokenized_card | string, optional | This is a 16 character PayHub-specific tokenized string representing the card number. <br>The value for the given customer and credit card can be obtained by examining the lastRecurringBillResponse.billingReferences.tokenizedCard by accessing the link to the bill that was successfully created. It is safer (and recommended) for the third party client to store and use this string in any future requests for the same customer. <br>This value is required if the 'card_number' property is not present in the request.
+card_number | string, optional | This is a 16 character card number. <br>This value is required if the 'tokenized_card' property is not present in the request. <br> **Note:** The card number is not stored by the API in plain text - the response will contain a tokenized card number that should always be used in future requests, (for the same Customer) in place of this property.
+billing_address_1 | string, optional | The billing street address of the customer.
+billing_address_2 | string, optional | The additional billing street address of the customer.
+billing_city | string, optional | The billing city of the customer.
+billing_state | string, optional | The billing state Code of the customer. The codes are for the states in the USA. For example, CA, WI, NY, etc.
+billing_zip | string, optional | The billing zip code of the customer. The codes are for the states in the USA. <br>The code must be either 5 digits or 5 plus four separated by a '-'. <br>This value is required if the Merchant has the AVS flag turned on.
+metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent the data in the client's domain, which can be associated with this entity.
+
+
+### MerchantInput
+
+Key | Type | Value
+--- | ---- | -----
+organization_id | integer | The organization Id (['range[0-]']) of the merchant. <br>This Id must match the organization Id of the merchant that the passed Oauth Token is associated with.
+terminal_id | integer | The Virtual Terminal Id (['range[0-]']) for 3rd Party API of the merchant.
+metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
+
+
+### BillInput
+
+Key | Type | Value
+--- | ---- | -----
+tax_amount | TransactionAmount, optional | The tax amount for the transaction. <br>This value will be included in the total amount charged.
+po_number | string, optional | The purchase order number for the transaction.
+base_amount | TransactionAmount | The Base amount of the recurring bill. <br> The total amount charged will be the sum of this amount and (any) 'shipping_amount' and 'tax_amount'.
+shipping_amount | TransactionAmount, optional | The shipping amount for the transaction. <br>This will be included in the total amount charged.
+invoice_number | string, optional | The invoice number for the transaction.
+note | string, optional | A free format note for the transaction. <br>The note will be read by the Merchant.
+metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain, which can be associated with this entity.
+
+
+### TransactionAmount
+
+Key | Type | Value
+--- | ---- | -----
+amount | Number | The amount expressed as a decimal number with at most two decimal places (example: 1.23),
+currency | string, optional | The ISO 4217 currency code for this amount. <br>['USD']: Currently only 'USD' is accepted.
+
+
+### ScheduleInput
+
+Key | Type | Value
+--- | ---- | -----
+specific_dates_schedule | SpecificDatesSchedule, optional | Required if the schedule_type is 'S' (='Specific Dates').
+weekly_schedule | WeeklySchedule, optional | Required if the schedule_type is 'W' (='Weekly').
+schedule_type | string | The type of schedule being set up, ['M' or 'D' or 'Y' or 'W' or 'S']: 'M' (='Monthly'), 'D' (='Daily'), 'Y' (='Yearly'), 'W' (='Weekly'), S=Specific Dates.
+bill_generation_interval | integer, optional | The interval between bills where the unit is dependent on the value of the schedule_type (example: if the schedule_type is 'W' and this field is 3, the bill will recur every three weeks). <br>Applicable to schedule_typeof 'M' (='Monthly'), 'D' (='Daily'), 'Y' (='Yearly'), and 'W' (='Weekly').
+monthly_schedule | MonthlySchedule, optional | Required if the schedule_type is 'M' (='Monthly').
+schedule_start_and_end | ScheduleStartAndEnd, optional | Required if the schedule_type is not 'S' ( not 'Specific Dates').
+yearly_schedule | YearlySchedule, optional | Required if the schedule_type is 'Y' (='Yearly').
+metaData | MetaData, optional | A client-specific arbitrary (but valid) JSON string to represent data in the client's domain that can be associated with this entity.
+
+
+### SpecificDatesSchedule
+
+Key | Type | Value
+--- | ---- | -----
+specific_dates | array[string] | An array of specific dates on which the bill should recur. The dates should be in the YYYY-MM-DD format. There must be at least one date specified and all dates must be later than today's date.
+
+
+### WeeklySchedule
+
+Key | Type | Value
+--- | ---- | -----
+weekly_bill_days | array[string] | The day(s) of week on which the weekly bill recurs. The array must have at least one entry and each entry must be the first three characters of the day name, as in 'SUN', and 'SAT'.
+
+
+### MonthlySchedule
+
+Key | Type | Value
+--- | ---- | -----
+monthly_type | string | ['O' or 'E']: Determines the day(s) of the month on which the bill will recur. <br>Valid values are 'O' (='On the' - also specify monthly_on_the_day_of_week_in_month and the monthly_day_of_week) and 'E' (='Each' - also specify monthly_each_days).
+monthly_each_days | array[integer], optional | An array of integers that must have at least one entry and each entry must be in the range between 1 and 32 where a '1' means 'first day of month', a '2' means 'second day of month and so on. An entry of '32' means 'last day of month'. <br>This value is applicable to monthly_type of 'E' (='Each').
+monthly_on_the_day_of_week_in_month | integer, optional | A value (['range[1-5]']) of 1 means 'first of month', 2 means 'second of month' and so on, with a value of 5 meaning 'last of month'. Must be specified in combination with monthly_day_of_week which supplies the day of week (Monday, Tuesday, etc.) that this applies to. <br>This value is applicable to monthly_type of 'O' (='On the').
+monthly_day_of_week | integer, optional | The day of week (['range[1-7]']) on which the bill recurs, where 1 is Sunday and 7 is Saturday. <br>The value must be specified in combination with monthly_on_the_day_of_week_in_month which supplies the 'position' (First, Second, etc.) of the day in the month (First Monday, Second Friday, Last Saturday, etc.). <br>This value is applicable to monthly_type of 'O' (='On the').
+
+### ScheduleStartAndEnd
+
+Key | Type | Value
+--- | ---- | -----
+start_date | string, optional | The date to start the schedule in YYYY-MM-DD format. <br>The value is required if the schedule_type is 'M' (='Monthly'), 'D' (='Daily'), or 'W' (='Weekly').
+end_date | string, optional | The date to end the schedule in YYYY-MM-DD format. <br>The value is applicable to end_date_type equal to 'O' (='End On date').
+end_date_type | string, optional | Determines the date on which the schedule ends. <br>The values (['N' or ' A' or ' O']:) can be 'N' (='Never'), 'A' (='After a number of bills' - you must also specify a end_after_bill_count), or 'O' (='On or no later than a specific date' - you must also specify a end_date). If not present, then 'N' (='Never') is assumed.
+end_after_bill_count | integer, optional | The number of bills before ending the schedule. Applicable to end_date_type equal to 'A' (='After a number of bills').
+
+### YearlySchedule
+
+Key | Type | Value
+--- | ---- | -----
+year_to_start | string | The year (in YYYY format) in which the schedule starts. <br>You must also specify yearly_bill_on_month_number and yearly_bill_on_day_of_month.
+yearly_bill_on_day_of_month | integer | The month number ( ['range[1-12]']) on which the bill will recur, where 1 is January and 12 is December. Must be specified in combination with year_to_start and yearly_bill_on_day_of_month.
+yearly_bill_on_day_of_month | string | The day of the month (['range[1-31]']) on which the yearly bill will recur, where 1 is the 1st, 2 is the 2nd, etc. <br>If you specify a day of month that is invalid for the month specified by yearly_bill_on_month_number, then the last day of the month is used. Must be specified in combination with year_to_start and yearly_bill_on_month_number.
+
+
+### Response Messages
+
+Code | Meaning | Sample code
+---- | ------- | -----------
+200 | (not returned) | `ResourceSupport { links (array[Link], optional) } Link { templated (boolean, optional), rel (string, optional), href (string, optional) }`
+201 | The recurring bill was created - use the link in the response's 'Location' Header to view the Recurring Bill. | `Void {}`
+400 | Bad request due to incorrect or invalid data passed. | `RestErrorStructure { errors ( array[RestError], optional)} RestError {   status ( string, optional) = ['100' or '101' or '102' or '103' or '200' or '201' or '202' or '203' or '204' or '205' or '206' or '207' or '208' or '226' or '300' or '301' or '302' or '302' or '303' or '304' or '305' or '307' or '308' or '400' or '401' or '402' or '403' or '404' or '405' or '406' or '407' or '408' or '409' or '410' or '411' or '412' or '413' or '414' or '415' or '416' or '417' or '418' or '419' or '420' or '421' or '422' or '423' or '424' or '426' or '428' or '429' or '431' or '500' or '501' or '502' or '503' or '504' or '505' or '506' or '507' or '508' or '509' or '510' or '511']: The Http Status Code, code ( string, optional), location ( string, optional), reason ( string, optional), severity ( string, optional) }`
+401 | Unauthorized. You do not have permission to perform this operation. Make sure you entered a valid API Key at the top of the page. | `Void {}`
+403 | Forbidden. The server does not permit you to use this URI. | `Void {}`
+500 | Internal server error due to encoding the data, or to a PayHub server failure. Contact PayHub. | `Void {}`
+
+## Get
+You can also send a GET  to http://payhub.com/payhubws/api/recurring-bill to list all recurring bills and associated operations in compact form.
+

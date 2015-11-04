@@ -18,7 +18,7 @@ includes_gateway:
   - capture_transaction
   - void_transaction 
   - refund_transaction
-  - recurring
+  - recurring_bill
   - recurring_bill_status
   - transaction_report
   - webhook_for_integrators

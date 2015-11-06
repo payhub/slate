@@ -1,4 +1,4 @@
-# Payhub Webhook
+# PayHub Webhook
 ##Configuration Process
 
 **With this new service you can receive a notification in two cases:**
@@ -6,18 +6,20 @@
 * **for each transaction in your account.**
 * **when a batch was settled.**
  
-Go to your Merchant Administration and select "Webhook Configuration".
+Go to your Merchant Administration and select `Webhook Configuration`.
 
  <%= image_tag "webhook-admin.png" %>
-Now, you are seeing your first configuration.
+ 
+There, you will see your current webhook configuration.
 
-From this page you can enter your website url, and select those services for  receive notifications. 
-Also, once that the webhook is configurated, you can disable or enable it at any moment.
+From this page, you can enter your website url and select those services for which you would like to receive notifications. 
+Also, once that the webhook is configured, you can disable or enable it at any time.
 
 ##Services
+
 ###Transaction Services
-* Virtual Hub
-* Mobile Hub
+* VirtualHub
+* MobileHub
 * Recurring Billing
 * API
 
@@ -26,101 +28,98 @@ Also, once that the webhook is configurated, you can disable or enable it at any
 
 ##Requirements
 
-* The enpoint validation only allows HTTPS.
-* The controller for your endpoint must be implemented with POST method.
-* The controller for your endpoint must to accept json.
+* The endpoint validation only allows HTTPS.
+* The controller for your endpoint must be implemented with a POST method.
+* The controller for your endpoint must be set to accept JSON.
 
 
  <%= image_tag "webhook-admin-config.png" %>
 
-After Save your configuration, our service will notify you for each event on your account at the endpoint that you have chosen.
+After you have saved your configuration (by selecting the green "Update" button), our service will send you a notification for each event that occurs on your account to the endpoint that you have indicated.
 
 ##Events
 
-There are two kind of events: transcations and batch settled
+There are two kinds of events: transactions and settled batches.
 
-##Transaction Message from Webhook to your endpoing:
+##Transaction Message from Webhook to your endpoint
 
-The Json Messaje is at follows:
 
-<pre style="float: left;background-color: rgb(234, 242, 246);color: black;text-shadow: 0px 1px 2px rgba(0,0,0,0);">
-<code class="highlight shell"> 
-<span class="o" style="color: black;">{</span>
-        <span class="s2"  style="color: black;">"endpoint"</span>: <span class="s2"  style="color: black;">"http://yoursite.com/your_controller/"</span>,
-        <span class="s2"  style="color: black;">"eventType"</span>: <span class="s2"  style="color: black;">"transaction"</span>,
-        <span class="s2"  style="color: black;">"event"</span>: <span class="o"  style="color: black;">{</span>
-            <span class="s2"  style="color: black;">"type"</span>: <span class="o"  style="color: black;">{</span>
-                <span class="s2"  style="color: black;">"transaction"</span>: <span class="o"  style="color: black;">{</span>
-                    <span class="s2"  style="color: black;">"transactionType"</span>: <span class="s2"  style="color: black;">"Sale"</span>,
-                    <span class="s2"  style="color: black;">"recurringBillId"</span>: <span class="s2"  style="color: black;">""</span>,
-                    <span class="s2"  style="color: black;">"responseText"</span>: <span class="s2"  style="color: black;">"VER UNAVAILABLE"</span>,
-                    <span class="s2"  style="color: black;">"source"</span>: <span class="s2"  style="color: black;">"3rd Party API"</span>,
-                    <span class="s2"  style="color: black;">"cardObscured"</span>: <span class="s2"  style="color: black;">"XXXXXXXXXXXX4507"</span>,
-                    <span class="s2"  style="color: black;">"orgId"</span>: <span class="s2"  style="color: black;">"10002"</span>,
-                    <span class="s2"  style="color: black;">"transactionId"</span>: <span class="s2"  style="color: black;">"721"</span>,
-                    <span class="s2"  style="color: black;">"responseCode"</span>: <span class="s2"  style="color: black;">"00"</span>
-                <span class="o"  style="color: black;">}</span>
-            <span class="o"  style="color: black;">}</span>
-        <span class="o"  style="color: black;">}</span>
-    <span class="o"  style="color: black;">}</span>
+###The JSON message is as follows:
+```shell
+    {
+        "endpoint": "https://yoursite.com/your_controller/",
+        "eventType": "transaction",
+        "event": {
+            "type": {
+                "transaction": {
+                    "transactionType": "Sale",
+                    "recurringBillId": "",
+                    "responseText": "VER UNAVAILABLE",
+                    "source": "3rd Party API",
+                    "cardObscured": "XXXXXXXXXXXX4507",
+                    "orgId": "10002",
+                    "transactionId": "721",
+                    "responseCode": "00"
+                }
+            }
+        }
+    }
+```
 
-</code>
-</pre>
 
 ###Fields Meaning
 
 |Key | Type | Value|
 |--- | ---- | -----|
-|"endpoint"|String|your site endpoint to receive the notifications|
-|"eventType"|String| in this case the type is "transaction" allways|
-|"batch_settled"|Object|Json object with batch information|
-|"transaction"|String|Posible values: <br><ul><li> "Sale" </li><li> "Authorization Only" </li><li> "Offline" </li> <li>"Void"</li><li>"Refund"</li></ul>|
-|"source"|String| Posible values: <br><ul><li>"Virtual Terminal"</li><li>"3rd Party API"</li><li>"Recurring"</li><li>"Mobile VT"</li></ul>|
-|"orgId"|String|String| your organization Id.|
-|"transactionId"|String| the transaction id.|
-|"recurringBillId"|String| the recurring bill id if the transaction was scheduled.|
-|"cardObsucred"|String| the card obscured entered for the transaction.|
-|"responseText"|String| a descriptive text of the transaction result.|
-|"responseCode"|String| the code for the transaction result.|
+|endpoint|String|Your site endpoint to receive the notifications|
+|eventType|String| In this case the type is always "transaction"|
+|batch_settled|Object|JSON object with batch information|
+|transaction|String|Possible values: <br><ul><li> "Sale" </li><li> "Authorization Only" </li><li> "Offline" </li> <li>"Void"</li><li>"Refund"</li></ul>|
+|source|String| Possible values: <br><ul><li>"Virtual Terminal"</li><li>"3rd Party API"</li><li>"Recurring"</li><li>"Mobile VT"</li></ul>|
+|orgId|String|String| Your organization Id.|
+|transactionId|String| The transaction id.|
+|recurringBillId|String| The recurring bill id if the transaction was scheduled.|
+|cardObscured|String| the obscured card entered for the transaction.|
+|responseText|String| A descriptive text of the transaction result.|
+|responseCode|String| The code for the transaction result.|
 
-##Batch Message from Webhook to your endpoing:
+##Batch Message from Webhook to your endpoint
 
-The Json Messaje is at follows:
+###The JSON message is at follows:
 
-<pre style="float: left;background-color: rgb(234, 242, 246);color: black;text-shadow: 0px 1px 2px rgba(0,0,0,0);">
-<code class="highlight shell"> 
-<span class="o" style="color: black;">{</span>
-        <span class="s2"  style="color: black;">"endpoint"</span>: <span class="s2"  style="color: black;">"http://yoursite.com/your_controller/"</span>,
-        <span class="s2"  style="color: black;">"eventType"</span>: <span class="s2"  style="color: black;">"batch_settled"</span>,
-        <span class="s2"  style="color: black;">"event"</span>: <span class="o"  style="color: black;">{</span>
-            <span class="s2"  style="color: black;">"type"</span>: <span class="o"  style="color: black;">{</span>
-                <span class="s2"  style="color: black;">"batch_settled"</span>: <span class="o"  style="color: black;">{</span>
-                    <span class="s2"  style="color: black;">"date"</span>: <span class="s2"  style="color: black;">"Thu Oct 29 11:23:11 ART 2015"</span>,
-                    <span class="s2"  style="color: black;">"batch_id"</span>: <span class="s2"  style="color: black;">"102"</span>,
-                    <span class="s2"  style="color: black;">"net_total"</span>: <span class="s2"  style="color: black;">"15"</span>,
-                    <span class="s2"  style="color: black;">"terminal"</span>: <span class="s2"  style="color: black;">"Virtual Hub"</span>,
-                    <span class="s2"  style="color: black;">"trans_count"</span>: <span class="s2"  style="color: black;">"15"</span>,
-                    <span class="s2"  style="color: black;">"status"</span>: <span class="s2"  style="color: black;">"Settled"</span>
-                <span class="o"  style="color: black;">}</span>
-            <span class="o"  style="color: black;">}</span>
-        <span class="o"  style="color: black;">}</span>
-    <span class="o"  style="color: black;">}</span>
+```shell
 
-</code>
-</pre>
+    {
+        "endpoint": "https://yoursite.com/your_controller/",
+        "eventType": "batch_settled",
+        "event": {
+            "type": {
+                "batch_settled": {
+                    "date": "Thu Oct 29 11:23:11 ART 2015",
+                    "batch_id": "102",
+                    "net_total": "15",
+                    "terminal": "Virtual Hub",
+                    "trans_count": "15",
+                    "status": "Settled"
+                }
+            }
+        }
+    }
+
+```
 
 ###Fields Meaning
 
 |Key | Type | Value|
 |--- | ---- | -----|
-|"endpoint"|String|your site endpoint to receive the notifications|
-|"eventType"|String| in this case the type is "batch_settled" allways|
-|"batch_settled"|Object|Json object with batch information|
-|"date"|String| date.|
-|"batch_id"|String| the batch id.|
-|"net_total"|"String"| the total amount of money|
-|"trans_count"|String| The terminal name|
-|"trans_count"|String| The number of transaction that were settled on the batch.|
-|"status"|String| the batch status .|
+|endpoint|String|Your site endpoint to receive the notifications|
+|eventType|String| In this case the type is always "batch_settled" |
+|batch_settled|Object|JSON object with batch information|
+|date|String| Date.|
+|batch_id|String| The batch id.|
+|net_total|String| The total amount of money|
+|terminal|String| The terminal name.|
+|trans_count|String| The number of transaction that were settled on the batch.|
+|status|String| The batch status .|
 
 

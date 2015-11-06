@@ -24,46 +24,9 @@ When posting a merchant, we confirm that the following fields contain real data:
 
 As these fields go beyond basic validation, it is recommended that you handle the responses from Safyer in a user friendly way. If you would like to test the validation on these fields, you can use the following test values to return an error response that has matched basic validation, but has been identified as dummy data.
 
-```json
-
-"phone": "1232342456"
-"address1": "1 testing st", "address2": "", "zip": "12345"
-"bankRouting": "123123123"
-"email": "john.doe@rlyfakenmehere.com"
-```
-
 
 ## Parameters
-
-Parameter | Type | Description
---- | ---- | -----
-quickId	| string (1 - 50 characters) | Associates an application with pricing and a sales rep.<br>Obtained when setting up a frictionless link using the Safyer UI
-legalFirstName | string (1 - 30 characters) | The given first name of the merchant.
-legalLastName | string (1 - 30 characters) | The given last name of the merchant.
-email | string (7 - 50 characters) | The email address of the merchant.
-phone | numeric (10 digits) | The phone number of the merchant.
-businessName | string (1 - 25 characters) | The legal business name of the merchant.
-dbaName | string (1 - 25 characters) | The name the merchant is Doing Business As (DBA).
-website | string, optional (1 - 40 characters) | The website address of the merchant.
-taxID | numeric, optional (10 digits) | The Tax Identification Number of the merchant.
-npo | bit (1 digit) | Indicates whether the Tax ID provided belongs to a Non-Profit Organization. Only value 0 or 1.
-businessType | numeric (1 - 2 digits) | The type of business. See Business Types.
-businessCategory  | numeric (4 digits) | The business category. See Business Categories.
-otherBusinessDesc  | string (1 - 50 characters) | If the businessCategory is 0000, you must specify the name of the business category.
-estimatedRevenue | numeric (1 - 11 digits) |The estimated monthly credit card sales of the merchant. The sale must be greater or equal to 0.
-bankRouting | numeric (9 digits) | The routing number of the bank account of the merchant. The number must match with an existing bank routing number.
-bankDDA | numeric (1 - 30 digits) | The bank account number of the merchant.
-dbaAddress1 | numeric (1 - 50 digits) | The merchant's DBA street address.
-dbaAddress2 | numeric (1 - 50 digits) | The merchant's DBA suite or apartment number.
-dbazip | numeric (5 digits) | The merchant's DBA zip code. <br>The zip code will be used to determine the City and State of the merchant. The Address and Zip will be validated against the USPS list of valid addresses.
-address1 | string (1 - 50 digits) | The street address of the merchant.
-address2 | string, optional (1 - 50 digits) | The suite or apartment number of the merchant.
-Zip | numeric (5 digits) | The zip code will be used to determine the city and state of the merchant. The address and zip will be validated against the USPS list of valid addresses.
-dob | date (mm-dd-yyyy) | The data of birth of the merchant. The merchant must be above 18 years old.
-ssn | string (1 - 50 digits) | The Social Security Number of the merchant.
-ip | Alphanumeric YYY.XXX.XXX.XXX | The IP address of the system from where the merchant is submitting the application. <ul><li>YYY: Number between 1 - 223</li><li>XXX: Number between 0 - 255</li></ul>
-
-```json
+```shell
 {
     "merchantInformation": {
         "quickID": "W3Rg6CjtyIfasvdT/bCYRL6Opyg==",
@@ -94,6 +57,46 @@ ip | Alphanumeric YYY.XXX.XXX.XXX | The IP address of the system from where the 
     }
 }
 ```
+Parameter | Type | Description
+--- | ---- | -----
+quickId	| string (1 - 50 characters) | Associates an application with pricing and a sales rep.<br>Obtained when setting up a frictionless link using the Safyer UI
+legalFirstName | string (1 - 30 characters) | The given first name of the merchant.
+legalLastName | string (1 - 30 characters) | The given last name of the merchant.
+email | string (7 - 50 characters) | The email address of the merchant.
+phone | numeric (10 digits) | The phone number of the merchant.
+businessName | string (1 - 25 characters) | The legal business name of the merchant.
+dbaName | string (1 - 25 characters) | The name the merchant is Doing Business As (DBA).
+website | string, optional (1 - 40 characters) | The website address of the merchant.
+taxID | numeric, optional (10 digits) | The Tax Identification Number of the merchant.
+npo | bit (1 digit) | Indicates whether the Tax ID provided belongs to a Non-Profit Organization. Only value 0 or 1.
+businessType | numeric (1 - 2 digits) | The type of business. See Business Types.
+businessCategory  | numeric (4 digits) | The business category. See Business Categories.
+otherBusinessDesc  | string (1 - 50 characters) | If the businessCategory is 0000, you must specify the name of the business category.
+estimatedRevenue | numeric (1 - 11 digits) |The estimated monthly credit card sales of the merchant. The sale must be greater or equal to 0.
+bankRouting | numeric (9 digits) | The routing number of the bank account of the merchant. The number must match with an existing bank routing number.
+bankDDA | numeric (1 - 30 digits) | The bank account number of the merchant.
+dbaAddress1 | numeric (1 - 50 digits) | The merchant's DBA street address.
+dbaAddress2 | numeric (1 - 50 digits) | The merchant's DBA suite or apartment number.
+dbazip | numeric (5 digits) | The merchant's DBA zip code. <br>The zip code will be used to determine the City and State of the merchant. The Address and Zip will be validated against the USPS list of valid addresses.
+address1 | string (1 - 50 digits) | The street address of the merchant.
+address2 | string, optional (1 - 50 digits) | The suite or apartment number of the merchant.
+Zip | numeric (5 digits) | The zip code will be used to determine the city and state of the merchant. The address and zip will be validated against the USPS list of valid addresses.
+dob | date (mm-dd-yyyy) | The data of birth of the merchant. The merchant must be above 18 years old.
+ssn | string (1 - 50 digits) | The Social Security Number of the merchant.
+ip | Alphanumeric YYY.XXX.XXX.XXX | The IP address of the system from where the merchant is submitting the application. <ul><li>YYY: Number between 1 - 223</li><li>XXX: Number between 0 - 255</li></ul>
+
+###Request Method:
+`GET`
+
+###Endpoint (URL to Call): 
+ `https://ws.safyer.com/api/v1/merchant/{{mid}}`
+
+###Parameters
+
+|Parameter | Type | Description|
+|--- | ---- | -----|
+|mid	|Text|A string that identifies a single merchant. This field is returned after successfully posting a merchant.|
+
 
 ## Business Categories
 

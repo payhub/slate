@@ -19,30 +19,28 @@ All fields are required unless indicated otherwise. All these parameters are in 
 |**transferAmount**|Numeric <br>( 2 decimals)|Transfer amount.|
 
 ##Example JSON
-
-
-<pre style="float: left;background-color: rgb(234, 242, 246);color: black;text-shadow: 0px 1px 2px rgba(0,0,0,0);">
-    <code class="highlight shell"> 
-     <span class="o" style="color:black;">{</span>
-         <span class="s2"style="color:black;">"ReserveFundin"</span>: <span class="o"style="color:black;">{</span>
-             <span class="s2" style="color:black;">"mid"</span>: <span class="s2" style="color:black;">"76200045009254219"</span>,
-             <span class="s2" style="color:black;">"dda"</span>: <span class="s2" style="color:black;">"123456789"</span>,
-             <span class="s2" style="color:black;">"routing"</span>: <span class="s2" style="color:black;">"034560015"</span>,
-             <span class="s2" style="color:black;">"transferAmount"</span>: <span class="s2" style="color:black;">"128.23"</span>
-         <span class="o" style="color:black;">}</span>
-     <span class="o" style="color:black;">}</span>
-</code>
-</pre>
+```shell
+    {
+     "ReserveFunding": {
+         "mid": "76200045009254219",
+         "dda": "123456789",
+         "routing": "034560015",
+         "transferAmount": "128.23"
+        }
+    }
+```
 
 ##Request Method
 
-###POST
+### GET
 
 ##Endpoint (URL to Call): 
 [https://ws.safyer.com/api/v1/reserveFunding/ {{reserveFundingId}}](https://ws.safyer.com/api/v1/reserveFunding/{{reserveFundingId}})
 
 ##Parameters
+
 | Parameter | Type | Description |
 |-----------|------|-------------|
 |reserveFundingId|Numeric|A number that identifies a Reserve Funding.|
+
 

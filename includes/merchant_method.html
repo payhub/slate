@@ -53,14 +53,38 @@
 * Address</p>
 
 <p>As these fields go beyond basic validation, it is recommended that you handle the responses from Safyer in a user friendly way. If you would like to test the validation on these fields, you can use the following test values to return an error response that has matched basic validation, but has been identified as dummy data.</p>
-<pre><code class="highlight json"><span class="w">
-</span><span class="s2">"phone"</span><span class="err">:</span><span class="w"> </span><span class="s2">"1232342456"</span><span class="w">
-</span><span class="s2">"address1"</span><span class="err">:</span><span class="w"> </span><span class="s2">"1 testing st"</span><span class="err">,</span><span class="w"> </span><span class="s2">"address2"</span><span class="err">:</span><span class="w"> </span><span class="s2">""</span><span class="err">,</span><span class="w"> </span><span class="s2">"zip"</span><span class="err">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="w">
-</span><span class="s2">"bankRouting"</span><span class="err">:</span><span class="w"> </span><span class="s2">"123123123"</span><span class="w">
-</span><span class="s2">"email"</span><span class="err">:</span><span class="w"> </span><span class="s2">"john.doe@rlyfakenmehere.com"</span><span class="w">
-</span></code></pre>
 
 <h2 id="parameters">Parameters</h2>
+<pre><code class="highlight shell"><span class="o">{</span>
+    <span class="s2">"merchantInformation"</span>: <span class="o">{</span>
+        <span class="s2">"quickID"</span>: <span class="s2">"W3Rg6CjtyIfasvdT/bCYRL6Opyg=="</span>,
+        <span class="s2">"legalFirstName"</span>: <span class="s2">"John"</span>,
+        <span class="s2">"legalLastName"</span>: <span class="s2">"Smith"</span>,
+        <span class="s2">"email"</span>: <span class="s2">"john.smith@email.com"</span>,
+        <span class="s2">"phone"</span>: <span class="s2">"0123456789"</span>,
+        <span class="s2">"businessName"</span>: <span class="s2">"Test"</span>,
+        <span class="s2">"dbaName"</span>: <span class="s2">"Test DBA"</span>,
+        <span class="s2">"website"</span>: <span class="s2">"www.test.com"</span>,
+        <span class="s2">"taxID"</span>: <span class="s2">"123456789"</span>,
+        <span class="s2">"npo"</span>: <span class="s2">"0"</span>,
+        <span class="s2">"businessType"</span>: <span class="s2">"1"</span>,
+        <span class="s2">"businessCategory"</span>: <span class="s2">"3357"</span>,
+        <span class="s2">"otherBusinessDesc"</span>: <span class="s2">""</span>,
+        <span class="s2">"estimatedRevenue"</span>: <span class="s2">"8000.00"</span>,
+        <span class="s2">"bankRouting"</span>: <span class="s2">"034560015"</span>,
+        <span class="s2">"bankDDA"</span>: <span class="s2">"123456789"</span>,
+        <span class="s2">"address1"</span>: <span class="s2">"Test av 2230"</span>,
+        <span class="s2">"address2"</span>: <span class="s2">""</span>,
+        <span class="s2">"zip"</span>: <span class="s2">"12345"</span>,
+        <span class="s2">"dbaAddress1"</span>: <span class="s2">"Test av 1010"</span>,
+        <span class="s2">"dbaAddress2"</span>: <span class="s2">""</span>,
+        <span class="s2">"dbaZip"</span>: <span class="s2">"12233"</span>,
+        <span class="s2">"dob"</span>: <span class="s2">"07-09-1985"</span>,
+        <span class="s2">"ssn"</span>: <span class="s2">"123456789"</span>,
+        <span class="s2">"ip"</span>: <span class="s2">"181.23.198.26"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
 
 <table><thead>
 <tr>
@@ -195,36 +219,30 @@
 <td>The IP address of the system from where the merchant is submitting the application. <ul><li>YYY: Number between 1 - 223</li><li>XXX: Number between 0 - 255</li></ul></td>
 </tr>
 </tbody></table>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"merchantInformation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"quickID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"W3Rg6CjtyIfasvdT/bCYRL6Opyg=="</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"legalFirstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"legalLastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john.smith@email.com"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"businessName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"dbaName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test DBA"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">"www.test.com"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"taxID"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456789"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"npo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"businessType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"businessCategory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3357"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"otherBusinessDesc"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"estimatedRevenue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8000.00"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"bankRouting"</span><span class="p">:</span><span class="w"> </span><span class="s2">"034560015"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"bankDDA"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456789"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"address1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test av 2230"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"dbaAddress1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test av 1010"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"dbaAddress2"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"dbaZip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12233"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07-09-1985"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"ssn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456789"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"181.23.198.26"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+
+<h3 id="request-method:">Request Method:</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h3>
+
+<p><code class="prettyprint">https://ws.safyer.com/api/v1/merchant/{{mid}}</code></p>
+
+<h3 id="parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>mid</td>
+<td>Text</td>
+<td>A string that identifies a single merchant. This field is returned after successfully posting a merchant.</td>
+</tr>
+</tbody></table>
 
 <h2 id="business-categories">Business Categories</h2>
 
@@ -1052,7 +1070,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="business-types">Business Types</h2>
+Business Types</h2>
 
 <table><thead>
 <tr>

@@ -28,7 +28,7 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="payhub-webhook">Payhub Webhook</h1>
+        <h1 id="payhub-webhook">PayHub Webhook</h1>
 
 <h2 id="configuration-process">Configuration Process</h2>
 
@@ -39,21 +39,22 @@
 <li><strong>when a batch was settled.</strong></li>
 </ul>
 
-<p>Go to your Merchant Administration and select &ldquo;Webhook Configuration&rdquo;.</p>
+<p>Go to your Merchant Administration and select <code class="prettyprint">Webhook Configuration</code>.</p>
 
-<p><img src="../images/webhook-admin.png" />
-Now, you are seeing your first configuration.</p>
+<p><img src="../images/webhook-admin.png" /></p>
 
-<p>From this page you can enter your website url, and select those services for  receive notifications. 
-Also, once that the webhook is configurated, you can disable or enable it at any moment.</p>
+<p>There, you will see your current webhook configuration.</p>
+
+<p>From this page, you can enter your website url and select those services for which you would like to receive notifications. 
+Also, once that the webhook is configured, you can disable or enable it at any time.</p>
 
 <h2 id="services">Services</h2>
 
 <h3 id="transaction-services">Transaction Services</h3>
 
 <ul>
-<li>Virtual Hub</li>
-<li>Mobile Hub</li>
+<li>VirtualHub</li>
+<li>MobileHub</li>
 <li>Recurring Billing</li>
 <li>API</li>
 </ul>
@@ -67,46 +68,41 @@ Also, once that the webhook is configurated, you can disable or enable it at any
 <h2 id="requirements">Requirements</h2>
 
 <ul>
-<li>The enpoint validation only allows HTTPS.</li>
-<li>The controller for your endpoint must be implemented with POST method.</li>
-<li>The controller for your endpoint must to accept json.</li>
+<li>The endpoint validation only allows HTTPS.</li>
+<li>The controller for your endpoint must be implemented with a POST method.</li>
+<li>The controller for your endpoint must be set to accept JSON.</li>
 </ul>
 
 <p><img src="../images/webhook-admin-config.png" /></p>
 
-<p>After Save your configuration, our service will notify you for each event on your account at the endpoint that you have chosen.</p>
+<p>After you have saved your configuration (by selecting the green &ldquo;Update&rdquo; button), our service will send you a notification for each event that occurs on your account to the endpoint that you have indicated.</p>
 
 <h2 id="events">Events</h2>
 
-<p>There are two kind of events: transcations and batch settled</p>
+<p>There are two kinds of events: transactions and settled batches.</p>
 
-<h2 id="transaction-message-from-webhook-to-your-endpoing:">Transaction Message from Webhook to your endpoing:</h2>
+<h2 id="transaction-message-from-webhook-to-your-endpoint">Transaction Message from Webhook to your endpoint</h2>
 
-<p>The Json Messaje is at follows:</p>
-
-<pre style="float: left;background-color: rgb(234, 242, 246);color: black;text-shadow: 0px 1px 2px rgba(0,0,0,0);">
-<code class="highlight shell"> 
-<span class="o" style="color: black;">{</span>
-        <span class="s2"  style="color: black;">"endpoint"</span>: <span class="s2"  style="color: black;">"http://yoursite.com/your_controller/"</span>,
-        <span class="s2"  style="color: black;">"eventType"</span>: <span class="s2"  style="color: black;">"transaction"</span>,
-        <span class="s2"  style="color: black;">"event"</span>: <span class="o"  style="color: black;">{</span>
-            <span class="s2"  style="color: black;">"type"</span>: <span class="o"  style="color: black;">{</span>
-                <span class="s2"  style="color: black;">"transaction"</span>: <span class="o"  style="color: black;">{</span>
-                    <span class="s2"  style="color: black;">"transactionType"</span>: <span class="s2"  style="color: black;">"Sale"</span>,
-                    <span class="s2"  style="color: black;">"recurringBillId"</span>: <span class="s2"  style="color: black;">""</span>,
-                    <span class="s2"  style="color: black;">"responseText"</span>: <span class="s2"  style="color: black;">"VER UNAVAILABLE"</span>,
-                    <span class="s2"  style="color: black;">"source"</span>: <span class="s2"  style="color: black;">"3rd Party API"</span>,
-                    <span class="s2"  style="color: black;">"cardObscured"</span>: <span class="s2"  style="color: black;">"XXXXXXXXXXXX4507"</span>,
-                    <span class="s2"  style="color: black;">"orgId"</span>: <span class="s2"  style="color: black;">"10002"</span>,
-                    <span class="s2"  style="color: black;">"transactionId"</span>: <span class="s2"  style="color: black;">"721"</span>,
-                    <span class="s2"  style="color: black;">"responseCode"</span>: <span class="s2"  style="color: black;">"00"</span>
-                <span class="o"  style="color: black;">}</span>
-            <span class="o"  style="color: black;">}</span>
-        <span class="o"  style="color: black;">}</span>
-    <span class="o"  style="color: black;">}</span>
-
-</code>
-</pre>
+<h3 id="the-json-message-is-as-follows:">The JSON message is as follows:</h3>
+<pre><code class="highlight shell">    <span class="o">{</span>
+        <span class="s2">"endpoint"</span>: <span class="s2">"https://yoursite.com/your_controller/"</span>,
+        <span class="s2">"eventType"</span>: <span class="s2">"transaction"</span>,
+        <span class="s2">"event"</span>: <span class="o">{</span>
+            <span class="s2">"type"</span>: <span class="o">{</span>
+                <span class="s2">"transaction"</span>: <span class="o">{</span>
+                    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>,
+                    <span class="s2">"recurringBillId"</span>: <span class="s2">""</span>,
+                    <span class="s2">"responseText"</span>: <span class="s2">"VER UNAVAILABLE"</span>,
+                    <span class="s2">"source"</span>: <span class="s2">"3rd Party API"</span>,
+                    <span class="s2">"cardObscured"</span>: <span class="s2">"XXXXXXXXXXXX4507"</span>,
+                    <span class="s2">"orgId"</span>: <span class="s2">"10002"</span>,
+                    <span class="s2">"transactionId"</span>: <span class="s2">"721"</span>,
+                    <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre>
 
 <h3 id="fields-meaning">Fields Meaning</h3>
 
@@ -118,87 +114,84 @@ Also, once that the webhook is configurated, you can disable or enable it at any
 </tr>
 </thead><tbody>
 <tr>
-<td>&ldquo;endpoint&rdquo;</td>
+<td>endpoint</td>
 <td>String</td>
-<td>your site endpoint to receive the notifications</td>
+<td>Your site endpoint to receive the notifications</td>
 </tr>
 <tr>
-<td>&ldquo;eventType&rdquo;</td>
+<td>eventType</td>
 <td>String</td>
-<td>in this case the type is &ldquo;transaction&rdquo; allways</td>
+<td>In this case the type is always &ldquo;transaction&rdquo;</td>
 </tr>
 <tr>
-<td>&ldquo;batch_settled&rdquo;</td>
+<td>batch_settled</td>
 <td>Object</td>
-<td>Json object with batch information</td>
+<td>JSON object with batch information</td>
 </tr>
 <tr>
-<td>&ldquo;transaction&rdquo;</td>
+<td>transaction</td>
 <td>String</td>
-<td>Posible values: <br><ul><li> &ldquo;Sale&rdquo; </li><li> &ldquo;Authorization Only&rdquo; </li><li> &ldquo;Offline&rdquo; </li> <li>&ldquo;Void&rdquo;</li><li>&ldquo;Refund&rdquo;</li></ul></td>
+<td>Possible values: <br><ul><li> &ldquo;Sale&rdquo; </li><li> &ldquo;Authorization Only&rdquo; </li><li> &ldquo;Offline&rdquo; </li> <li>&ldquo;Void&rdquo;</li><li>&ldquo;Refund&rdquo;</li></ul></td>
 </tr>
 <tr>
-<td>&ldquo;source&rdquo;</td>
+<td>source</td>
 <td>String</td>
-<td>Posible values: <br><ul><li>&ldquo;Virtual Terminal&rdquo;</li><li>&ldquo;3rd Party API&rdquo;</li><li>&ldquo;Recurring&rdquo;</li><li>&ldquo;Mobile VT&rdquo;</li></ul></td>
+<td>Possible values: <br><ul><li>&ldquo;Virtual Terminal&rdquo;</li><li>&ldquo;3rd Party API&rdquo;</li><li>&ldquo;Recurring&rdquo;</li><li>&ldquo;Mobile VT&rdquo;</li></ul></td>
 </tr>
 <tr>
-<td>&ldquo;orgId&rdquo;</td>
+<td>orgId</td>
 <td>String</td>
 <td>String</td>
 </tr>
 <tr>
-<td>&ldquo;transactionId&rdquo;</td>
+<td>transactionId</td>
 <td>String</td>
-<td>the transaction id.</td>
+<td>The transaction id.</td>
 </tr>
 <tr>
-<td>&ldquo;recurringBillId&rdquo;</td>
+<td>recurringBillId</td>
 <td>String</td>
-<td>the recurring bill id if the transaction was scheduled.</td>
+<td>The recurring bill id if the transaction was scheduled.</td>
 </tr>
 <tr>
-<td>&ldquo;cardObsucred&rdquo;</td>
+<td>cardObscured</td>
 <td>String</td>
-<td>the card obscured entered for the transaction.</td>
+<td>the obscured card entered for the transaction.</td>
 </tr>
 <tr>
-<td>&ldquo;responseText&rdquo;</td>
+<td>responseText</td>
 <td>String</td>
-<td>a descriptive text of the transaction result.</td>
+<td>A descriptive text of the transaction result.</td>
 </tr>
 <tr>
-<td>&ldquo;responseCode&rdquo;</td>
+<td>responseCode</td>
 <td>String</td>
-<td>the code for the transaction result.</td>
+<td>The code for the transaction result.</td>
 </tr>
 </tbody></table>
 
-<h2 id="batch-message-from-webhook-to-your-endpoing:">Batch Message from Webhook to your endpoing:</h2>
+<h2 id="batch-message-from-webhook-to-your-endpoint">Batch Message from Webhook to your endpoint</h2>
 
-<p>The Json Messaje is at follows:</p>
+<h3 id="the-json-message-is-at-follows:">The JSON message is at follows:</h3>
+<pre><code class="highlight shell">
+    <span class="o">{</span>
+        <span class="s2">"endpoint"</span>: <span class="s2">"https://yoursite.com/your_controller/"</span>,
+        <span class="s2">"eventType"</span>: <span class="s2">"batch_settled"</span>,
+        <span class="s2">"event"</span>: <span class="o">{</span>
+            <span class="s2">"type"</span>: <span class="o">{</span>
+                <span class="s2">"batch_settled"</span>: <span class="o">{</span>
+                    <span class="s2">"date"</span>: <span class="s2">"Thu Oct 29 11:23:11 ART 2015"</span>,
+                    <span class="s2">"batch_id"</span>: <span class="s2">"102"</span>,
+                    <span class="s2">"net_total"</span>: <span class="s2">"15"</span>,
+                    <span class="s2">"terminal"</span>: <span class="s2">"Virtual Hub"</span>,
+                    <span class="s2">"trans_count"</span>: <span class="s2">"15"</span>,
+                    <span class="s2">"status"</span>: <span class="s2">"Settled"</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-<pre style="float: left;background-color: rgb(234, 242, 246);color: black;text-shadow: 0px 1px 2px rgba(0,0,0,0);">
-<code class="highlight shell"> 
-<span class="o" style="color: black;">{</span>
-        <span class="s2"  style="color: black;">"endpoint"</span>: <span class="s2"  style="color: black;">"http://yoursite.com/your_controller/"</span>,
-        <span class="s2"  style="color: black;">"eventType"</span>: <span class="s2"  style="color: black;">"batch_settled"</span>,
-        <span class="s2"  style="color: black;">"event"</span>: <span class="o"  style="color: black;">{</span>
-            <span class="s2"  style="color: black;">"type"</span>: <span class="o"  style="color: black;">{</span>
-                <span class="s2"  style="color: black;">"batch_settled"</span>: <span class="o"  style="color: black;">{</span>
-                    <span class="s2"  style="color: black;">"date"</span>: <span class="s2"  style="color: black;">"Thu Oct 29 11:23:11 ART 2015"</span>,
-                    <span class="s2"  style="color: black;">"batch_id"</span>: <span class="s2"  style="color: black;">"102"</span>,
-                    <span class="s2"  style="color: black;">"net_total"</span>: <span class="s2"  style="color: black;">"15"</span>,
-                    <span class="s2"  style="color: black;">"terminal"</span>: <span class="s2"  style="color: black;">"Virtual Hub"</span>,
-                    <span class="s2"  style="color: black;">"trans_count"</span>: <span class="s2"  style="color: black;">"15"</span>,
-                    <span class="s2"  style="color: black;">"status"</span>: <span class="s2"  style="color: black;">"Settled"</span>
-                <span class="o"  style="color: black;">}</span>
-            <span class="o"  style="color: black;">}</span>
-        <span class="o"  style="color: black;">}</span>
-    <span class="o"  style="color: black;">}</span>
-
-</code>
-</pre>
+</code></pre>
 
 <h3 id="fields-meaning">Fields Meaning</h3>
 
@@ -210,49 +203,49 @@ Also, once that the webhook is configurated, you can disable or enable it at any
 </tr>
 </thead><tbody>
 <tr>
-<td>&ldquo;endpoint&rdquo;</td>
+<td>endpoint</td>
 <td>String</td>
-<td>your site endpoint to receive the notifications</td>
+<td>Your site endpoint to receive the notifications</td>
 </tr>
 <tr>
-<td>&ldquo;eventType&rdquo;</td>
+<td>eventType</td>
 <td>String</td>
-<td>in this case the type is &ldquo;batch_settled&rdquo; allways</td>
+<td>In this case the type is always &ldquo;batch_settled&rdquo;</td>
 </tr>
 <tr>
-<td>&ldquo;batch_settled&rdquo;</td>
+<td>batch_settled</td>
 <td>Object</td>
-<td>Json object with batch information</td>
+<td>JSON object with batch information</td>
 </tr>
 <tr>
-<td>&ldquo;date&rdquo;</td>
+<td>date</td>
 <td>String</td>
-<td>date.</td>
+<td>Date.</td>
 </tr>
 <tr>
-<td>&ldquo;batch_id&rdquo;</td>
+<td>batch_id</td>
 <td>String</td>
-<td>the batch id.</td>
+<td>The batch id.</td>
 </tr>
 <tr>
-<td>&ldquo;net_total&rdquo;</td>
-<td>&ldquo;String&rdquo;</td>
-<td>the total amount of money</td>
-</tr>
-<tr>
-<td>&ldquo;trans_count&rdquo;</td>
+<td>net_total</td>
 <td>String</td>
-<td>The terminal name</td>
+<td>The total amount of money</td>
 </tr>
 <tr>
-<td>&ldquo;trans_count&rdquo;</td>
+<td>terminal</td>
+<td>String</td>
+<td>The terminal name.</td>
+</tr>
+<tr>
+<td>trans_count</td>
 <td>String</td>
 <td>The number of transaction that were settled on the batch.</td>
 </tr>
 <tr>
-<td>&ldquo;status&rdquo;</td>
+<td>status</td>
 <td>String</td>
-<td>the batch status .</td>
+<td>The batch status .</td>
 </tr>
 </tbody></table>
 

@@ -71,6 +71,14 @@
 </tbody></table>
 
 <h3 id="batchreport">batchReport</h3>
+<pre><code class="highlight shell"><span class="o">{</span>
+    <span class="s2">"BatchReport"</span>: <span class="o">{</span>
+        <span class="s2">"mid"</span>: <span class="s2">"7620000000000002"</span>,
+        <span class="s2">"dateCreateFrom"</span>: <span class="s2">"03-23-2015"</span>,
+        <span class="s2">"dateCreateTo"</span>: <span class="s2">"04-13-2015"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
 
 <p>Retrieves information from all transactions of a Merchant for a specific date range. The date range cannot be greater than 30 days. The response will include the IdBatch element, which can be referenced using the GET batch method.</p>
 
@@ -109,14 +117,6 @@
 <td>Format mm-dd-yyyy</td>
 </tr>
 </tbody></table>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"BatchReport"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"mid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7620000000000002"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"dateCreateFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"03-23-2015"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"dateCreateTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"04-13-2015"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
 
 <h2 id="batch">batch</h2>
 
@@ -175,6 +175,14 @@
 </tbody></table>
 
 <h2 id="depositreport">depositReport</h2>
+<pre><code class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Deposit"</span>: <span class="o">{</span>
+        <span class="s2">"mid"</span>: <span class="s2">"7620000000000002"</span>,
+        <span class="s2">"dateFrom"</span>: <span class="s2">"03-23-2015"</span>,
+        <span class="s2">"dateTo"</span>: <span class="s2">"04-13-2015"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
 
 <p>Retrieves information from all deposits of a Merchant, between a range of dates. The response will include the idDeposit element, which can be referenced using the GET deposit method.</p>
 
@@ -211,14 +219,6 @@
 <td>Format mm-dd-yyyy.</td>
 </tr>
 </tbody></table>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"Deposit"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"mid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7620000000000002"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"dateFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"03-23-2015"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"dateTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"04-13-2015"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
 
 <p><strong>Notes:</strong></p>
 
@@ -257,6 +257,14 @@
 </tbody></table>
 
 <h2 id="statementreport">statementReport</h2>
+<pre><code class="highlight shell">    <span class="o">{</span>
+       <span class="s2">"Statement"</span>: <span class="o">{</span>
+            <span class="s2">"mid"</span>: <span class="s2">"7620000000000002"</span>,
+            <span class="s2">"stmtMonth"</span>: <span class="s2">"2"</span>,
+            <span class="s2">"stmtYearSt"</span>: <span class="s2">"2015"</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre>
 
 <p>Returns the Merchant Statement XML for a specific month and year. This XML is received from the merchant&rsquo;s processor and relayed as it is.</p>
 
@@ -293,16 +301,20 @@
 <td>A number between 0000 and 9999.</td>
 </tr>
 </tbody></table>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-   </span><span class="s2">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"mid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7620000000000002"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"stmtMonth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"stmtYearSt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
 
 <h2 id="chargebackreport">chargebackReport</h2>
+<pre><code class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Chargeback"</span>: <span class="o">{</span>
+        <span class="s2">"mid"</span>: <span class="s2">"7620000000000002"</span>,
+        <span class="s2">"transactionDateFrom"</span>: <span class="s2">""</span>,
+        <span class="s2">"transactionDateTo"</span>: <span class="s2">""</span>,
+        <span class="s2">"receivedDateFrom"</span>: <span class="s2">""</span>,
+        <span class="s2">"receivedDateTo"</span>: <span class="s2">""</span>,
+        <span class="s2">"cardNumLast4"</span>: <span class="s2">""</span>,
+        <span class="s2">"authorizationCode"</span>: <span class="s2">""</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
 
 <p>Returns information, the chargebacks for the specified merchant.</p>
 
@@ -359,18 +371,6 @@
 <td>A string of 6 characters.</td>
 </tr>
 </tbody></table>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"Chargeback"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"mid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7620000000000002"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"transactionDateFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"transactionDateTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"receivedDateFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"receivedDateTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"cardNumLast4"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"authorizationCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
 
 <p><strong>Note:</strong> The processor does not provide a unique number that can be used to tie the chargeback to the original transaction.</p>
 

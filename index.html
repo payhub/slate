@@ -148,7 +148,7 @@ supplied findByMerchantOrganizationId search functions.
       <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
 
       <span class="n">JSONObject</span> <span class="n">jsonRequestObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://payhub.com/payhubws/api/v2/sale"</span><span class="o">;</span>
+      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.payhub.com/api/v2/sale"</span><span class="o">;</span>
 
       <span class="n">JSONObject</span> <span class="n">merchant</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
         <span class="n">merchant</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"organization_id"</span><span class="o">,</span> <span class="s">"10005"</span><span class="o">);</span><span class="c1">//You put your org id here</span>
@@ -259,7 +259,7 @@ supplied findByMerchantOrganizationId search functions.
   <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
 
   <span class="c1">//Defining the Web Service URL
-</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
+</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"https://api.payhub.com/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
 
 
   <span class="c1">//Defining data for the SALE transaction
@@ -394,7 +394,7 @@ supplied findByMerchantOrganizationId search functions.
         <span class="p">{</span>
             <span class="k">try</span>
             <span class="p">{</span>
-                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/sale"</span><span class="p">);</span>
+                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"https://api.payhub.com/api/v2/sale"</span><span class="p">);</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
 
@@ -511,7 +511,7 @@ supplied findByMerchantOrganizationId search functions.
     <span class="nb">require</span> <span class="s1">'net/http'</span>
     <span class="nb">require</span> <span class="s1">'json'</span>
 
-    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"http://payhub.com/payhubws/api/v2/sale"</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.payhub.com/api/v2/sale"</span><span class="p">)</span>
 
     <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
 
@@ -624,7 +624,7 @@ supplied findByMerchantOrganizationId search functions.
 
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
-<p><code class="prettyprint">POST http://payhub.com/payhubws/api/sale</code></p>
+<p><code class="prettyprint">POST https://api.payhub.com/api/sale</code></p>
 
 <h2 id="elements">Elements</h2>
 
@@ -863,19 +863,19 @@ supplied findByMerchantOrganizationId search functions.
           <span class="o">}</span>,
           <span class="s2">"_links"</span>: <span class="o">{</span>
               <span class="s2">"self"</span>: <span class="o">{</span>
-                  <span class="s2">"href"</span>: <span class="s2">"http://payhub.com/payhubws/api/v2/sale/478"</span>
+                  <span class="s2">"href"</span>: <span class="s2">"https://payhub.com/api/v2/sale/478"</span>
               <span class="o">}</span>,
               <span class="s2">"merchant"</span>: <span class="o">{</span>
-                  <span class="s2">"href"</span>: <span class="s2">"http://payhub.com/payhubws/api/v2/sale/478/merchant"</span>
+                  <span class="s2">"href"</span>: <span class="s2">"https://payhub.com/api/v2/sale/478/merchant"</span>
               <span class="o">}</span>,
               <span class="s2">"customer"</span>: <span class="o">{</span>
-                  <span class="s2">"href"</span>: <span class="s2">"http://payhub.com/payhubws/api/v2/sale/478/customer"</span>
+                  <span class="s2">"href"</span>: <span class="s2">"https://payhub.com/api/v2/sale/478/customer"</span>
               <span class="o">}</span>,
               <span class="s2">"card_data"</span>: <span class="o">{</span>
-                  <span class="s2">"href"</span>: <span class="s2">"http://payhub.com/payhubws/api/v2/sale/478/card_data"</span>
+                  <span class="s2">"href"</span>: <span class="s2">"https://payhub.com/api/v2/sale/478/card_data"</span>
               <span class="o">}</span>,
               <span class="s2">"bill"</span>: <span class="o">{</span>
-                  <span class="s2">"href"</span>: <span class="s2">"http://payhub.com/payhubws/api/v2/sale/478/bill"</span>
+                  <span class="s2">"href"</span>: <span class="s2">"https://payhub.com/api/v2/sale/478/bill"</span>
               <span class="o">}</span>
           <span class="o">}</span>
       <span class="o">}</span>
@@ -887,7 +887,7 @@ supplied findByMerchantOrganizationId search functions.
 <ul>
 <li>A 201 code (created)</li>
 <li>The Id of the Sale in the Location header.
-<br>Sample header in the response: <code class="prettyprint">Location → http:// [payhub-api-server]:8251/payhubws/api/sale/5501b651da06a879ce520d4d</code>.
+<br>Sample header in the response: <code class="prettyprint">Location → https:// [payhub-api-server]:8251/payhubws/api/sale/5501b651da06a879ce520d4d</code>.
 <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.</li>
 </ul>
 
@@ -925,7 +925,7 @@ supplied findByMerchantOrganizationId search functions.
           <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
 
           <span class="n">JSONObject</span> <span class="n">jsonRequestObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-          <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://payhub.com/payhubws/api/v2/authOnly"</span><span class="o">;</span>
+          <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.payhub.com/api/v2/authOnly"</span><span class="o">;</span>
 
           <span class="n">JSONObject</span> <span class="n">merchant</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
             <span class="n">merchant</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"organization_id"</span><span class="o">,</span> <span class="s">"10005"</span><span class="o">);</span><span class="c1">//You put your org id here</span>
@@ -1037,7 +1037,7 @@ supplied findByMerchantOrganizationId search functions.
       <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
 
       <span class="c1">//Defining the Web Service URL
-</span>      <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
+</span>      <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"https://api.payhub.com/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
 
 
       <span class="c1">//Defining data for the AuthOnly transaction
@@ -1172,7 +1172,7 @@ supplied findByMerchantOrganizationId search functions.
             <span class="p">{</span>
                 <span class="k">try</span>
                 <span class="p">{</span>
-                    <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/authonly"</span><span class="p">);</span>
+                    <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"https://api.payhub.com/api/v2/authonly"</span><span class="p">);</span>
                     <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
                     <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
 
@@ -1338,7 +1338,7 @@ supplied findByMerchantOrganizationId search functions.
     <span class="nb">require</span> <span class="s1">'net/http'</span>
     <span class="nb">require</span> <span class="s1">'json'</span>
 
-    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"http://payhub.com/payhubws/api/v2/authonly"</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.payhub.com/api/v2/authonly"</span><span class="p">)</span>
 
     <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
 
@@ -1414,7 +1414,7 @@ supplied findByMerchantOrganizationId search functions.
 
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
-<p><code class="prettyprint">POST http://payhub.com/payhubws/api/v2/authOnly</code></p>
+<p><code class="prettyprint">POST https://api.payhub.com/api/v2/authOnly</code></p>
 
 <h2 id="elements">Elements</h2>
 
@@ -1657,7 +1657,7 @@ supplied findByMerchantOrganizationId search functions.
 
 <ul>
 <li>201 code (created)</li>
-<li>The Id of the AuthOnly in the Location header <br>Sample header in the response:Location: http://payhub.com/payhubws/api/v2/authOnly/234</li>
+<li>The Id of the AuthOnly in the Location header <br>Sample header in the response:Location: https://api.payhub.com/api/v2/authOnly/234</li>
 </ul>
 
 <p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="https://payhub.atlassian.net/wiki/display/MM/OAuth+2.0+Access+Tokens">OAuth 2.0 Access Tokens</a> section.</p>
@@ -1692,7 +1692,7 @@ supplied findByMerchantOrganizationId search functions.
       <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
 
       <span class="n">JSONObject</span> <span class="n">jsonRequestObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://payhub.com/payhubws/api/v2/capture"</span><span class="o">;</span>
+      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.payhub.com/api/v2/capture"</span><span class="o">;</span>
 
       <span class="n">JSONObject</span> <span class="n">merchant</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
       <span class="n">merchant</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"organization_id"</span><span class="o">,</span> <span class="s">"10005"</span><span class="o">);</span> <span class="c1">//You put your org id here</span>
@@ -1781,7 +1781,7 @@ supplied findByMerchantOrganizationId search functions.
       <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
 
       <span class="c1">//Defining the Web Service URL
-</span>      <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
+</span>      <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"https://api.payhub.com/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
 
 
       <span class="c1">//Defining data for the VOID transaction
@@ -1894,7 +1894,7 @@ supplied findByMerchantOrganizationId search functions.
             <span class="p">{</span>
                 <span class="k">try</span>
                 <span class="p">{</span>
-                    <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/capture"</span><span class="p">);</span>
+                    <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"https://api.payhub.com/api/v2/capture"</span><span class="p">);</span>
                     <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
                     <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
 
@@ -2015,7 +2015,7 @@ supplied findByMerchantOrganizationId search functions.
     <span class="nb">require</span> <span class="s1">'net/http'</span>
     <span class="nb">require</span> <span class="s1">'json'</span>
 
-    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"http://payhub.com/payhubws/api/v2/capture"</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.payhub.com/api/v2/capture"</span><span class="p">)</span>
 
     <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
 
@@ -2068,7 +2068,7 @@ supplied findByMerchantOrganizationId search functions.
 
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
-<p><code class="prettyprint">http://payhub.com/payhubws/api/v2/capture</code></p>
+<p><code class="prettyprint">https://api.payhub.com/api/v2/capture</code></p>
 
 <h2 id="elements">Elements</h2>
 
@@ -2185,7 +2185,7 @@ supplied findByMerchantOrganizationId search functions.
 <ul>
 <li>201 code (created)</li>
 <li>The Id of the Capture in the Location header. This ID should be the same that you provided. 
-<br>Sample header in the response:Location: http://payhub.com/payhubws/api/v2/authOnly/234</li>
+<br>Sample header in the response:Location: https://api.payhub.com/api/v2/authOnly/234</li>
 </ul>
 
           <h1 id="void-transaction">Void Transaction</h1>
@@ -2218,7 +2218,7 @@ supplied findByMerchantOrganizationId search functions.
       <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
 
       <span class="n">JSONObject</span> <span class="n">jsonRequestObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://payhub.com/payhubws/api/v2/void"</span><span class="o">;</span>
+      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.payhub.com/api/v2/void"</span><span class="o">;</span>
 
       <span class="n">JSONObject</span> <span class="n">merchant</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
       <span class="n">merchant</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"organization_id"</span><span class="o">,</span> <span class="s">"10005"</span><span class="o">);</span> <span class="c1">//You put your org id here</span>
@@ -2291,7 +2291,7 @@ supplied findByMerchantOrganizationId search functions.
   <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
 
   <span class="c1">//Defining the Web Service URL
-</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
+</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"https://api.payhub.com/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
 
 
   <span class="c1">//Defining data for the VOID transaction
@@ -2393,7 +2393,7 @@ supplied findByMerchantOrganizationId search functions.
         <span class="p">{</span>
             <span class="k">try</span>
             <span class="p">{</span>
-                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/void"</span><span class="p">);</span>
+                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"https://api.payhub.com/api/v2/void"</span><span class="p">);</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
 
@@ -2468,7 +2468,7 @@ supplied findByMerchantOrganizationId search functions.
     <span class="nb">require</span> <span class="s1">'net/http'</span>
     <span class="nb">require</span> <span class="s1">'json'</span>
 
-    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"http://payhub.com/payhubws/api/v2/void"</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.payhub.com/api/v2/void"</span><span class="p">)</span>
 
     <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
 
@@ -2512,7 +2512,7 @@ supplied findByMerchantOrganizationId search functions.
 
 <h3 id="endpoint-(url-to-call):">Endpoint (URL to Call):</h3>
 
-<p><code class="prettyprint">POST http://payhub.com/payhubws/api/void</code></p>
+<p><code class="prettyprint">POST https://api.payhub.com/api/void</code></p>
 
 <h2 id="elements">Elements</h2>
 
@@ -2585,7 +2585,7 @@ supplied findByMerchantOrganizationId search functions.
 <ul>
 <li>A 201 code (created)</li>
 <li>The Id of the Void in the Location header.
-<br>Sample header in the response: <code class="prettyprint">Location ? http:// [payhub-api-server]:8251/payhubws/api/verify/5501b651da06a879ce520d4d</code>.
+<br>Sample header in the response: <code class="prettyprint">Location ? https:// [payhub-api-server]:8251/payhubws/api/verify/5501b651da06a879ce520d4d</code>.
 <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.</li>
 </ul>
 
@@ -2623,7 +2623,7 @@ supplied findByMerchantOrganizationId search functions.
       <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
 
       <span class="n">JSONObject</span> <span class="n">jsonRequestObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://payhub.com/payhubws/api/v2/refund"</span><span class="o">;</span>
+      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.payhub.com/api/v2/refund"</span><span class="o">;</span>
 
       <span class="n">JSONObject</span> <span class="n">merchant</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
       <span class="n">merchant</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"organization_id"</span><span class="o">,</span> <span class="s">"10005"</span><span class="o">);</span><span class="c1">//You put your org id here</span>
@@ -2696,7 +2696,7 @@ supplied findByMerchantOrganizationId search functions.
   <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
 
   <span class="c1">//Defining the Web Service URL
-</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
+</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"https://api.payhub.com/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
 
 
   <span class="c1">//Defining data for the REFUND transaction
@@ -2802,7 +2802,7 @@ supplied findByMerchantOrganizationId search functions.
         <span class="p">{</span>
             <span class="k">try</span>
             <span class="p">{</span>
-                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/refund"</span><span class="p">);</span>
+                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"https://api.payhub.com/api/v2/refund"</span><span class="p">);</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
 
@@ -2888,7 +2888,7 @@ supplied findByMerchantOrganizationId search functions.
     <span class="nb">require</span> <span class="s1">'net/http'</span>
     <span class="nb">require</span> <span class="s1">'json'</span>
 
-    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"http://payhub.com/payhubws/api/v2/refund"</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.payhub.com/api/v2/refund"</span><span class="p">)</span>
 
     <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
 
@@ -2929,7 +2929,7 @@ supplied findByMerchantOrganizationId search functions.
 
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
-<p><code class="prettyprint">http://payhub.com/payhubws/api/refund</code></p>
+<p><code class="prettyprint">https://api.payhub.com/api/refund</code></p>
 
 <h2 id="elements-(all-required)">Elements (All Required)</h2>
 
@@ -3008,7 +3008,7 @@ supplied findByMerchantOrganizationId search functions.
 <ul>
 <li>A 201 code (created)</li>
 <li>The Id of the Refund in the Location header.
-<br>Sample header in the response: <code class="prettyprint">Location ? http:// [payhub-api-server]:8251/payhubws/api/refund/5501b651da06a879ce520d4d</code>.
+<br>Sample header in the response: <code class="prettyprint">Location ? https:// [payhub-api-server]:8251/payhubws/api/refund/5501b651da06a879ce520d4d</code>.
 <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.</li>
 </ul>
 
@@ -3047,7 +3047,7 @@ supplied findByMerchantOrganizationId search functions.
       <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
 
       <span class="n">JSONObject</span> <span class="n">jsonRequestObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://payhub.com/payhubws/api/v2/recurring-bill"</span><span class="o">;</span>
+      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.payhub.com/api/v2/recurring-bill"</span><span class="o">;</span>
 
       <span class="n">JSONObject</span> <span class="n">merchant</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
         <span class="n">merchant</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"organization_id"</span><span class="o">,</span> <span class="s">"10005"</span><span class="o">);</span><span class="c1">//You put your org id here</span>
@@ -3163,7 +3163,7 @@ supplied findByMerchantOrganizationId search functions.
   <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
 
   <span class="c1">//Defining the Web Service URL
-</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
+</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"https://api.payhub.com/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
 
   <span class="c1">//Defining data for the RECURRING BILL transaction
 </span>  <span class="c1">// Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
@@ -3192,7 +3192,7 @@ supplied findByMerchantOrganizationId search functions.
   <span class="nv">$company_name</span> <span class="o">=</span> <span class="s2">"Payhub Inc"</span><span class="p">;</span>
   <span class="nv">$job_title</span> <span class="o">=</span> <span class="s2">"Software Engineer"</span><span class="p">;</span>
   <span class="nv">$email_address</span> <span class="o">=</span> <span class="s2">"jhon@company.com"</span><span class="p">;</span>
-  <span class="nv">$web_address</span> <span class="o">=</span> <span class="s2">"http://payhub.com"</span><span class="p">;</span>
+  <span class="nv">$web_address</span> <span class="o">=</span> <span class="s2">"https://payhub.com"</span><span class="p">;</span>
   <span class="nv">$phone_number</span> <span class="o">=</span> <span class="s2">"(415) 479 1349"</span><span class="p">;</span>
   <span class="nv">$phone_ext</span> <span class="o">=</span> <span class="s2">"123"</span><span class="p">;</span>
   <span class="nv">$phone_type</span> <span class="o">=</span> <span class="s2">"M"</span><span class="p">;</span>
@@ -3310,7 +3310,7 @@ supplied findByMerchantOrganizationId search functions.
         <span class="p">{</span>
             <span class="k">try</span>
             <span class="p">{</span>
-                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/recurring-bill"</span><span class="p">);</span>
+                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"https://api.payhub.com/api/v2/recurring-bill"</span><span class="p">);</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
 
@@ -3487,7 +3487,7 @@ supplied findByMerchantOrganizationId search functions.
     <span class="nb">require</span> <span class="s1">'net/http'</span>
     <span class="nb">require</span> <span class="s1">'json'</span>
 
-    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"http://payhub.com/payhubws/api/v2/authonly"</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.payhub.com/api/v2/authonly"</span><span class="p">)</span>
 
     <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
 
@@ -3558,7 +3558,7 @@ supplied findByMerchantOrganizationId search functions.
 
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
-<p><code class="prettyprint">http://payhub.com/payhubws/api/recurring-bill</code></p>
+<p><code class="prettyprint">https://api.payhub.com/api/recurring-bill</code></p>
 
 <h2 id="elements">Elements</h2>
 
@@ -4031,7 +4031,7 @@ supplied findByMerchantOrganizationId search functions.
 
 <h2 id="get">Get</h2>
 
-<p>You can also send a GET  to http://payhub.com/payhubws/api/recurring-bill to list all recurring bills and associated operations in compact form.</p>
+<p>You can also send a GET  to https://api.payhub.com/api/recurring-bill to list all recurring bills and associated operations in compact form.</p>
 
           <h1 id="recurring-bill-status">Recurring Bill Status</h1>
 
@@ -4045,7 +4045,7 @@ supplied findByMerchantOrganizationId search functions.
 
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
-<p><code class="prettyprint">http://payhub.com/payhubws/api/recurring-bill-status/{id}</code></p>
+<p><code class="prettyprint">https://api.payhub.com/api/recurring-bill-status/{id}</code></p>
 
 <h2 id="elements">Elements</h2>
 
@@ -4140,7 +4140,7 @@ supplied findByMerchantOrganizationId search functions.
       <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
 
       <span class="n">JSONObject</span> <span class="n">jsonRequestObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://payhub.com/payhubws/api/v2/report/transactionReport"</span><span class="o">;</span>
+      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="o">;</span>
 
       <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"batchIdFrom"</span><span class="o">,</span> <span class="s">"5"</span><span class="o">);</span>
       <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"batchIdTo"</span><span class="o">,</span> <span class="s">"10"</span><span class="o">);</span>
@@ -4214,7 +4214,7 @@ supplied findByMerchantOrganizationId search functions.
   <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
 
   <span class="c1">//Defining the Web Service URL
-</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/report/transactionReport"</span><span class="p">;</span>
+</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="p">;</span>
 
 
   <span class="nv">$batchIdFrom</span><span class="o">=</span> <span class="s2">"5"</span><span class="p">;</span>
@@ -4325,7 +4325,7 @@ supplied findByMerchantOrganizationId search functions.
         <span class="p">{</span>
             <span class="k">try</span>
             <span class="p">{</span>
-                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/report/transactionReport"</span><span class="p">);</span>
+                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="p">);</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
 
@@ -4406,7 +4406,7 @@ supplied findByMerchantOrganizationId search functions.
     <span class="nb">require</span> <span class="s1">'net/http'</span>
     <span class="nb">require</span> <span class="s1">'json'</span>
 
-    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"http://payhub.com/payhubws/api/v2/report/transactionReport"</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="p">)</span>
 
     <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
 

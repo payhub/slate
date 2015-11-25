@@ -59,7 +59,7 @@
       <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
 
       <span class="n">JSONObject</span> <span class="n">jsonRequestObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://payhub.com/payhubws/api/v2/recurring-bill"</span><span class="o">;</span>
+      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.payhub.com/api/v2/recurring-bill"</span><span class="o">;</span>
 
       <span class="n">JSONObject</span> <span class="n">merchant</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
         <span class="n">merchant</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"organization_id"</span><span class="o">,</span> <span class="s">"10005"</span><span class="o">);</span><span class="c1">//You put your org id here</span>
@@ -175,7 +175,7 @@
   <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
 
   <span class="c1">//Defining the Web Service URL
-</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"http://payhub.com/payhubws/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
+</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"https://api.payhub.com/api/v2/</span><span class="nv">$trans_type</span><span class="s2">"</span><span class="p">;</span>
 
   <span class="c1">//Defining data for the RECURRING BILL transaction
 </span>  <span class="c1">// Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
@@ -204,7 +204,7 @@
   <span class="nv">$company_name</span> <span class="o">=</span> <span class="s2">"Payhub Inc"</span><span class="p">;</span>
   <span class="nv">$job_title</span> <span class="o">=</span> <span class="s2">"Software Engineer"</span><span class="p">;</span>
   <span class="nv">$email_address</span> <span class="o">=</span> <span class="s2">"jhon@company.com"</span><span class="p">;</span>
-  <span class="nv">$web_address</span> <span class="o">=</span> <span class="s2">"http://payhub.com"</span><span class="p">;</span>
+  <span class="nv">$web_address</span> <span class="o">=</span> <span class="s2">"https://payhub.com"</span><span class="p">;</span>
   <span class="nv">$phone_number</span> <span class="o">=</span> <span class="s2">"(415) 479 1349"</span><span class="p">;</span>
   <span class="nv">$phone_ext</span> <span class="o">=</span> <span class="s2">"123"</span><span class="p">;</span>
   <span class="nv">$phone_type</span> <span class="o">=</span> <span class="s2">"M"</span><span class="p">;</span>
@@ -322,7 +322,7 @@
         <span class="p">{</span>
             <span class="k">try</span>
             <span class="p">{</span>
-                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"http://payhub.com/payhubws/api/v2/recurring-bill"</span><span class="p">);</span>
+                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"https://api.payhub.com/api/v2/recurring-bill"</span><span class="p">);</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
                 <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
 
@@ -499,7 +499,7 @@
     <span class="nb">require</span> <span class="s1">'net/http'</span>
     <span class="nb">require</span> <span class="s1">'json'</span>
 
-    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"http://payhub.com/payhubws/api/v2/authonly"</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.payhub.com/api/v2/authonly"</span><span class="p">)</span>
 
     <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
 
@@ -570,7 +570,7 @@
 
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
-<p><code class="prettyprint">http://payhub.com/payhubws/api/recurring-bill</code></p>
+<p><code class="prettyprint">https://api.payhub.com/api/recurring-bill</code></p>
 
 <h2 id="elements">Elements</h2>
 
@@ -1043,7 +1043,7 @@
 
 <h2 id="get">Get</h2>
 
-<p>You can also send a GET  to http://payhub.com/payhubws/api/recurring-bill to list all recurring bills and associated operations in compact form.</p>
+<p>You can also send a GET  to https://api.payhub.com/api/recurring-bill to list all recurring bills and associated operations in compact form.</p>
 
       </div>
       <div class="dark-box">

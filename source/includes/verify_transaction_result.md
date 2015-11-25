@@ -89,16 +89,16 @@
       },
       "_links": {
         "self": {
-          "href": "https://staging-api.payhub.com/api/v2/verify/182364"
+          "href": "https://api.payhub.com/api/v2/verify/182364"
         },
         "merchant": {
-          "href": "https://staging-api.payhub.com/api/v2/verify/182364/merchant"
+          "href": "https://api.payhub.com/api/v2/verify/182364/merchant"
         },
         "customer": {
-          "href": "https://staging-api.payhub.com/api/v2/verify/182364/customer"
+          "href": "https://api.payhub.com/api/v2/verify/182364/customer"
         },
         "card_data": {
-          "href": "https://staging-api.payhub.com/api/v2/verify/182364/card_data"
+          "href": "https://api.payhub.com/api/v2/verify/182364/card_data"
         }
       }
     }

@@ -37,19 +37,19 @@
       },
       "_links": {
         "self": {
-          "href": "https://staging-api.payhub.com/api/v2/authonly/182349"
+          "href": "https://api.payhub.com/api/v2/authonly/182349"
         },
         "merchant": {
-          "href": "https://staging-api.payhub.com/api/v2/authonly/182349/merchant"
+          "href": "https://api.payhub.com/api/v2/authonly/182349/merchant"
         },
         "customer": {
-          "href": "https://staging-api.payhub.com/api/v2/authonly/182349/customer"
+          "href": "https://api.payhub.com/api/v2/authonly/182349/customer"
         },
         "card_data": {
-          "href": "https://staging-api.payhub.com/api/v2/authonly/182349/card_data"
+          "href": "https://api.payhub.com/api/v2/authonly/182349/card_data"
         },
         "bill": {
-          "href": "https://staging-api.payhub.com/api/v2/authonly/182349/bill"
+          "href": "https://api.payhub.com/api/v2/authonly/182349/bill"
         }
       }
     }

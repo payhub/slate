@@ -16,10 +16,10 @@
         "merchantOrganizationId": 10127,
         "_links": {
           "self": {
-            "href": "https://staging-api.payhub.com/api/v2/refund/181332"
+            "href": "https://api.payhub.com/api/v2/refund/181332"
           },
           "merchant": {
-            "href": "https://staging-api.payhub.com/api/v2/refund/181332/merchant"
+            "href": "https://api.payhub.com/api/v2/refund/181332/merchant"
           }
         }
       }

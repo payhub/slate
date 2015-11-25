@@ -27,13 +27,13 @@
         },
         "_links": {
             "self": {
-                "href": "https://staging-api.payhub.com/api/v2/capture/777"
+                "href": "https://api.payhub.com/api/v2/capture/777"
             },
             "merchant": {
-                "href": "https://staging-api.payhub.com/api/v2/capture/777/merchant"
+                "href": "https://api.payhub.com/api/v2/capture/777/merchant"
             },
             "bill": {
-                "href": "https://staging-api.payhub.com/api/v2/capture/777/bill"
+                "href": "https://api.payhub.com/api/v2/capture/777/bill"
             }
         }
     }

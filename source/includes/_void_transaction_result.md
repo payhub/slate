@@ -15,10 +15,10 @@
         "merchantOrganizationId": 10127,
         "_links": {
           "self": {
-            "href": "https://staging-api.payhub.com/api/v2/void/181258"
+            "href": "https://api.payhub.com/api/v2/void/181258"
           },
           "merchant": {
-            "href": "https://staging-api.payhub.com/api/v2/void/181258/merchant"
+            "href": "https://api.payhub.com/api/v2/void/181258/merchant"
           }
         }
       }

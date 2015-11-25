@@ -18,7 +18,7 @@ When the AuthOnly transaction is successfully executed, you will receive a 201 C
 
 ### Endpoint (URL to Call)
 
-`POST http://payhub.com/payhubws/api/v2/authOnly`
+`POST https://api.payhub.com/api/v2/authOnly`
 
 ## Elements
 
@@ -73,6 +73,6 @@ record_format | string, optional | The value that indicates whether the sale has
 <%= partial "includes/authonly_transaction_result" %>
 ## Result
 * 201 code (created)
-* The Id of the AuthOnly in the Location header <br>Sample header in the response:Location: http://payhub.com/payhubws/api/v2/authOnly/234
+* The Id of the AuthOnly in the Location header <br>Sample header in the response:Location: https://api.payhub.com/api/v2/authOnly/234
 
 **Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> [OAuth 2.0 Access Tokens](https://payhub.atlassian.net/wiki/display/MM/OAuth+2.0+Access+Tokens) section.

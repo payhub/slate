@@ -10,7 +10,7 @@ Run the Refund transaction when you want to refund the full amount of a settled 
 
 ### Endpoint (URL to Call)
 
-`http://payhub.com/payhubws/api/refund`
+`https://api.payhub.com/api/refund`
 
 ## Elements (All Required)
 
@@ -32,7 +32,7 @@ Key | Type | Value
 ###Result
 * A 201 code (created)
 * The Id of the Refund in the Location header.
-    <br>Sample header in the response: `Location ? http:// [payhub-api-server]:8251/payhubws/api/refund/5501b651da06a879ce520d4d`.
+    <br>Sample header in the response: `Location ? https:// [payhub-api-server]:8251/payhubws/api/refund/5501b651da06a879ce520d4d`.
     <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
 
 On the same way you  can query about merchant, customer, bill and card data details using the given URLs.

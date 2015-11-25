@@ -37,7 +37,7 @@ public class RecurringBill {
       HttpConnectionParams.setConnectionTimeout(params, 10000);
 
       JSONObject jsonRequestObject = new JSONObject();
-      String url = "http://payhub.com/payhubws/api/v2/recurring-bill";
+      String url = "https://api.payhub.com/api/v2/recurring-bill";
 
       JSONObject merchant = new JSONObject();
         merchant.put("organization_id", "10005");//You put your org id here
@@ -155,7 +155,7 @@ public class RecurringBill {
   $ERROR_MESSAGE = '';
 
   //Defining the Web Service URL
-  $WsURL="http://payhub.com/payhubws/api/v2/$trans_type";
+  $WsURL="https://api.payhub.com/api/v2/$trans_type";
 
   //Defining data for the RECURRING BILL transaction
   // Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
@@ -303,7 +303,7 @@ namespace PayHubSamples
         {
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create("http://payhub.com/payhubws/api/v2/recurring-bill");
+                var request = (HttpWebRequest)WebRequest.Create("https://api.payhub.com/api/v2/recurring-bill");
                 request.ContentType = "text/json";
                 request.Method = "POST";
 
@@ -481,7 +481,7 @@ namespace PayHubSamples
     require 'net/http'
     require 'json'
     
-    url = URI("http://payhub.com/payhubws/api/v2/authonly")
+    url = URI("https://api.payhub.com/api/v2/authonly")
     
     http = Net::HTTP.new(url.host, url.port)
     
@@ -546,7 +546,7 @@ namespace PayHubSamples
 
 ### Endpoint (URL to Call)
 
-`http://payhub.com/payhubws/api/recurring-bill`
+`https://api.payhub.com/api/recurring-bill`
 
 ## Elements
 
@@ -775,7 +775,7 @@ Code | Meaning | Sample code
 500 | Internal server error due to encoding the data, or to a PayHub server failure. Contact PayHub. | `Void {}`
 
 ## Get
-You can also send a GET  to http://payhub.com/payhubws/api/recurring-bill to list all recurring bills and associated operations in compact form.
+You can also send a GET  to https://api.payhub.com/api/recurring-bill to list all recurring bills and associated operations in compact form.
 
 The response will look like:
 

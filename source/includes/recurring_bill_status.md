@@ -10,7 +10,7 @@ This topic provides the information about the Recurring Bill Status API. Use the
 
 ### Endpoint (URL to Call)
 
-`http://payhub.com/payhubws/api/recurring-bill-status/{id}`
+`https://api.payhub.com/api/recurring-bill-status/{id}`
 
 ## Elements
 

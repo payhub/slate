@@ -27,7 +27,7 @@ public class Void {
       HttpConnectionParams.setConnectionTimeout(params, 10000);
 
       JSONObject jsonRequestObject = new JSONObject();
-      String url = "http://payhub.com/payhubws/api/v2/capture";
+      String url = "https://api.payhub.com/api/v2/capture";
 
       JSONObject merchant = new JSONObject();
       merchant.put("organization_id", "10005"); //You put your org id here
@@ -117,7 +117,7 @@ public class Void {
       $ERROR_MESSAGE = '';
     
       //Defining the Web Service URL
-      $WsURL="http://payhub.com/payhubws/api/v2/$trans_type";
+      $WsURL="https://api.payhub.com/api/v2/$trans_type";
     
     
       //Defining data for the VOID transaction
@@ -231,7 +231,7 @@ public class Void {
             {
                 try
                 {
-                    var request = (HttpWebRequest)WebRequest.Create("http://payhub.com/payhubws/api/v2/capture");
+                    var request = (HttpWebRequest)WebRequest.Create("https://api.payhub.com/api/v2/capture");
                     request.ContentType = "text/json";
                     request.Method = "POST";
     
@@ -354,7 +354,7 @@ public class Void {
     require 'net/http'
     require 'json'
     
-    url = URI("http://payhub.com/payhubws/api/v2/capture")
+    url = URI("https://api.payhub.com/api/v2/capture")
     
     http = Net::HTTP.new(url.host, url.port)
     

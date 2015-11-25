@@ -28,7 +28,7 @@ public class RecurringBill {
       HttpConnectionParams.setConnectionTimeout(params, 10000);
 
       JSONObject jsonRequestObject = new JSONObject();
-      String url = "http://payhub.com/payhubws/api/v2/recurring-bill";
+      String url = "https://api.payhub.com/api/v2/recurring-bill";
 
       JSONObject merchant = new JSONObject();
         merchant.put("organization_id", "10005");//You put your org id here
@@ -146,7 +146,7 @@ public class RecurringBill {
   $ERROR_MESSAGE = '';
 
   //Defining the Web Service URL
-  $WsURL="http://payhub.com/payhubws/api/v2/$trans_type";
+  $WsURL="https://api.payhub.com/api/v2/$trans_type";
 
   //Defining data for the RECURRING BILL transaction
   // Merchant data (obtained from the payHub Virtual Terminal (3rd party integration)
@@ -175,7 +175,7 @@ public class RecurringBill {
   $company_name = "Payhub Inc";
   $job_title = "Software Engineer";
   $email_address = "jhon@company.com";
-  $web_address = "http://payhub.com";
+  $web_address = "https://payhub.com";
   $phone_number = "(415) 479 1349";
   $phone_ext = "123";
   $phone_type = "M";
@@ -294,7 +294,7 @@ namespace PayHubSamples
         {
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create("http://payhub.com/payhubws/api/v2/recurring-bill");
+                var request = (HttpWebRequest)WebRequest.Create("https://api.payhub.com/api/v2/recurring-bill");
                 request.ContentType = "text/json";
                 request.Method = "POST";
 
@@ -472,7 +472,7 @@ namespace PayHubSamples
     require 'net/http'
     require 'json'
     
-    url = URI("http://payhub.com/payhubws/api/v2/authonly")
+    url = URI("https://api.payhub.com/api/v2/authonly")
     
     http = Net::HTTP.new(url.host, url.port)
     

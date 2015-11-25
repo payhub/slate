@@ -27,7 +27,7 @@ public class Refund {
       HttpConnectionParams.setConnectionTimeout(params, 10000);
 
       JSONObject jsonRequestObject = new JSONObject();
-      String url = "http://payhub.com/payhubws/api/v2/refund";
+      String url = "https://api.payhub.com/api/v2/refund";
 
       JSONObject merchant = new JSONObject();
       merchant.put("organization_id", "10005");//You put your org id here
@@ -101,7 +101,7 @@ public class Refund {
   $ERROR_MESSAGE = '';
 
   //Defining the Web Service URL
-  $WsURL="http://payhub.com/payhubws/api/v2/$trans_type";
+  $WsURL="https://api.payhub.com/api/v2/$trans_type";
 
 
   //Defining data for the REFUND transaction
@@ -208,7 +208,7 @@ namespace PayHubSamples
         {
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create("http://payhub.com/payhubws/api/v2/refund");
+                var request = (HttpWebRequest)WebRequest.Create("https://api.payhub.com/api/v2/refund");
                 request.ContentType = "text/json";
                 request.Method = "POST";
 
@@ -295,7 +295,7 @@ namespace PayHubSamples
     require 'net/http'
     require 'json'
     
-    url = URI("http://payhub.com/payhubws/api/v2/refund")
+    url = URI("https://api.payhub.com/api/v2/refund")
     
     http = Net::HTTP.new(url.host, url.port)
     

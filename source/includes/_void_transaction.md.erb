@@ -6,7 +6,7 @@ Run a Void when you need to cancel a transaction (either a sale or a refund) tha
 
 ### Endpoint (URL to Call):
 
-`POST http://payhub.com/payhubws/api/void`
+`POST https://api.payhub.com/api/void`
 
 ## Elements
 
@@ -29,7 +29,7 @@ transaction_id | string | The Transaction Id to be voided.
 ###Result
 * A 201 code (created)
 * The Id of the Void in the Location header.
-    <br>Sample header in the response: `Location ? http:// [payhub-api-server]:8251/payhubws/api/verify/5501b651da06a879ce520d4d`.
+    <br>Sample header in the response: `Location ? https:// [payhub-api-server]:8251/payhubws/api/verify/5501b651da06a879ce520d4d`.
     <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
 
 On the same way you  can query about merchant, customer, bill and card data details using the given URLs.

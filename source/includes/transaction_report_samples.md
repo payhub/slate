@@ -27,7 +27,7 @@ public class Transactions {
       HttpConnectionParams.setConnectionTimeout(params, 10000);
 
       JSONObject jsonRequestObject = new JSONObject();
-      String url = "http://payhub.com/payhubws/api/v2/report/transactionReport";
+      String url = "https://api.payhub.com/api/v2/report/transactionReport";
 
       jsonRequestObject.put("batchIdFrom", "5");
       jsonRequestObject.put("batchIdTo", "10");
@@ -102,7 +102,7 @@ public class Transactions {
   $ERROR_MESSAGE = '';
 
   //Defining the Web Service URL
-  $WsURL="http://payhub.com/payhubws/api/v2/report/transactionReport";
+  $WsURL="https://api.payhub.com/api/v2/report/transactionReport";
 
 
   $batchIdFrom= "5";
@@ -214,7 +214,7 @@ namespace PayHubSamples
         {
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create("http://payhub.com/payhubws/api/v2/report/transactionReport");
+                var request = (HttpWebRequest)WebRequest.Create("https://api.payhub.com/api/v2/report/transactionReport");
                 request.ContentType = "text/json";
                 request.Method = "POST";
 
@@ -296,7 +296,7 @@ namespace PayHubSamples
     require 'net/http'
     require 'json'
     
-    url = URI("http://payhub.com/payhubws/api/v2/report/transactionReport")
+    url = URI("https://api.payhub.com/api/v2/report/transactionReport")
     
     http = Net::HTTP.new(url.host, url.port)
     

@@ -12,7 +12,7 @@ Upon successful sale, you will receive an approval code. Once a sale transaction
 
 ### Endpoint (URL to Call)
 
-`POST http://payhub.com/payhubws/api/sale`
+`POST https://api.payhub.com/api/sale`
 
 ## Elements
 
@@ -74,7 +74,7 @@ note | string, optional | A free format note for the transaction. The note will 
 
 * A 201 code (created)
 * The Id of the Sale in the Location header.
-    <br>Sample header in the response: `Location → http:// [payhub-api-server]:8251/payhubws/api/sale/5501b651da06a879ce520d4d`.
+    <br>Sample header in the response: `Location → https:// [payhub-api-server]:8251/payhubws/api/sale/5501b651da06a879ce520d4d`.
     <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
 
 On the same way you  can query about merchant, customer, bill and card data details using the given URLs.

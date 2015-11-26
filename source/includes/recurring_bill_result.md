@@ -546,7 +546,7 @@ namespace PayHubSamples
 
 ### Endpoint (URL to Call)
 
-`https://api.payhub.com/api/recurring-bill`
+`https://api.payhub.com/api/v2/recurring-bill`
 
 ## Elements
 
@@ -775,7 +775,7 @@ Code | Meaning | Sample code
 500 | Internal server error due to encoding the data, or to a PayHub server failure. Contact PayHub. | `Void {}`
 
 ## Get
-You can also send a GET  to https://api.payhub.com/api/recurring-bill to list all recurring bills and associated operations in compact form.
+You can also send a GET  to https://api.payhub.com/api/v2/recurring-bill to list all recurring bills and associated operations in compact form.
 
 The response will look like:
 

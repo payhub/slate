@@ -411,13 +411,13 @@ namespace PayHubSamples
     
     # bill data
     bill= {
-                "base_amount"=>"1.00",
-                "shipping_amount"=>"1.00",
-                "tax_amount"=>"1.00",
-                "note"=>"this a sample note",
-                "invoice_number"=>"this is an invoice",
-                "po_number"=>"a test po number"
-                }
+    		"base_amount"=>Hash["amount" =>"1.00"],
+    		"shipping_amount"=>Hash["amount" =>"1.00"],
+    		"tax_amount"=>Hash["amount" =>"1.00"],
+    		"note"=>"this a sample note",
+    		"invoice_number"=>"this is an invoice",
+    		"po_number"=>"a test po number"
+    }
     #Credit card data
     card_data = {
                 "card_number"=>"4055011111111111",

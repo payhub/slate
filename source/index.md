@@ -24,6 +24,7 @@ includes_gateway:
   - webhook_for_integrators
   - response_codes  
   - errors
+  - administration_configuration
   
 includes_safyer:
   - safyer

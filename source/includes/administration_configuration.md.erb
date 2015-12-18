@@ -1,0 +1,481 @@
+# Administration Configuration
+##Introduction
+
+**Now, with our API, you can see and modify your administration settings.**
+
+* **General Settings.**
+* **Validated Devices.**
+* **Webhook Configuration.**
+* **Risk and Fraud Settings.**
+* **User Roles.**
+
+<%= partial "includes/general_settings_result" %>
+##General Settings Methods
+
+### 1. get General Settings
+
+### Request Method
+
+`GET`
+
+### Endpoint (URL to Call)
+
+`GET https://api.payhub.com/api/v2/adminSettings/generalSettings`
+
+###Result:
+You will get the list of all the terminals that you have associated to your account. 
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+<%= partial "includes/validated_devices_get_result" %>
+<%= partial "includes/validated_devices_patch_method" %>
+##Validated Devices Methods
+
+### 1. Get Validated Devices
+
+### Request Method
+
+`GET`
+
+### Endpoint (URL to Call)
+
+`GET https://api.payhub.com/api/v2/adminSettings/validatedDevices`
+
+
+###Result
+You will get the list of all the devices that were associated to your account. 
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+
+### 2. Patch Validated Devices
+
+### Request Method
+
+`PATCH`
+
+### Endpoint (URL to Call)
+
+`PATCH https://api.payhub.com/api/v2/adminSettings/validatedDevices`
+
+### Parameters
+
+|Key | Type | Value|
+|--- | ---- | -----|
+|enforce_device_validation|Boolean|Device Validation is an enhanced security feature that allows you to reasonably control the devices that are allowed to access your PayHub account. <br>Turning device validation ON will require users to enter a validation code when they try to access your account on a new device. The validation code is sent to the administrator's email address.<br> Turning device validation OFF will allow any device to access your account.|
+
+###Result
+* A 201 code (created)
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+<%= partial "includes/webhook_get_result" %>
+<%= partial "includes/webhook_patch_method" %>
+## Webhook Configuration
+
+### 1. Get Webhook Configuration
+
+### Request Method
+
+`GET`
+
+### Endpoint (URL to Call)
+
+`GET https://api.payhub.com/api/v2/adminSettings/webhookConfiguration`
+
+
+###Result
+You will get the Webhook Configuration that was associated to your account. 
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+
+### 2. Patch Webhook Configuration
+
+### Request Method
+
+`PATCH`
+
+### Endpoint (URL to Call)
+
+`PATCH https://api.payhub.com/api/v2/adminSettings/webhookConfiguration`
+
+### Parameters
+
+|Key | Type | Value|
+|--- | ---- | -----|
+|webhookActive|Boolean|Set it to True/False to enable/disable the notifications|
+|virtualHub|Boolean|Set it to True/False to enable/disable the notifications for transactions that are coming from your Virtual Terminal|
+|endPoint|String|Your EndPoint for receive our notifications|
+|batchIsActive|Boolean|Set it to True/False to enable/disable the notifications for Batches|
+|api|Boolean|Set it to True/False to enable/disable the notifications for transactions that are coming from your API|
+|recurringBill|Boolean|Set it to True/False to enable/disable the notifications for transactions that are coming from your Recurring bills|
+|mobileHub|Boolean|Set it to True/False to enable/disable the notifications for transactions that are coming from your Mobile Hub|
+
+
+###Result
+* A 201 code (created)
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+<%= partial "includes/riskFraud_get_result" %>
+<%= partial "includes/riskFraud_patch_method" %>
+## Risk and Fraud Settings
+
+### 1. Get Risk and Fraud Settings
+
+### Request Method
+
+`GET`
+
+### Endpoint (URL to Call)
+
+`GET https://api.payhub.com/api/v2/adminSettings/riskFraudDetection`
+
+
+###Result
+You will get the Risk and Fraud Settings that are associated to your account. 
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+
+### 2. Patch Risk and Fraud Settings
+
+### Request Method
+
+`PATCH`
+
+### Endpoint (URL to Call)
+
+`PATCH https://api.payhub.com/api/v2/adminSettings/riskFraudDetection`
+
+### Parameters
+
+###Email
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False to enable/disable the "Copy the following email addresses on Risk/Fraud notifications" option|
+|email_address|String|Valid email address for Risk/Fraud notifications|
+
+###Transaction Volume Settings
+
+|Key | Type | Value|
+|--- | ---- | -----|
+|sale_trn_amount_below|Node|Set values for "When a sales transaction amount is below"|
+|sale_trn_amount_above|Node|Set values for "When a sales transaction amount is above"|
+|refund_trn_amount_below|Node|Set values for "When a refund transaction amount is below"|
+|refund_trn_amount_above|Node|Set values for "When a sales transaction amount is above"|
+|days_trn_amount_more_than|Node|Set values for "When the day's transactions amount to more than"|
+|hours_trn_number_more_than|Node|Set values for "When the hour's transactions number more than"|
+|days_trn_number_more_than|Node|Set values for "WWhen the day's transactions number more than"|
+
+###Card filtering
+
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False to enable/disable the "Require a matching authorization code for offline transactions (made in the last 30 days)." option|
+
+###Credit Card Security Codes
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False to enable/disable the "Require a CVV/CCV/CID when processing manually entered (non swiped) transactions." option|
+|cvv_mismatch|Node|Set values for "Minimum Threshold"|
+
+###Address Verification System (AVS)
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False to enable/disable the "Require an address when processing manually entered (non swiped) transactions." option|
+|avs_mismatch_street_and_zip_code|Node|Set values for "Mismatched Street Address and Zip Code"|
+|avs_mismatch_street|Node|Set values for "Mismatched Street Address"|
+|avs_mismatch_zip_code|Node|Set values for "Mismatched Zip Code"|
+
+
+###Options and Values for each node
+
+**Note:** for each node described above these two options are required.
+
+|Key | Type | Value|
+|--- | ---- | -----|
+|option|String|Posible Values are: 1, 2, and 3 <br> <ul><li> 1:Ignore this Setting</li><li>2:Process and Hold</li><li>3:Deny</li></ul>|
+|value|String|Amount|
+
+
+###Result
+* A 201 code (created)
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+
+</br>
+</br>
+</br>
+</br>
+
+<%= partial "includes/roles_get_result" %>
+<%= partial "includes/roles_post_and_patch_method" %>
+## Role Settings
+
+### 1. Get All user roles
+
+### Request Method
+
+`GET`
+
+### Endpoint (URL to Call)
+
+`GET https://api.payhub.com/api/v2/userRole/roles`
+
+
+###Result
+You will get the list of the rol names that are associated to your account. 
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+### 2. Get user role by Id
+
+### Request Method
+
+`GET`
+
+### Endpoint (URL to Call)
+
+`GET https://api.payhub.com/api/v2/userRole/roles/{id}`
+
+
+###Result
+You will get all the settings for that particular role. 
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+
+### 3. Patch Risk and Fraud Settings
+
+### Request Method
+
+`PATCH`
+
+### Endpoint (URL to Call)
+
+`PATCH https://api.payhub.com/api/v2/userRole/roles/update/{id}`
+
+###General Structure
+|Key | Type | Value|
+|--- | ---- | -----|
+|roleName|String|the role name|
+|firstDefaultScreen|Numeric String|The first default screen that will be showed after you login <br>Allowed values are: 1,2, and 3 <br><ul><li>1: Home</li><li>2: Process a Card</li><li>3: Reports</li></ul>|
+|transactions|NODE|Json Node that allows you to set permissions related to transactions|
+|reports|NODE|Json Node that allows you to set permissions related to reports|
+|help|NODE|Json Node that allows you to set permissions related to help options and tickets|
+|mobileVTAcces|NODE|Json Node that allows you to set permissions related to you mobile vt access|
+|admin|NODE|Json Node that allows you to set permissions related to other administration settings|
+|customer|NODE|Json Node that allows you to set permissions related to customers|
+|webPosAccess|NODE|Json Node that allows you to set permissions related to your webposs access|
+
+### Parameters
+
+###transactions
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|transactionOptions|NODE|Json Node Described above|
+###transactionOptions Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|viewHostedShop|Boolean|Set it to True/False|
+|viewSubmitBatch|Boolean|Set it to True/False|
+|currentBatches|Boolean|Set it to True/False|
+|allBatches|Boolean|Set it to True/False|
+|txtRefundupto|Numeric String|Enter a numeric value for this option, any other String will not be accepted|
+|single|NODE|Json Node Described above|
+|recurringBills|NODE|Json Node Described above|
+###Single Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|singleOptions|NODE|Json Node Described above|
+###Single Options Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|voidupto|Boolean|Set it to True/False|
+|sales|Boolean|Set it to True/False|
+|refund|Boolean|Set it to True/False|
+|viewTransaction|Boolean|Set it to True/False|
+###RecurringBills Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|recurringBillOptions|NODE|Json Node Described above|
+###RecurringBills Options Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|viewHostedShop|Boolean|Set it to True/False|
+|edit|Boolean|Set it to True/False|
+|delete|Boolean|Set it to True/False|
+|add|Boolean|Set it to True/False|
+
+###Reports
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|reportOptions|NODE|Json Node Described above|
+###Reports Options Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|custom|Boolean|Set it to True/False|
+|standard|NODE|Json Node Described above|
+###Standard Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|standardOptions|NODE|Json Node Described above|
+###Standard Options Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|product|Boolean|Set it to True/False|
+|recurrbill|Boolean|Set it to True/False|
+|users|Boolean|Set it to True/False|
+|transaction|Boolean|Set it to True/False|
+|batch|Boolean|Set it to True/False|
+|customer|Boolean|Set it to True/False|
+###MobileVT Access
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+
+###Help 
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|helpOptions|NODE|Json Node Described above|
+###Help Options Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|tickets|NODE|Json Node Described above|
+###Tickets Node 
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|ticketsOptions|NODE|Json Node Described above|
+###Tickets Options Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|edit|Boolean|Set it to True/False|
+|add|Boolean|Set it to True/False|
+
+###Admin Settings
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|adminOptions|NODE|Json Node Described above|
+###Admin Options Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|product|NODE|Json Node Described above|
+|users|NODE|Json Node Described above|
+|hostedShopCart|Boolean|Set it to True/False|
+|riskAndFraud|NODE|Json Node Described above|
+|webposSetUp|Boolean|Set it to True/False|
+|general|NODE|Json Node Described above|
+###Product Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|productOptions|NODE|Json Node Described above|
+###Product Options Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|edit|Boolean|Set it to True/False|
+|delete|Boolean|Set it to True/False|
+|bulkUpload|Boolean|Set it to True/False|
+|add|Boolean|Set it to True/False|
+###Users Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|usersOptions|NODE|Json Node Described above|
+###User Options Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|deleteRole|Boolean|Set it to True/False|
+|manageRole|Boolean|Set it to True/False|
+|editRole|Boolean|Set it to True/False|
+|addRole|Boolean|Set it to True/False|
+|edit|Boolean|Set it to True/False|
+|delete|Boolean|Set it to True/False|
+|add|Boolean|Set it to True/False|
+|usersEditAdmin|Boolean|Set it to True/False|
+###Risk and Fraud Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|riskAndFraudOptions|NODE|Json Node Described above|
+###Risk and Fraud Options
+|Key | Type | Value|
+|--- | ---- | -----|
+|riskfraudSetting|Boolean|Set it to True/False|
+|riskfraudFlagTrn|Boolean|Set it to True/False|
+###General Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|generalOptions|NODE|Json Node Described above|
+###General Options node
+|Key | Type | Value|
+|--- | ---- | -----|
+|validateDev|Boolean|Set it to True/False|
+|thirdParyApi|Boolean|Set it to True/False|
+|shippingTax|Boolean|Set it to True/False|
+|branding|Boolean|Set it to True/False|
+|generalSetting|Boolean|Set it to True/False|
+
+###Customer Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|customerOptions|NODE|Json Node Described above|
+###Customer Options node
+|Key | Type | Value|
+|--- | ---- | -----|
+|edit|Boolean|Set it to True/False|
+|delete|Boolean|Set it to True/False|
+|view|Boolean|Set it to True/False|
+|add|Boolean|Set it to True/False|
+
+###WebPos Access Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|webPosAccessOptions|NODE|Json Node Described above|
+###WebPos Access Options node
+|Key | Type | Value|
+|--- | ---- | -----|
+|admin|NODE|Json Node Described above|
+|quitPos|Boolean|Set it to True/False|
+|manualPriceChange|Boolean|Set it to True/False|
+|add|Boolean|Set it to True/False|
+###Admin Node
+|Key | Type | Value|
+|--- | ---- | -----|
+|checked|Boolean|Set it to True/False|
+|adminOptions|NODE|Json Node Described above|
+###Admin Options node
+|Key | Type | Value|
+|--- | ---- | -----|
+|hotKey|Boolean|Set it to True/False|
+|submitBatch|Boolean|Set it to True/False|
+|deviceList|Boolean|Set it to True/False|
+|generalSettings|Boolean|Set it to True/False|
+|tills|Boolean|Set it to True/False|
+|display|Boolean|Set it to True/False|
+|customPrompt|Boolean|Set it to True/False|
+|customMessage|Boolean|Set it to True/False|
+
+###Result
+* A 201 code (created)
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+### 4. Post Risk and Fraud Settings
+
+### Request Method
+
+`POST`
+
+### Endpoint (URL to Call)
+
+`POST https://api.payhub.com/api/v2/userRole/roles/create`
+
+###Result
+* A 201 code (created)
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.

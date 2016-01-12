@@ -4110,1548 +4110,6 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-          <h1 id="transaction-report">Transaction Report</h1>
-
-<pre><code class="highlight java">
-<span class="kn">package</span> <span class="n">transactions</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.UnsupportedEncodingException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.http.Header</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.http.HttpResponse</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.http.client.ClientProtocolException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.http.client.HttpClient</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.http.client.methods.HttpPost</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.http.entity.StringEntity</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.http.impl.client.DefaultHttpClient</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpConnectionParams</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpParams</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.json.JSONException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.json.JSONObject</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Transactions</span> <span class="o">{</span>
-
-  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">findTransactions</span><span class="o">()</span> <span class="o">{</span>
-    <span class="k">try</span> <span class="o">{</span>
-      <span class="n">HttpClient</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DefaultHttpClient</span><span class="o">();</span>
-      <span class="n">HttpParams</span> <span class="n">params</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">getParams</span><span class="o">();</span>
-      <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
-
-      <span class="n">JSONObject</span> <span class="n">jsonRequestObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="o">;</span>
-
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"batchIdFrom"</span><span class="o">,</span> <span class="s">"5"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"batchIdTo"</span><span class="o">,</span> <span class="s">"10"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"transactionType"</span><span class="o">,</span> <span class="s">"Sale"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"responseCode"</span><span class="o">,</span> <span class="s">"00"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amountFrom"</span><span class="o">,</span> <span class="s">"1"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amountTo"</span><span class="o">,</span> <span class="s">"2"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"firstName"</span><span class="o">,</span> <span class="s">"First"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"lastName"</span><span class="o">,</span> <span class="s">"Contact"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"phoneNumber"</span><span class="o">,</span> <span class="s">"(415) 479 1349"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"email"</span><span class="o">,</span> <span class="s">"jhon@company.com"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"trnDateFrom"</span><span class="o">,</span> <span class="s">"2015-06-06 00:00:00"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"trnDateTo"</span><span class="o">,</span> <span class="s">"2015-07-07 23:59:59"</span><span class="o">);</span>
-      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"cardType"</span><span class="o">,</span> <span class="s">"Visa"</span><span class="o">);</span>
-
-
-      <span class="n">HttpPost</span> <span class="n">postCreate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpPost</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
-      <span class="n">postCreate</span><span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"Authorization"</span><span class="o">,</span> <span class="s">"Bearer dfd4f12a-79af-4825-8dba-db27342c8491"</span><span class="o">);</span><span class="c1">//You put your token here</span>
-      <span class="n">postCreate</span><span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"Content-Type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">);</span>
-      <span class="n">postCreate</span><span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"Accept"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">);</span>
-
-      <span class="n">StringEntity</span> <span class="n">se</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringEntity</span><span class="o">(</span><span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-      <span class="n">postCreate</span><span class="o">.</span><span class="na">setEntity</span><span class="o">(</span><span class="n">se</span><span class="o">);</span>
-      <span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">postCreate</span><span class="o">);</span> <span class="c1">//You return this response and work with it</span>
-
-      <span class="n">String</span> <span class="n">json</span> <span class="o">=</span> <span class="s">" "</span><span class="o">;</span>
-      <span class="n">JSONObject</span> <span class="n">jsonResponseObject</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-      <span class="kt">int</span> <span class="n">statusCode</span> <span class="o">=</span> <span class="n">responseDataRequest</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">();</span>
-      <span class="n">InputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getEntity</span><span class="o">().</span><span class="na">getContent</span><span class="o">();</span>
-      <span class="k">if</span> <span class="o">(</span><span class="n">statusCode</span> <span class="o">&gt;=</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">statusCode</span> <span class="o">&lt;</span> <span class="mi">400</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">BufferedReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">responseDataRequest</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
-                <span class="n">String</span> <span class="n">line</span><span class="o">;</span>
-                <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span> 
-                    <span class="n">response</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">);</span> 
-                <span class="o">}</span>
-                    <span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-                      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">response</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>      
-            <span class="o">}</span><span class="k">else</span><span class="o">{</span>
-                <span class="n">BufferedReader</span> <span class="n">er</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">responseDataRequest</span><span class="o">.</span><span class="na">getErrorStream</span><span class="o">()));</span>
-                <span class="n">String</span> <span class="n">line</span><span class="o">;</span>
-                <span class="k">try</span> <span class="o">{</span>
-                    <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-                     <span class="k">while</span><span class="o">((</span><span class="n">c</span> <span class="o">=</span> <span class="n">er</span><span class="o">.</span><span class="na">read</span><span class="o">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>                          
-                          <span class="n">response</span><span class="o">.</span><span class="na">append</span><span class="o">((</span><span class="kt">char</span><span class="o">)</span><span class="n">c</span><span class="o">);</span>
-                     <span class="o">}</span>                      
-
-                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                        <span class="c1">// TODO Auto-generated catch block</span>
-                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-                    <span class="o">}</span>
-                  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">response</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-            <span class="o">}</span>  
-
-
-    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">JSONException</span> <span class="n">e</span><span class="o">){</span>
-      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
-    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">UnsupportedEncodingException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
-    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ClientProtocolException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
-    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre>
-
-<pre><code class="highlight php"><span class="cp">&lt;?php</span>
-  <span class="nv">$processed</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
-  <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
-
-  <span class="c1">//Defining the Web Service URL
-</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="p">;</span>
-
-
-  <span class="nv">$batchIdFrom</span><span class="o">=</span> <span class="s2">"5"</span><span class="p">;</span>
-  <span class="nv">$batchIdTo</span><span class="o">=</span> <span class="s2">"10"</span><span class="p">;</span>
-  <span class="nv">$transactionType</span><span class="o">=</span> <span class="s2">"Sale"</span><span class="p">;</span>
-  <span class="nv">$responseCode</span><span class="o">=</span> <span class="s2">"00"</span><span class="p">;</span>
-  <span class="nv">$amountFrom</span><span class="o">=</span> <span class="s2">"1"</span><span class="p">;</span>
-  <span class="nv">$amountTo</span><span class="o">=</span> <span class="s2">"2"</span><span class="p">;</span>
-  <span class="nv">$firstName</span><span class="o">=</span> <span class="s2">"First"</span><span class="p">;</span>
-  <span class="nv">$lastName</span><span class="o">=</span> <span class="s2">"Contact"</span><span class="p">;</span>
-  <span class="nv">$phoneNumber</span><span class="o">=</span> <span class="s2">"(415) 479 1349"</span><span class="p">;</span>
-  <span class="nv">$email</span><span class="o">=</span> <span class="s2">"jhon@company.com"</span><span class="p">;</span>
-  <span class="nv">$trnDateFrom</span><span class="o">=</span> <span class="s2">"2015-06-06 00:00:00"</span><span class="p">;</span>
-  <span class="nv">$trnDateTo</span><span class="o">=</span> <span class="s2">"2015-07-07 23:59:59"</span><span class="p">;</span>
-  <span class="nv">$cardType</span><span class="o">=</span> <span class="s2">"Visa"</span><span class="p">;</span>
-
-
-  <span class="c1">//Convert data to array to send it to the WS as JSON format
-</span>  <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
-  <span class="nv">$data</span><span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"batchIdFrom"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$batchIdFrom</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"batchIdTo"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$batchIdTo</span><span class="s2">"</span><span class="p">,</span>
-                  <span class="s2">"transactionType"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$transactionType</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"responseCode"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$responseCode</span><span class="s2">"</span><span class="p">,</span>
-                  <span class="s2">"amountFrom"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$amountFrom</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"amountTo"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$amountTo</span><span class="s2">"</span><span class="p">,</span>
-                  <span class="s2">"firstName"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$firstName</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"lastName"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$lastName</span><span class="s2">"</span><span class="p">,</span>
-                  <span class="s2">"phoneNumber"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$phoneNumber</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"email"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$email</span><span class="s2">"</span><span class="p">,</span>
-                  <span class="s2">"trnDateFrom"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$trnDateFrom</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"trnDateTo"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$trnDateTo</span><span class="s2">"</span><span class="p">,</span><span class="s2">"cardType"</span><span class="o">=&gt;</span><span class="s2">"</span><span class="nv">$cardType</span><span class="s2">"</span><span class="p">);</span>
-  <span class="c1">//Convert data from Array to JSON
-</span>  <span class="nv">$data_string</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-
-  <span class="c1">//Creating a CURL object to access the WS
-</span>  <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
-  <span class="c1">//Setting the address to connect to
-</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$WsURL</span><span class="p">);</span>
-  <span class="c1">//Setting HTTP method. For a new transaction we need to use POST
-</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"POST"</span><span class="p">);</span>
-  <span class="c1">//Setting data in JSON format
-</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nv">$data_string</span><span class="p">);</span>
-  <span class="c1">//Setting the proper header.
-</span>  <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
-</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
-    <span class="s1">'Content-Type: application/json'</span><span class="p">,</span>
-    <span class="s1">'Accept: application/json'</span><span class="p">,</span>
-    <span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">)</span>
-    <span class="p">);</span>
-  <span class="c1">//Store the response as a variable and not showing the content as echo $variable
-</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-  <span class="c1">//Set to return the response header, this is to analyze the result and the transaction ID
-</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-
-  <span class="c1">//execute connection to the Web Service
-</span>  <span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
-  <span class="c1">// get some data from the response
-</span>  <span class="nv">$httpcode</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
-  <span class="nv">$header_size</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HEADER_SIZE</span><span class="p">);</span>
-  <span class="c1">//Get the header as string.
-</span>  <span class="nv">$header</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$response</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$header_size</span><span class="p">);</span>
-  <span class="c1">//close connection to the Web Service
-</span>  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
-
-  <span class="c1">//Obtain the data from the sale recently created
-</span>  <span class="k">if</span> <span class="p">(</span><span class="nv">$httpcode</span><span class="o">==</span><span class="mi">201</span><span class="p">){</span>
-    <span class="c1">//find the url of the sale (Location header in the response)
-</span>    <span class="nb">preg_match</span><span class="p">(</span><span class="s2">"!</span><span class="se">\r\n</span><span class="s2">(?:Location): *(.*?) *</span><span class="se">\r\n</span><span class="s2">!"</span><span class="p">,</span> <span class="nv">$header</span><span class="p">,</span> <span class="nv">$matches</span><span class="p">);</span>
-    <span class="c1">//$url contains the URL to GET the data from the Web Service
-</span>    <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-    <span class="c1">//Once we get the transaction ID we will query for the information of the last transaction
-</span>    <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
-    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$url</span><span class="p">);</span>
-    <span class="c1">//Setting HTTP method. To get a transaction response we need to use GET
-</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"GET"</span><span class="p">);</span>
-    <span class="c1">//Setting the proper header.
-</span>    <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
-</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">));</span>
-    <span class="c1">//Store the response as a variable and not showing the content as echo $variable
-</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-    <span class="c1">//execute connection to the Web Service
-</span>    <span class="nv">$response_json</span><span class="o">=</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
-    <span class="c1">//close connection to the Web Service
-</span>    <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
-    <span class="c1">//show result (standard JSON), parse it, process it, etc..
-</span>    <span class="k">echo</span> <span class="nv">$response_json</span><span class="p">;</span>
-    <span class="c1">// now you could parse the json object to array if you preffer: $obj = json_decode($response_json);
-</span>    <span class="nv">$array</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$response_json</span><span class="p">);</span>
-    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
-    <span class="nb">print_r</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
-    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="c1">//There was an error with the WS
-</span>  <span class="k">else</span><span class="p">{</span>
-    <span class="k">echo</span> <span class="s2">"Error creating the "</span><span class="o">.</span><span class="nb">strtoupper</span><span class="p">(</span><span class="nv">$trans_type</span><span class="p">)</span><span class="o">.</span><span class="s2">": RESPONSE MESSAGE"</span><span class="p">;</span>
-    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
-    <span class="k">echo</span> <span class="nv">$response</span><span class="p">;</span>
-    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
-  <span class="p">}</span>
-
-<span class="cp">?&gt;</span>
-</code></pre>
-
-<pre><code class="highlight csharp"><span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">PayHubSamples</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">Transactions</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">findTransactions</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="p">);</span>
-                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
-                <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
-
-                <span class="n">var</span> <span class="n">transaction</span> <span class="p">=</span> <span class="k">new</span>
-                <span class="p">{</span>
-                    <span class="n">batchIdFrom</span><span class="p">=</span> <span class="s">"5"</span><span class="p">,</span>
-                    <span class="n">batchIdTo</span><span class="p">=</span> <span class="s">"10"</span><span class="p">,</span>
-                    <span class="n">transactionType</span><span class="p">=</span> <span class="s">"Sale"</span><span class="p">,</span>
-                    <span class="n">responseCode</span><span class="p">=</span> <span class="s">"00"</span><span class="p">,</span>
-                    <span class="n">amountFrom</span><span class="p">=</span> <span class="s">"1"</span><span class="p">,</span>
-                    <span class="n">amountTo</span><span class="p">=</span> <span class="s">"2"</span><span class="p">,</span>
-                    <span class="n">firstName</span><span class="p">=</span> <span class="s">"First"</span><span class="p">,</span>
-                    <span class="n">lastName</span><span class="p">=</span> <span class="s">"Contact"</span><span class="p">,</span>
-                    <span class="n">phoneNumber</span><span class="p">=</span> <span class="s">"(415) 479 1349"</span><span class="p">,</span>
-                    <span class="n">email</span><span class="p">=</span> <span class="s">"jhon@company.com"</span><span class="p">,</span>
-                    <span class="n">trnDateFrom</span><span class="p">=</span> <span class="s">"2015-06-06 00:00:00"</span><span class="p">,</span>
-                    <span class="n">trnDateTo</span><span class="p">=</span> <span class="s">"2015-07-07 23:59:59"</span><span class="p">,</span>
-                    <span class="n">cardType</span><span class="p">=</span> <span class="s">"Visa"</span>
-                <span class="p">};</span>
-
-                <span class="kt">string</span> <span class="n">json</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="n">transaction</span><span class="p">);</span>
-
-                <span class="n">request</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"Bearer dfd4f12a-79af-4825-8dba-db27342c8491"</span><span class="p">);</span>
-                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
-                <span class="n">request</span><span class="p">.</span><span class="n">Accept</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
-
-                <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">streamWriter</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="nf">GetRequestStream</span><span class="p">()))</span>
-                <span class="p">{</span>
-                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
-                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Flush</span><span class="p">();</span>
-                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
-                <span class="p">}</span>
-
-                 <span class="k">try</span>
-                <span class="p">{</span>
-                    <span class="n">var</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">request</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span>
-                    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"\nSending 'Put' request to URL"</span><span class="p">);</span>
-                    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Response Code : "</span> <span class="p">+</span> <span class="n">response</span><span class="p">.</span><span class="n">StatusCode</span><span class="p">);</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">OK</span> <span class="p">==</span> <span class="n">response</span><span class="p">.</span><span class="n">StatusCode</span><span class="p">)</span>
-                    <span class="p">{</span>
-                        <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
-                            <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
-                    <span class="p">}</span>
-                    <span class="k">else</span>
-                    <span class="p">{</span>
-                        <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
-                        <span class="p">{</span>
-                            <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
-                        <span class="p">}</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-                <span class="k">catch</span> <span class="p">(</span><span class="n">WebException</span> <span class="n">wex</span><span class="p">)</span>
-                <span class="p">{</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
-                    <span class="p">{</span>
-                        <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">errorResponse</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span><span class="p">)</span><span class="c1">//You return wex.Response instead
-</span>                        <span class="p">{</span>
-                            <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">errorResponse</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
-                            <span class="p">{</span>
-                                <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
-                            <span class="p">}</span>
-                        <span class="p">}</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="k">return</span> <span class="n">result</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-
-<pre><code class="highlight ruby">
-    <span class="nb">require</span> <span class="s1">'uri'</span>
-    <span class="nb">require</span> <span class="s1">'net/http'</span>
-    <span class="nb">require</span> <span class="s1">'json'</span>
-
-    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="p">)</span>
-
-    <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
-
-    <span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="n">request</span><span class="p">[</span><span class="s2">"content-type"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
-    <span class="n">request</span><span class="p">[</span><span class="s2">"accept"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
-    <span class="n">request</span><span class="p">[</span><span class="s2">"authorization"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Bearer 2a5d6a73-d294-4fba-bfba-957a4948d4a3'</span>
-    <span class="n">request</span><span class="p">[</span><span class="s2">"cache-control"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'no-cache'</span>
-
-    <span class="n">informationToSend</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"batchIdFrom"</span><span class="o">=&gt;</span> <span class="s2">"5"</span><span class="p">,</span>
-                         <span class="s2">"batchIdTo"</span><span class="o">=&gt;</span> <span class="s2">"10"</span><span class="p">,</span>
-                         <span class="s2">"transactionType"</span><span class="o">=&gt;</span> <span class="s2">"Sale"</span><span class="p">,</span>
-                         <span class="s2">"responseCode"</span><span class="o">=&gt;</span> <span class="s2">"00"</span><span class="p">,</span>
-                         <span class="s2">"amountFrom"</span><span class="o">=&gt;</span> <span class="s2">"1"</span><span class="p">,</span>
-                         <span class="s2">"amountTo"</span><span class="o">=&gt;</span> <span class="s2">"2"</span><span class="p">,</span>
-                         <span class="s2">"firstName"</span><span class="o">=&gt;</span> <span class="s2">"First"</span><span class="p">,</span>
-                         <span class="s2">"lastName"</span><span class="o">=&gt;</span> <span class="s2">"Contact"</span><span class="p">,</span>
-                         <span class="s2">"phoneNumber"</span><span class="o">=&gt;</span> <span class="s2">"(415) 479 1349"</span><span class="p">,</span>
-                         <span class="s2">"email"</span><span class="o">=&gt;</span> <span class="s2">"jhon@company.com"</span><span class="p">,</span>
-                         <span class="s2">"trnDateFrom"</span><span class="o">=&gt;</span> <span class="s2">"2015-06-06 00:00:00"</span><span class="p">,</span>
-                         <span class="s2">"trnDateTo"</span><span class="o">=&gt;</span> <span class="s2">"2015-07-07 23:59:59"</span><span class="p">,</span>
-                         <span class="s2">"cardType"</span><span class="o">=&gt;</span> <span class="s2">"Visa"</span>
-                         <span class="p">}</span>                         
-
-    <span class="n">request</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">generate</span><span class="p">(</span><span class="n">informationToSend</span><span class="p">)</span>
-
-    <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-    <span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">read_body</span>
-</code></pre>
-
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"batchIdFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"batchIdTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"transactionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sale"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"responseCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"amountFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"amountTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"First"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Contact"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"phoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"(415) 479 1349"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jhon@company.com"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"trnDateFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-06 00:00:00"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"trnDateTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-07-07 23:59:59"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cardType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Visa"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<h2 id="introduction">Introduction</h2>
-
-<p>This API allows the merchant to search for transactions filtering by a wide range of optional parameters.</p>
-
-<h3 id="request-method">Request Method</h3>
-
-<p><code class="prettyprint">PATCH</code></p>
-
-<h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
-
-<p><code class="prettyprint">webservice URL/api/v2/search/transactionReport</code></p>
-
-<h3 id="required-headers">Required Headers</h3>
-
-<ul>
-<li><strong>Content-Type</strong>: application/json</li>
-<li><strong>Accept</strong>: application/json</li>
-<li><strong>Authorization</strong>: Bearer {auth_token}</li>
-</ul>
-
-<h2 id="parameters">Parameters</h2>
-
-<p>All the parameters are optional, they can be sent in no particular order. If one of the parameters is incorrect the server will return an error.</p>
-
-<p>The parameters are case sensitive.</p>
-
-<p>Below is an explanation of the parameters.</p>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>batchIdFrom, batchIdTo</td>
-<td>Allows the merchant to look for transactions where the <strong>batchId</strong> is between the batchIdFrom and batchIdTo. <br>You can also use any one of the two parameters. In that case, the result will be the transactions with the batchId greater than <strong>batchIdFrom</strong>, or the batchId less than <strong>batchIdTo</strong>.</td>
-</tr>
-<tr>
-<td>transactionType</td>
-<td>Allows the merchant to look for transactions where the transaction type is any one of the following:<ul><li>Void</li><li>Sale</li><li>Refund</li><li>Verify</li></ul></td>
-</tr>
-<tr>
-<td>responseCode</td>
-<td>Allows the merchant to look for transactions where the response code is equal to a specific code. For example, the code “00” means a successful transaction.</td>
-</tr>
-<tr>
-<td>amountFrom, amountTo</td>
-<td>Allows the merchant to look for transactions where the amount of the transaction is between the <strong>amountFrom</strong> and <strong>amountTo</strong>. <br>You can use any one of the two parameters. In that case, the result will be the transactions with the amount greater than <strong>amountFrom</strong>, or the amount less than <strong>amountTo</strong>.</td>
-</tr>
-<tr>
-<td>firstName</td>
-<td>Allows the merchant to look for transactions where the customer’s first name contains the value of the parameter.</td>
-</tr>
-<tr>
-<td>lastName</td>
-<td>Allows the merchant to look for transactions where the customer’s first name contains the value of the parameter.</td>
-</tr>
-<tr>
-<td>phoneNumber</td>
-<td>Allows the merchant to look for transactions where the customer’s phone number contains the value of the parameter.</td>
-</tr>
-<tr>
-<td>email</td>
-<td>This parameter allows the merchant to look for transactions where the customer’s email address contains the value of the parameter.</td>
-</tr>
-<tr>
-<td>trnDateFrom, trnDateTo</td>
-<td>Allows the merchant to look for transactions where the date of the transaction is between the trnDateFrom and trnDateTo. <br>You can use any one of the two parameters. In that case, the result will be the transactions with the date later than the trnDateFrom, or the date earlier than trnDateTo.<br>Format: “yyyy-mm-dd hh:mm:ss”.</td>
-</tr>
-<tr>
-<td>cardType</td>
-<td>This parameter allows the merchant to look for transactions where the card type matches the value of the parameter. <br>For instance: MasterCard, Visa.</td>
-</tr>
-<tr>
-<td>cardLast4Digits</td>
-<td>Allows the merchant to look for transactions where the credit card’s last four digits matches the value of the parameter. <br>Format: “XXXX”.</td>
-</tr>
-<tr>
-<td>cardToken</td>
-<td>Allows the merchant to look for transactions where the credit card’s token matches the value of the parameter. <br>Format: “XXXXXXXXXXXXXXXX”.</td>
-</tr>
-<tr>
-<td>authAmountFrom, authAmountTo</td>
-<td>Allows the merchant to look for transactions where the authorized amount of the transaction is between the authAmountFrom and authAmountTo. <br>You can use any one of the two parameters. In that case the result will be the transactions with the authorization amount is greater than <strong>authAmountFrom</strong>, or the authorization amount less than <strong>authAmountTo</strong>.</td>
-</tr>
-<tr>
-<td>swiped</td>
-<td>Allows the merchant to look for transactions that where performed with a swiper device. <br>Valid values: true, false</td>
-</tr>
-<tr>
-<td>source</td>
-<td>Allows the merchant to look for transactions where the source matches the value of the parameter. <br>For instance: “3rd Party API”</td>
-</tr>
-<tr>
-<td>note</td>
-<td>Allows the merchant to look for transactions where the note matches the value of the parameter.</td>
-</tr>
-<tr>
-<td>transactionStatus</td>
-<td>Allows the merchant to look for transactions where the transaction status matches the value of the parameter. <br>For instance: “Approved”</td>
-</tr>
-<tr>
-<td>recurringBillId</td>
-<td>Allows the merchant to look for transactions that were scheduled.</td>
-</tr>
-</tbody></table>
-
-<h2 id="result-data">Result Data</h2>
-<pre><code class="highlight shell"><span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"amount"</span>: <span class="s2">"99.25"</span>,
-    <span class="s2">"authAmount"</span>: <span class="s2">"99.25"</span>,
-    <span class="s2">"batchID"</span>: <span class="s2">"1302"</span>,
-    <span class="s2">"cardLast4Digits"</span>: <span class="s2">"XXXXXXXXXXXX8888"</span>,
-    <span class="s2">"cardToken"</span>: <span class="s2">"9999000000001838"</span>,
-    <span class="s2">"cardType"</span>: <span class="s2">"Visa"</span>,
-    <span class="s2">"customerName"</span>: <span class="s2">"Joe Tester"</span>,
-    <span class="s2">"email"</span>: <span class="s2">"lsun@payhub.com"</span>,
-    <span class="s2">"note"</span>: <span class="s2">""</span>,
-    <span class="s2">"phoneNumber"</span>: <span class="s2">"(917) 823-4567"</span>,
-    <span class="s2">"recurringBillId"</span>: <span class="s2">"2108"</span>,
-    <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>,
-    <span class="s2">"responseText"</span>: <span class="s2">"NO  MATCH"</span>,
-    <span class="s2">"source"</span>: <span class="s2">"Recurring"</span>,
-    <span class="s2">"swiped"</span>: <span class="s2">"true"</span>,
-    <span class="s2">"transactionDate"</span>: <span class="s2">"2015-02-15 01:10:19"</span>,
-    <span class="s2">"transactionID"</span>: <span class="s2">"180628"</span>,
-    <span class="s2">"transactionStatus"</span>: <span class="s2">"Approved"</span>,
-    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>
-  <span class="o">}</span>,
-  <span class="o">{</span>
-    <span class="s2">"amount"</span>: <span class="s2">"99.25"</span>,
-    <span class="s2">"authAmount"</span>: <span class="s2">"99.25"</span>,
-    <span class="s2">"batchID"</span>: <span class="s2">"1302"</span>,
-    <span class="s2">"cardLast4Digits"</span>: <span class="s2">"XXXXXXXXXXXX8888"</span>,
-    <span class="s2">"cardToken"</span>: <span class="s2">"9999000000001838"</span>,
-    <span class="s2">"cardType"</span>: <span class="s2">"Visa"</span>,
-    <span class="s2">"customerName"</span>: <span class="s2">"Joe Tester"</span>,
-    <span class="s2">"email"</span>: <span class="s2">"lsun@payhub.com"</span>,
-    <span class="s2">"note"</span>: <span class="s2">""</span>,
-    <span class="s2">"phoneNumber"</span>: <span class="s2">"(917) 823-4567"</span>,
-    <span class="s2">"recurringBillId"</span>: <span class="s2">"2109"</span>,
-    <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>,
-    <span class="s2">"responseText"</span>: <span class="s2">"NO  MATCH"</span>,
-    <span class="s2">"source"</span>: <span class="s2">"Recurring"</span>,
-    <span class="s2">"swiped"</span>: <span class="s2">"true"</span>,
-    <span class="s2">"transactionDate"</span>: <span class="s2">"2015-02-15 01:10:21"</span>,
-    <span class="s2">"transactionID"</span>: <span class="s2">"180629"</span>,
-    <span class="s2">"transactionStatus"</span>: <span class="s2">"Approved"</span>,
-    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-</code></pre>
-
-<p>The result data is an array of objects in JSON format.</p>
-
-          <h1 id="payhub-webhook">PayHub Webhook</h1>
-
-<h2 id="configuration-process">Configuration Process</h2>
-
-<p><strong>With this new service you can receive a notification in two cases:</strong></p>
-
-<ul>
-<li><strong>for each transaction in your account.</strong></li>
-<li><strong>when a batch was settled.</strong></li>
-</ul>
-
-<p>Go to your Merchant Administration and select <code class="prettyprint">Webhook Configuration</code>.</p>
-
-<p><img src="images/webhook-admin.png" /></p>
-
-<p>There, you will see your current webhook configuration.</p>
-
-<p>From this page, you can enter your website url and select those services for which you would like to receive notifications. 
-Also, once that the webhook is configured, you can disable or enable it at any time.</p>
-
-<h2 id="services">Services</h2>
-
-<h3 id="transaction-services">Transaction Services</h3>
-
-<ul>
-<li>VirtualHub</li>
-<li>MobileHub</li>
-<li>Recurring Billing</li>
-<li>API</li>
-</ul>
-
-<h3 id="batch-service">Batch Service</h3>
-
-<ul>
-<li>Batch</li>
-</ul>
-
-<h2 id="requirements">Requirements</h2>
-
-<ul>
-<li>The endpoint validation only allows HTTPS.</li>
-<li>The controller for your endpoint must be implemented with a POST method.</li>
-<li>The controller for your endpoint must be set to accept JSON.</li>
-</ul>
-
-<p><img src="images/webhook-admin-config.png" /></p>
-
-<p>After you have saved your configuration (by selecting the green &ldquo;Update&rdquo; button), our service will send you a notification for each event that occurs on your account to the endpoint that you have indicated.</p>
-
-<h2 id="events">Events</h2>
-
-<p>There are two kinds of events: transactions and settled batches.</p>
-
-<h2 id="transaction-message-from-webhook-to-your-endpoint">Transaction Message from Webhook to your endpoint</h2>
-
-<h3 id="the-json-message-is-as-follows:">The JSON message is as follows:</h3>
-<pre><code class="highlight shell">    <span class="o">{</span>
-        <span class="s2">"endpoint"</span>: <span class="s2">"https://yoursite.com/your_controller/"</span>,
-        <span class="s2">"eventType"</span>: <span class="s2">"transaction"</span>,
-        <span class="s2">"event"</span>: <span class="o">{</span>
-            <span class="s2">"type"</span>: <span class="o">{</span>
-                <span class="s2">"transaction"</span>: <span class="o">{</span>
-                    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>,
-                    <span class="s2">"recurringBillId"</span>: <span class="s2">""</span>,
-                    <span class="s2">"responseText"</span>: <span class="s2">"VER UNAVAILABLE"</span>,
-                    <span class="s2">"source"</span>: <span class="s2">"3rd Party API"</span>,
-                    <span class="s2">"cardObscured"</span>: <span class="s2">"XXXXXXXXXXXX4507"</span>,
-                    <span class="s2">"orgId"</span>: <span class="s2">"10002"</span>,
-                    <span class="s2">"transactionId"</span>: <span class="s2">"721"</span>,
-                    <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-</code></pre>
-
-<h3 id="fields-meaning">Fields Meaning</h3>
-
-<table><thead>
-<tr>
-<th>Key</th>
-<th>Type</th>
-<th>Value</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>endpoint</td>
-<td>String</td>
-<td>Your site endpoint to receive the notifications</td>
-</tr>
-<tr>
-<td>eventType</td>
-<td>String</td>
-<td>In this case the type is always &ldquo;transaction&rdquo;</td>
-</tr>
-<tr>
-<td>batch_settled</td>
-<td>Object</td>
-<td>JSON object with batch information</td>
-</tr>
-<tr>
-<td>transaction</td>
-<td>String</td>
-<td>Possible values: <br><ul><li> &ldquo;Sale&rdquo; </li><li> &ldquo;Authorization Only&rdquo; </li><li> &ldquo;Offline&rdquo; </li> <li>&ldquo;Void&rdquo;</li><li>&ldquo;Refund&rdquo;</li></ul></td>
-</tr>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Possible values: <br><ul><li>&ldquo;Virtual Terminal&rdquo;</li><li>&ldquo;3rd Party API&rdquo;</li><li>&ldquo;Recurring&rdquo;</li><li>&ldquo;Mobile VT&rdquo;</li></ul></td>
-</tr>
-<tr>
-<td>orgId</td>
-<td>String</td>
-<td>String</td>
-</tr>
-<tr>
-<td>transactionId</td>
-<td>String</td>
-<td>The transaction id.</td>
-</tr>
-<tr>
-<td>recurringBillId</td>
-<td>String</td>
-<td>The recurring bill id if the transaction was scheduled.</td>
-</tr>
-<tr>
-<td>cardObscured</td>
-<td>String</td>
-<td>the obscured card entered for the transaction.</td>
-</tr>
-<tr>
-<td>responseText</td>
-<td>String</td>
-<td>A descriptive text of the transaction result.</td>
-</tr>
-<tr>
-<td>responseCode</td>
-<td>String</td>
-<td>The code for the transaction result.</td>
-</tr>
-</tbody></table>
-
-<h2 id="batch-message-from-webhook-to-your-endpoint">Batch Message from Webhook to your endpoint</h2>
-
-<h3 id="the-json-message-is-at-follows:">The JSON message is at follows:</h3>
-<pre><code class="highlight shell">
-    <span class="o">{</span>
-        <span class="s2">"endpoint"</span>: <span class="s2">"https://yoursite.com/your_controller/"</span>,
-        <span class="s2">"eventType"</span>: <span class="s2">"batch_settled"</span>,
-        <span class="s2">"event"</span>: <span class="o">{</span>
-            <span class="s2">"type"</span>: <span class="o">{</span>
-                <span class="s2">"batch_settled"</span>: <span class="o">{</span>
-                    <span class="s2">"date"</span>: <span class="s2">"Thu Oct 29 11:23:11 ART 2015"</span>,
-                    <span class="s2">"batch_id"</span>: <span class="s2">"102"</span>,
-                    <span class="s2">"net_total"</span>: <span class="s2">"15"</span>,
-                    <span class="s2">"terminal"</span>: <span class="s2">"Virtual Hub"</span>,
-                    <span class="s2">"trans_count"</span>: <span class="s2">"15"</span>,
-                    <span class="s2">"status"</span>: <span class="s2">"Settled"</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-</code></pre>
-
-<h3 id="fields-meaning">Fields Meaning</h3>
-
-<table><thead>
-<tr>
-<th>Key</th>
-<th>Type</th>
-<th>Value</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>endpoint</td>
-<td>String</td>
-<td>Your site endpoint to receive the notifications</td>
-</tr>
-<tr>
-<td>eventType</td>
-<td>String</td>
-<td>In this case the type is always &ldquo;batch_settled&rdquo;</td>
-</tr>
-<tr>
-<td>batch_settled</td>
-<td>Object</td>
-<td>JSON object with batch information</td>
-</tr>
-<tr>
-<td>date</td>
-<td>String</td>
-<td>Date.</td>
-</tr>
-<tr>
-<td>batch_id</td>
-<td>String</td>
-<td>The batch id.</td>
-</tr>
-<tr>
-<td>net_total</td>
-<td>String</td>
-<td>The total amount of money</td>
-</tr>
-<tr>
-<td>terminal</td>
-<td>String</td>
-<td>The terminal name.</td>
-</tr>
-<tr>
-<td>trans_count</td>
-<td>String</td>
-<td>The number of transaction that were settled on the batch.</td>
-</tr>
-<tr>
-<td>status</td>
-<td>String</td>
-<td>The batch status .</td>
-</tr>
-</tbody></table>
-
-          <h1 id="response-codes">Response Codes</h1>
-
-<table><thead>
-<tr>
-<th>Response Code</th>
-<th>Response Text</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>00</td>
-<td>Approval</td>
-<td>Successful - Approved and completed</td>
-</tr>
-<tr>
-<td>01</td>
-<td>Call</td>
-<td>Failed - Refer to issuer</td>
-</tr>
-<tr>
-<td>02</td>
-<td>Call</td>
-<td>Failed - Refer to issuer-Special condition</td>
-</tr>
-<tr>
-<td>03</td>
-<td>Term ID Error No Merchant</td>
-<td>Failed - Invalid Merchant ID</td>
-</tr>
-<tr>
-<td>04</td>
-<td>Hold-call or Pick Up Card</td>
-<td>Failed - Pick up card (no fraud)</td>
-</tr>
-<tr>
-<td>05</td>
-<td>Decline</td>
-<td>Failed - Do not honor</td>
-</tr>
-<tr>
-<td>06</td>
-<td>Error XXXX</td>
-<td>Failed - General error</td>
-</tr>
-<tr>
-<td>06*</td>
-<td>(Check Service Custom Text)</td>
-<td>Failed - Error response text from check service</td>
-</tr>
-<tr>
-<td>07</td>
-<td>Hold-call or Pick Up Card</td>
-<td>Failed - Pick up card, special condition (fraud account)</td>
-</tr>
-<tr>
-<td>08</td>
-<td>Approval</td>
-<td>Successful - Honor MasterCard with ID</td>
-</tr>
-<tr>
-<td>10</td>
-<td>Partial Approval</td>
-<td>Failed - PayHub does not support partial approvals.</td>
-</tr>
-<tr>
-<td>11</td>
-<td>Approval</td>
-<td>Successful - VIP approval</td>
-</tr>
-<tr>
-<td>12</td>
-<td>Invalid Trans</td>
-<td>Failed - Invalid transaction</td>
-</tr>
-<tr>
-<td>13</td>
-<td>Amount Error</td>
-<td>Failed - Invalid amount</td>
-</tr>
-<tr>
-<td>14</td>
-<td>Card No. Error</td>
-<td>Failed - Invalid card number</td>
-</tr>
-<tr>
-<td>15</td>
-<td>No such Issuer</td>
-<td>Failed - No such issuer</td>
-</tr>
-<tr>
-<td>19</td>
-<td>RE Enter</td>
-<td>Failed - Re-enter transaction</td>
-</tr>
-<tr>
-<td>21</td>
-<td>No Action Taken</td>
-<td>Failed - Unable to back out transaction</td>
-</tr>
-<tr>
-<td>28</td>
-<td>No Reply</td>
-<td>Failed - File is temporarily unavailable</td>
-</tr>
-<tr>
-<td>34</td>
-<td>Transaction Cancelled</td>
-<td>Failed - MasterCard use only, Transaction Cancelled; Fraud Concern (Used in reversal requests only)</td>
-</tr>
-<tr>
-<td>39</td>
-<td>No Credit Acct</td>
-<td>Failed - No credit account</td>
-</tr>
-<tr>
-<td>41</td>
-<td>Hold-call or Pick Up Card</td>
-<td>Failed - Lost card, pick up (fraud account)</td>
-</tr>
-<tr>
-<td>43</td>
-<td>Hold-call or Pick Up Card</td>
-<td>Failed - Stolen card, pick up (fraud account)</td>
-</tr>
-<tr>
-<td>51</td>
-<td>Decline</td>
-<td>Failed - Insufficient funds</td>
-</tr>
-<tr>
-<td>52</td>
-<td>No Check Account</td>
-<td>Failed - No checking account</td>
-</tr>
-<tr>
-<td>53</td>
-<td>No Save Account</td>
-<td>Failed - No savings account</td>
-</tr>
-<tr>
-<td>54</td>
-<td>Expired Card</td>
-<td>Failed - Expired card</td>
-</tr>
-<tr>
-<td>55</td>
-<td>Wrong PIN</td>
-<td>Failed - Incorrect PIN</td>
-</tr>
-<tr>
-<td>57</td>
-<td>Serv not allowed</td>
-<td>Failed - Transaction not permitted-Card</td>
-</tr>
-<tr>
-<td>58</td>
-<td>Serv not allowed</td>
-<td>Failed - Transaction not permitted-Terminal</td>
-</tr>
-<tr>
-<td>59</td>
-<td>Serv not allowed</td>
-<td>Failed - Transaction not permitted-Merchant</td>
-</tr>
-<tr>
-<td>61</td>
-<td>Declined</td>
-<td>Failed - Exceeds withdrawal limit</td>
-</tr>
-<tr>
-<td>62</td>
-<td>Declined</td>
-<td>Failed - Invalid service code, restricted</td>
-</tr>
-<tr>
-<td>63</td>
-<td>Sec Violation</td>
-<td>Failed - Security violation</td>
-</tr>
-<tr>
-<td>65</td>
-<td>Declined</td>
-<td>Failed - Activity limit exceeded</td>
-</tr>
-<tr>
-<td>75</td>
-<td>PIN Exceeded</td>
-<td>Failed - PIN tried exceeded</td>
-</tr>
-<tr>
-<td>76</td>
-<td>Unsolicated Reversal</td>
-<td>Failed - Unable to locate, no match</td>
-</tr>
-<tr>
-<td>77</td>
-<td>No Action Taken</td>
-<td>Failed - Inconsistent data, reversed, or repeat</td>
-</tr>
-<tr>
-<td>78</td>
-<td>No Account</td>
-<td>Failed - No account</td>
-</tr>
-<tr>
-<td>79</td>
-<td>Already Reversed</td>
-<td>Failed - Already reversed at switch</td>
-</tr>
-<tr>
-<td>80</td>
-<td>Date Error</td>
-<td>Failed - Invalid date</td>
-</tr>
-<tr>
-<td>81</td>
-<td>Encryption Error</td>
-<td>Failed - Cryptographic error</td>
-</tr>
-<tr>
-<td>82</td>
-<td>Incorrect CVV</td>
-<td>Failed - CVV data is not correct</td>
-</tr>
-<tr>
-<td>83</td>
-<td>Cannot Verify PIN</td>
-<td>Failed - Cannot verify PIN</td>
-</tr>
-<tr>
-<td>85</td>
-<td>Card OK</td>
-<td>Successful - No reason to decline</td>
-</tr>
-<tr>
-<td>86</td>
-<td>Cannot Verify PIN</td>
-<td>Failed - Cannot verify PIN</td>
-</tr>
-<tr>
-<td>91</td>
-<td>No Reply</td>
-<td>Failed - Issuer or switch is unavailable</td>
-</tr>
-<tr>
-<td>92</td>
-<td>Invalid Routing</td>
-<td>Failed - Destination not found</td>
-</tr>
-<tr>
-<td>93</td>
-<td>Decline</td>
-<td>Failed - Violation, cannot complete</td>
-</tr>
-<tr>
-<td>94</td>
-<td>Duplicate Trans</td>
-<td>Failed - Unable to locate, no match</td>
-</tr>
-<tr>
-<td>96</td>
-<td>System Error</td>
-<td>Failed - System malfunction</td>
-</tr>
-</tbody></table>
-
-          <h1 id="errors">Errors</h1>
-
-<table><thead>
-<tr>
-<th>Error Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>00</td>
-<td>VALID_OPERATION</td>
-</tr>
-<tr>
-<td>02</td>
-<td>CARD_NUMBER_MISSING_CODE</td>
-</tr>
-<tr>
-<td>1009</td>
-<td>INVALID_REFERENCE_NUMBER</td>
-</tr>
-<tr>
-<td>4006</td>
-<td>INVALID_MERCHANT</td>
-</tr>
-<tr>
-<td>4007</td>
-<td>INVALID_TERMINAL</td>
-</tr>
-<tr>
-<td>4008</td>
-<td>INVALID_USER_NAME</td>
-</tr>
-<tr>
-<td>4009</td>
-<td>INVALID_USER_PASSWORD</td>
-</tr>
-<tr>
-<td>4010</td>
-<td>INVALID_RECORD_FORMAT</td>
-</tr>
-<tr>
-<td>4011</td>
-<td>INACTIVE_TERMINAL</td>
-</tr>
-<tr>
-<td>4012</td>
-<td>INVALID_AUTHENTICATION</td>
-</tr>
-<tr>
-<td>4013</td>
-<td>INVALID_TRANSACTION_CD</td>
-</tr>
-<tr>
-<td>4014</td>
-<td>INVALID_OFFLINE_APPROVAL_CD</td>
-</tr>
-<tr>
-<td>4015</td>
-<td>INVALID_CARDHOLDER_ID_CODE</td>
-</tr>
-<tr>
-<td>4016</td>
-<td>INVALID_CARD_HOLDER_ID_DATA</td>
-</tr>
-<tr>
-<td>4017</td>
-<td>INVALID_ACCOUNT_DATA_SOURCE</td>
-</tr>
-<tr>
-<td>4018</td>
-<td>INVALID_CUSTOMER_DATA_FIELD</td>
-</tr>
-<tr>
-<td>4019</td>
-<td>INVALID_CVV_CODE</td>
-</tr>
-<tr>
-<td>4020</td>
-<td>INVALID_CVV_DATA</td>
-</tr>
-<tr>
-<td>4021</td>
-<td>INVALID_TRANSACTION_AMOUNT</td>
-</tr>
-<tr>
-<td>4022</td>
-<td>INVALID_CARD_NUMBER</td>
-</tr>
-<tr>
-<td>4023</td>
-<td>INVALID_BATCH_ID</td>
-</tr>
-<tr>
-<td>4024</td>
-<td>INVALID_TRANSACTION_ID</td>
-</tr>
-<tr>
-<td>4025</td>
-<td>INVALID_CARD_EXPIRY_DATE</td>
-</tr>
-<tr>
-<td>4026</td>
-<td>INVALID_AVS_DATA_FLAG</td>
-</tr>
-<tr>
-<td>4027</td>
-<td>INVALID_CUSTOMER_ID</td>
-</tr>
-<tr>
-<td>4028</td>
-<td>INVALID_CUSTOMER_WEB</td>
-</tr>
-<tr>
-<td>4029</td>
-<td>INVALID_CUSTOMER_EMAIL_ID</td>
-</tr>
-<tr>
-<td>4030</td>
-<td>INVALID_CUSTOMER_BILLING_ADD_ZIP</td>
-</tr>
-<tr>
-<td>4031</td>
-<td>INVALID_CUSTOMER_SHIPPING_ADD_ZIP</td>
-</tr>
-<tr>
-<td>4032</td>
-<td>INACTIVE_MERCHANT</td>
-</tr>
-<tr>
-<td>4033</td>
-<td>INVALID_TERMINAL_ORIGIN</td>
-</tr>
-<tr>
-<td>4034</td>
-<td>INVALID_CARD_DATA_FOR_DEBIT</td>
-</tr>
-<tr>
-<td>4035</td>
-<td>INVALID_TRANSACTION_CODE_FOR_DEBIT</td>
-</tr>
-<tr>
-<td>4036</td>
-<td>INVALID_CUSTOMER_ADDRESS</td>
-</tr>
-<tr>
-<td>4037</td>
-<td>INVALID_CUSTOMER_COMPANY_NAME</td>
-</tr>
-<tr>
-<td>4038</td>
-<td>INVALID_CUSTOMER_DATA</td>
-</tr>
-<tr>
-<td>4039</td>
-<td>INVALID_TRANSACTION_NOTE</td>
-</tr>
-<tr>
-<td>4040</td>
-<td>CARD_NOT_SUPPORT_CODE</td>
-</tr>
-<tr>
-<td>4041</td>
-<td>CVV_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4042</td>
-<td>AVS_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4043</td>
-<td>CARD_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4044</td>
-<td>EXPIRY_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4045</td>
-<td>TRACK_DATA_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4046</td>
-<td>CARD_TOKEN_GENRATION_FAILED_CODE</td>
-</tr>
-<tr>
-<td>4047</td>
-<td>PAYMENT_TYPE_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4048</td>
-<td>TRANSACTION_TYPE_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4049</td>
-<td>TRANSACTION_ID_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4050</td>
-<td>BATCH_ID_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4051</td>
-<td>TERMINAL_ID_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4052</td>
-<td>ORGANIZATION_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4053</td>
-<td>BATCH_TRANSACTION_NOT_FOUND_CODE</td>
-</tr>
-<tr>
-<td>4054</td>
-<td>ALREADY_SETTLED_BATCH_CODE</td>
-</tr>
-<tr>
-<td>4055</td>
-<td>DUPLICATE_BATCH_CODE</td>
-</tr>
-<tr>
-<td>4056</td>
-<td>BATCH_SETTLED_SUCCESSFULLY_CODE</td>
-</tr>
-<tr>
-<td>4057</td>
-<td>BATCH_SETTLEMENT_FAILD_CODE</td>
-</tr>
-<tr>
-<td>4058</td>
-<td>BATCH_REJECTED_CODE</td>
-</tr>
-<tr>
-<td>4059</td>
-<td>NETWORK_UNAVAILABLE_CODE</td>
-</tr>
-<tr>
-<td>4060</td>
-<td>UNABLE_TO_BUILT_REQUEST_CODE</td>
-</tr>
-<tr>
-<td>4061</td>
-<td>RECORD_NOT_FOUND_CODE</td>
-</tr>
-<tr>
-<td>4062</td>
-<td>RECURRING_SAVED_CODE</td>
-</tr>
-<tr>
-<td>4063</td>
-<td>RECURRING_SAVING_FAILED_CODE</td>
-</tr>
-<tr>
-<td>4064</td>
-<td>RECURRING_UPDATION_CODE</td>
-</tr>
-<tr>
-<td>4065</td>
-<td>RECURRING_UPDATION_FAILED_CODE</td>
-</tr>
-<tr>
-<td>4066</td>
-<td>RECURRING_STATUS_CHANGED_SUCCESSFULLY</td>
-</tr>
-<tr>
-<td>4067</td>
-<td>RECURRING_STATUS_CHANGING_FAILED</td>
-</tr>
-<tr>
-<td>4068</td>
-<td>INVALID_TRANSACTION_ID_CODE</td>
-</tr>
-<tr>
-<td>4069</td>
-<td>TRANSACTION_ALREADY_VOIDED_CODE</td>
-</tr>
-<tr>
-<td>4070</td>
-<td>CARD_TYPE_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4071</td>
-<td>INVALID_BATCH_NO_CODE</td>
-</tr>
-<tr>
-<td>4072</td>
-<td>TRANSACTION_ALREADY_REFUNDED_CODE</td>
-</tr>
-<tr>
-<td>4073</td>
-<td>UNABLE_TO_VOID_CODE</td>
-</tr>
-<tr>
-<td>4074</td>
-<td>UNABLE_TO_REFUND_CODE</td>
-</tr>
-<tr>
-<td>4075</td>
-<td>UNABLE_TO_CAPTURE_CODE</td>
-</tr>
-<tr>
-<td>4076</td>
-<td>CAPTURED_TRANSACTION_SENT_CODE</td>
-</tr>
-<tr>
-<td>4077</td>
-<td>CAPTURED_TRANSACTION_FAILED_CODE</td>
-</tr>
-<tr>
-<td>4078</td>
-<td>INVALID_INVOICE_NUMBER</td>
-</tr>
-<tr>
-<td>4080</td>
-<td>INVALID_BILL_TYPE_CODE</td>
-</tr>
-<tr>
-<td>4081</td>
-<td>INVALID_BILL_GENERATION_SPAN_CODE</td>
-</tr>
-<tr>
-<td>4082</td>
-<td>INVALID_END_DATE_TYPE_CODE</td>
-</tr>
-<tr>
-<td>4083</td>
-<td>INVALID_END_BILL_COUNT_CODE</td>
-</tr>
-<tr>
-<td>4084</td>
-<td>INVALID_END_BILL_DATE_CODE</td>
-</tr>
-<tr>
-<td>4085</td>
-<td>INVALID_WEEK_DAYS_CODE</td>
-</tr>
-<tr>
-<td>4086</td>
-<td>INVALID_MONTHLY_TYPE_CODE</td>
-</tr>
-<tr>
-<td>4087</td>
-<td>INVALID_MONTHLY_WEEK_DAYS_CODE</td>
-</tr>
-<tr>
-<td>4088</td>
-<td>INVALID_MONTHLY_DAYS_POSSION_CODE</td>
-</tr>
-<tr>
-<td>4089</td>
-<td>INVALID_MONTHLY_DAYS_CODE</td>
-</tr>
-<tr>
-<td>4090</td>
-<td>INVALID_START_DATE_CODE</td>
-</tr>
-<tr>
-<td>4091</td>
-<td>INVALID_SPECIFIC_DATES_CODE</td>
-</tr>
-<tr>
-<td>4092</td>
-<td>SPECIFIC_SAME_DATES_CODE</td>
-</tr>
-<tr>
-<td>4093</td>
-<td>INVALID_RECURRING_DATA_CODE</td>
-</tr>
-<tr>
-<td>4094</td>
-<td>END_BILL_DATE_BEFORE_START_CODE</td>
-</tr>
-<tr>
-<td>4095</td>
-<td>CARD_HOLDER_DATA_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4096</td>
-<td>CARD_HOLDER_CODE_REQUIRED_CODE</td>
-</tr>
-<tr>
-<td>4097</td>
-<td>INVALID_STATUS_CODE</td>
-</tr>
-<tr>
-<td>4098</td>
-<td>UNABLE_TO_CHANGE_STATUS</td>
-</tr>
-<tr>
-<td>4099</td>
-<td>CARD_VALIDATION_FAILED_CODE</td>
-</tr>
-<tr>
-<td>4100</td>
-<td>RECURRING_CIS_FAILED_CODE</td>
-</tr>
-<tr>
-<td>4101</td>
-<td>UNABLE_BUILT_RECURRING_FILTER__CODE</td>
-</tr>
-<tr>
-<td>4103</td>
-<td>UNABLE_TO_BUILT_NEXT_BILL_CODE</td>
-</tr>
-<tr>
-<td>4501</td>
-<td>INVALID_PHONE_TYPE</td>
-</tr>
-<tr>
-<td>4502</td>
-<td>INVALID_PHONE_NUMBER</td>
-</tr>
-<tr>
-<td>4503</td>
-<td>INVALID_ZIP_CODE</td>
-</tr>
-<tr>
-<td>4504</td>
-<td>INVALID_STATE_CODE</td>
-</tr>
-<tr>
-<td>4505</td>
-<td>INVALID_INTERVAL_TYPE</td>
-</tr>
-<tr>
-<td>4506</td>
-<td>INVALID_END_DATE</td>
-</tr>
-<tr>
-<td>4507</td>
-<td>INVALID_BILL_WEEKLY_DAYS</td>
-</tr>
-<tr>
-<td>4508</td>
-<td>INVALID_YEAR_MONTH_DAYS</td>
-</tr>
-<tr>
-<td>4509</td>
-<td>INVALID_YEAR_BILL_ON_MONTH_NO</td>
-</tr>
-<tr>
-<td>4510</td>
-<td>INVALID_MONTHLY_BILL_TYPE</td>
-</tr>
-<tr>
-<td>4511</td>
-<td>INVALID_MDAYS_POSITION</td>
-</tr>
-<tr>
-<td>4512</td>
-<td>INVALID_MDAYS</td>
-</tr>
-<tr>
-<td>4513</td>
-<td>INVALID_MDAY_EACH_POSITIONS</td>
-</tr>
-<tr>
-<td>4514</td>
-<td>INCONSISTENT_SCHEDULE_FIELDS</td>
-</tr>
-<tr>
-<td>4515</td>
-<td>ACCOUNT_IS_NOT_ADMINISTRATOR</td>
-</tr>
-<tr>
-<td>4516</td>
-<td>INCONSISTENT_CARD_DATA_FIELDS</td>
-</tr>
-<tr>
-<td>4517</td>
-<td>WRONG_OAUTH_TOKEN_FOR_MERCHANT</td>
-</tr>
-<tr>
-<td>4518</td>
-<td>NO_MERCHANT_ACCOUNT_FOR_OUTH_TOKEN_FOR_MERCHANT</td>
-</tr>
-<tr>
-<td>4519</td>
-<td>NO_SETUP_ACCOUNT_FOR_OUTH_TOKEN_FOR_MERCHANT</td>
-</tr>
-<tr>
-<td>4520</td>
-<td>NO_VT_CLIENT_ACCOUNT_FOR_OUTH_TOKEN_FOR_MERCHANT</td>
-</tr>
-<tr>
-<td>4521</td>
-<td>INVALID_CURRENCY_CODE</td>
-</tr>
-<tr>
-<td>4522</td>
-<td>INVALID_RECURRING_BILL_STATUS_CHANGE_CODE</td>
-</tr>
-<tr>
-<td>4523</td>
-<td>INCONSISTENT_CURRENCIES</td>
-</tr>
-<tr>
-<td>4524</td>
-<td>MISSING_PROPERTY_CODE</td>
-</tr>
-<tr>
-<td>4525</td>
-<td>INCONSISTENT_CUSTOMER_DATA_CODE</td>
-</tr>
-<tr>
-<td>4526</td>
-<td>DUPLICATE_DEVELOPER_CODE</td>
-</tr>
-<tr>
-<td>9989</td>
-<td>METHOD_REQUEST_BODY_VALIDATION_ERROR_CODE</td>
-</tr>
-<tr>
-<td>9990</td>
-<td>HTTP_NOT_READABLE_EXCEPTION_CODE</td>
-</tr>
-<tr>
-<td>9991</td>
-<td>JSONPARSE_EXCEPTION_CODE</td>
-</tr>
-<tr>
-<td>9992</td>
-<td>MAPPING_EXCEPTION_CODE</td>
-</tr>
-<tr>
-<td>9993</td>
-<td>MEDIA_TYPE_NOT_SUPPORTED_CODE</td>
-</tr>
-<tr>
-<td>9994</td>
-<td>METHOD_NOT_SUPPORTED_CODE</td>
-</tr>
-<tr>
-<td>9995</td>
-<td>PAGE_NOT_FOUND_ERROR_CODE</td>
-</tr>
-<tr>
-<td>9996</td>
-<td>ACCESS_DENIED_ERROR_CODE</td>
-</tr>
-<tr>
-<td>9997</td>
-<td>JSON_SYNTAX_ERROR_CODE</td>
-</tr>
-<tr>
-<td>9998</td>
-<td>NOT_FOUND_ERROR_CODE</td>
-</tr>
-<tr>
-<td>9999</td>
-<td>INTERNAL_SERVER_ERROR_CODE</td>
-</tr>
-</tbody></table>
-
           <h1 id="administration-configuration">Administration Configuration</h1>
 
 <h2 id="introduction">Introduction</h2>
@@ -7450,6 +5908,1621 @@ Also, once that the webhook is configured, you can disable or enable it at any t
 <li>A 201 code (created)
 <strong>Note:</strong> You will need to use the Oauth token in the header request. For more information, see the OAUTH section.</li>
 </ul>
+
+          <h1 id="transaction-report">Transaction Report</h1>
+
+<pre><code class="highlight java">
+<span class="kn">package</span> <span class="n">transactions</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.UnsupportedEncodingException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.Header</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.HttpResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.ClientProtocolException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.HttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.client.methods.HttpPost</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.entity.StringEntity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.impl.client.DefaultHttpClient</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpConnectionParams</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.http.params.HttpParams</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.JSONException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.JSONObject</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Transactions</span> <span class="o">{</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">findTransactions</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="n">HttpClient</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DefaultHttpClient</span><span class="o">();</span>
+      <span class="n">HttpParams</span> <span class="n">params</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">getParams</span><span class="o">();</span>
+      <span class="n">HttpConnectionParams</span><span class="o">.</span><span class="na">setConnectionTimeout</span><span class="o">(</span><span class="n">params</span><span class="o">,</span> <span class="mi">10000</span><span class="o">);</span>
+
+      <span class="n">JSONObject</span> <span class="n">jsonRequestObject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
+      <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="o">;</span>
+
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"batchIdFrom"</span><span class="o">,</span> <span class="s">"5"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"batchIdTo"</span><span class="o">,</span> <span class="s">"10"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"transactionType"</span><span class="o">,</span> <span class="s">"Sale"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"responseCode"</span><span class="o">,</span> <span class="s">"00"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amountFrom"</span><span class="o">,</span> <span class="s">"1"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amountTo"</span><span class="o">,</span> <span class="s">"2"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"firstName"</span><span class="o">,</span> <span class="s">"First"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"lastName"</span><span class="o">,</span> <span class="s">"Contact"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"phoneNumber"</span><span class="o">,</span> <span class="s">"(415) 479 1349"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"email"</span><span class="o">,</span> <span class="s">"jhon@company.com"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"trnDateFrom"</span><span class="o">,</span> <span class="s">"2015-06-06 00:00:00"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"trnDateTo"</span><span class="o">,</span> <span class="s">"2015-07-07 23:59:59"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"cardType"</span><span class="o">,</span> <span class="s">"Visa"</span><span class="o">);</span>
+
+
+      <span class="n">HttpPost</span> <span class="n">postCreate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpPost</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+      <span class="n">postCreate</span><span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"Authorization"</span><span class="o">,</span> <span class="s">"Bearer dfd4f12a-79af-4825-8dba-db27342c8491"</span><span class="o">);</span><span class="c1">//You put your token here</span>
+      <span class="n">postCreate</span><span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"Content-Type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">);</span>
+      <span class="n">postCreate</span><span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"Accept"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">);</span>
+
+      <span class="n">StringEntity</span> <span class="n">se</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringEntity</span><span class="o">(</span><span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+      <span class="n">postCreate</span><span class="o">.</span><span class="na">setEntity</span><span class="o">(</span><span class="n">se</span><span class="o">);</span>
+      <span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">postCreate</span><span class="o">);</span> <span class="c1">//You return this response and work with it</span>
+
+      <span class="n">String</span> <span class="n">json</span> <span class="o">=</span> <span class="s">" "</span><span class="o">;</span>
+      <span class="n">JSONObject</span> <span class="n">jsonResponseObject</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+      <span class="kt">int</span> <span class="n">statusCode</span> <span class="o">=</span> <span class="n">responseDataRequest</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">();</span>
+      <span class="n">InputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getEntity</span><span class="o">().</span><span class="na">getContent</span><span class="o">();</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">statusCode</span> <span class="o">&gt;=</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">statusCode</span> <span class="o">&lt;</span> <span class="mi">400</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">BufferedReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">responseDataRequest</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
+                <span class="n">String</span> <span class="n">line</span><span class="o">;</span>
+                <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span> 
+                    <span class="n">response</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">);</span> 
+                <span class="o">}</span>
+                    <span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">response</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>      
+            <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                <span class="n">BufferedReader</span> <span class="n">er</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">responseDataRequest</span><span class="o">.</span><span class="na">getErrorStream</span><span class="o">()));</span>
+                <span class="n">String</span> <span class="n">line</span><span class="o">;</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+                     <span class="k">while</span><span class="o">((</span><span class="n">c</span> <span class="o">=</span> <span class="n">er</span><span class="o">.</span><span class="na">read</span><span class="o">())</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>                          
+                          <span class="n">response</span><span class="o">.</span><span class="na">append</span><span class="o">((</span><span class="kt">char</span><span class="o">)</span><span class="n">c</span><span class="o">);</span>
+                     <span class="o">}</span>                      
+
+                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="c1">// TODO Auto-generated catch block</span>
+                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                    <span class="o">}</span>
+                  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">response</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+            <span class="o">}</span>  
+
+
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">JSONException</span> <span class="n">e</span><span class="o">){</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">UnsupportedEncodingException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ClientProtocolException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre>
+
+<pre><code class="highlight php"><span class="cp">&lt;?php</span>
+  <span class="nv">$processed</span> <span class="o">=</span> <span class="k">FALSE</span><span class="p">;</span>
+  <span class="nv">$ERROR_MESSAGE</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+  <span class="c1">//Defining the Web Service URL
+</span>  <span class="nv">$WsURL</span><span class="o">=</span><span class="s2">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="p">;</span>
+
+
+  <span class="nv">$batchIdFrom</span><span class="o">=</span> <span class="s2">"5"</span><span class="p">;</span>
+  <span class="nv">$batchIdTo</span><span class="o">=</span> <span class="s2">"10"</span><span class="p">;</span>
+  <span class="nv">$transactionType</span><span class="o">=</span> <span class="s2">"Sale"</span><span class="p">;</span>
+  <span class="nv">$responseCode</span><span class="o">=</span> <span class="s2">"00"</span><span class="p">;</span>
+  <span class="nv">$amountFrom</span><span class="o">=</span> <span class="s2">"1"</span><span class="p">;</span>
+  <span class="nv">$amountTo</span><span class="o">=</span> <span class="s2">"2"</span><span class="p">;</span>
+  <span class="nv">$firstName</span><span class="o">=</span> <span class="s2">"First"</span><span class="p">;</span>
+  <span class="nv">$lastName</span><span class="o">=</span> <span class="s2">"Contact"</span><span class="p">;</span>
+  <span class="nv">$phoneNumber</span><span class="o">=</span> <span class="s2">"(415) 479 1349"</span><span class="p">;</span>
+  <span class="nv">$email</span><span class="o">=</span> <span class="s2">"jhon@company.com"</span><span class="p">;</span>
+  <span class="nv">$trnDateFrom</span><span class="o">=</span> <span class="s2">"2015-06-06 00:00:00"</span><span class="p">;</span>
+  <span class="nv">$trnDateTo</span><span class="o">=</span> <span class="s2">"2015-07-07 23:59:59"</span><span class="p">;</span>
+  <span class="nv">$cardType</span><span class="o">=</span> <span class="s2">"Visa"</span><span class="p">;</span>
+
+
+  <span class="c1">//Convert data to array to send it to the WS as JSON format
+</span>  <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+  <span class="nv">$data</span><span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"batchIdFrom"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$batchIdFrom</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"batchIdTo"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$batchIdTo</span><span class="s2">"</span><span class="p">,</span>
+                  <span class="s2">"transactionType"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$transactionType</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"responseCode"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$responseCode</span><span class="s2">"</span><span class="p">,</span>
+                  <span class="s2">"amountFrom"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$amountFrom</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"amountTo"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$amountTo</span><span class="s2">"</span><span class="p">,</span>
+                  <span class="s2">"firstName"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$firstName</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"lastName"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$lastName</span><span class="s2">"</span><span class="p">,</span>
+                  <span class="s2">"phoneNumber"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$phoneNumber</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"email"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$email</span><span class="s2">"</span><span class="p">,</span>
+                  <span class="s2">"trnDateFrom"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$trnDateFrom</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"trnDateTo"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$trnDateTo</span><span class="s2">"</span><span class="p">,</span><span class="s2">"cardType"</span><span class="o">=&gt;</span><span class="s2">"</span><span class="nv">$cardType</span><span class="s2">"</span><span class="p">);</span>
+  <span class="c1">//Convert data from Array to JSON
+</span>  <span class="nv">$data_string</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
+  <span class="c1">//Creating a CURL object to access the WS
+</span>  <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+  <span class="c1">//Setting the address to connect to
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$WsURL</span><span class="p">);</span>
+  <span class="c1">//Setting HTTP method. For a new transaction we need to use POST
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"POST"</span><span class="p">);</span>
+  <span class="c1">//Setting data in JSON format
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nv">$data_string</span><span class="p">);</span>
+  <span class="c1">//Setting the proper header.
+</span>  <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">'Content-Type: application/json'</span><span class="p">,</span>
+    <span class="s1">'Accept: application/json'</span><span class="p">,</span>
+    <span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">)</span>
+    <span class="p">);</span>
+  <span class="c1">//Store the response as a variable and not showing the content as echo $variable
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="c1">//Set to return the response header, this is to analyze the result and the transaction ID
+</span>  <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+  <span class="c1">//execute connection to the Web Service
+</span>  <span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+  <span class="c1">// get some data from the response
+</span>  <span class="nv">$httpcode</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+  <span class="nv">$header_size</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HEADER_SIZE</span><span class="p">);</span>
+  <span class="c1">//Get the header as string.
+</span>  <span class="nv">$header</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$response</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$header_size</span><span class="p">);</span>
+  <span class="c1">//close connection to the Web Service
+</span>  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+
+  <span class="c1">//Obtain the data from the sale recently created
+</span>  <span class="k">if</span> <span class="p">(</span><span class="nv">$httpcode</span><span class="o">==</span><span class="mi">201</span><span class="p">){</span>
+    <span class="c1">//find the url of the sale (Location header in the response)
+</span>    <span class="nb">preg_match</span><span class="p">(</span><span class="s2">"!</span><span class="se">\r\n</span><span class="s2">(?:Location): *(.*?) *</span><span class="se">\r\n</span><span class="s2">!"</span><span class="p">,</span> <span class="nv">$header</span><span class="p">,</span> <span class="nv">$matches</span><span class="p">);</span>
+    <span class="c1">//$url contains the URL to GET the data from the Web Service
+</span>    <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="c1">//Once we get the transaction ID we will query for the information of the last transaction
+</span>    <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$url</span><span class="p">);</span>
+    <span class="c1">//Setting HTTP method. To get a transaction response we need to use GET
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">"GET"</span><span class="p">);</span>
+    <span class="c1">//Setting the proper header.
+</span>    <span class="c1">//Setting the oauth_token to access the WS with the proper authorization
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'Authorization: Bearer '</span><span class="o">.</span><span class="nv">$oauth_token</span><span class="p">));</span>
+    <span class="c1">//Store the response as a variable and not showing the content as echo $variable
+</span>    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="c1">//execute connection to the Web Service
+</span>    <span class="nv">$response_json</span><span class="o">=</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="c1">//close connection to the Web Service
+</span>    <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+    <span class="c1">//show result (standard JSON), parse it, process it, etc..
+</span>    <span class="k">echo</span> <span class="nv">$response_json</span><span class="p">;</span>
+    <span class="c1">// now you could parse the json object to array if you preffer: $obj = json_decode($response_json);
+</span>    <span class="nv">$array</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$response_json</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+    <span class="nb">print_r</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">//There was an error with the WS
+</span>  <span class="k">else</span><span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"Error creating the "</span><span class="o">.</span><span class="nb">strtoupper</span><span class="p">(</span><span class="nv">$trans_type</span><span class="p">)</span><span class="o">.</span><span class="s2">": RESPONSE MESSAGE"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$response</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="cp">?&gt;</span>
+</code></pre>
+
+<pre><code class="highlight csharp"><span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">PayHubSamples</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Transactions</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">findTransactions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="n">var</span> <span class="n">request</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="p">);</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"text/json"</span><span class="p">;</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
+
+                <span class="n">var</span> <span class="n">transaction</span> <span class="p">=</span> <span class="k">new</span>
+                <span class="p">{</span>
+                    <span class="n">batchIdFrom</span><span class="p">=</span> <span class="s">"5"</span><span class="p">,</span>
+                    <span class="n">batchIdTo</span><span class="p">=</span> <span class="s">"10"</span><span class="p">,</span>
+                    <span class="n">transactionType</span><span class="p">=</span> <span class="s">"Sale"</span><span class="p">,</span>
+                    <span class="n">responseCode</span><span class="p">=</span> <span class="s">"00"</span><span class="p">,</span>
+                    <span class="n">amountFrom</span><span class="p">=</span> <span class="s">"1"</span><span class="p">,</span>
+                    <span class="n">amountTo</span><span class="p">=</span> <span class="s">"2"</span><span class="p">,</span>
+                    <span class="n">firstName</span><span class="p">=</span> <span class="s">"First"</span><span class="p">,</span>
+                    <span class="n">lastName</span><span class="p">=</span> <span class="s">"Contact"</span><span class="p">,</span>
+                    <span class="n">phoneNumber</span><span class="p">=</span> <span class="s">"(415) 479 1349"</span><span class="p">,</span>
+                    <span class="n">email</span><span class="p">=</span> <span class="s">"jhon@company.com"</span><span class="p">,</span>
+                    <span class="n">trnDateFrom</span><span class="p">=</span> <span class="s">"2015-06-06 00:00:00"</span><span class="p">,</span>
+                    <span class="n">trnDateTo</span><span class="p">=</span> <span class="s">"2015-07-07 23:59:59"</span><span class="p">,</span>
+                    <span class="n">cardType</span><span class="p">=</span> <span class="s">"Visa"</span>
+                <span class="p">};</span>
+
+                <span class="kt">string</span> <span class="n">json</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="n">transaction</span><span class="p">);</span>
+
+                <span class="n">request</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"Bearer dfd4f12a-79af-4825-8dba-db27342c8491"</span><span class="p">);</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+                <span class="n">request</span><span class="p">.</span><span class="n">Accept</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+
+                <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">streamWriter</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="nf">GetRequestStream</span><span class="p">()))</span>
+                <span class="p">{</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Flush</span><span class="p">();</span>
+                    <span class="n">streamWriter</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                 <span class="k">try</span>
+                <span class="p">{</span>
+                    <span class="n">var</span> <span class="n">response</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">request</span><span class="p">.</span><span class="nf">GetResponse</span><span class="p">();</span>
+                    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"\nSending 'Put' request to URL"</span><span class="p">);</span>
+                    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Response Code : "</span> <span class="p">+</span> <span class="n">response</span><span class="p">.</span><span class="n">StatusCode</span><span class="p">);</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">OK</span> <span class="p">==</span> <span class="n">response</span><span class="p">.</span><span class="n">StatusCode</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
+                            <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
+                    <span class="p">}</span>
+                    <span class="k">else</span>
+                    <span class="p">{</span>
+                        <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
+                        <span class="p">{</span>
+                            <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="k">catch</span> <span class="p">(</span><span class="n">WebException</span> <span class="n">wex</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">errorResponse</span> <span class="p">=</span> <span class="p">(</span><span class="n">HttpWebResponse</span><span class="p">)</span><span class="n">wex</span><span class="p">.</span><span class="n">Response</span><span class="p">)</span><span class="c1">//You return wex.Response instead
+</span>                        <span class="p">{</span>
+                            <span class="k">using</span> <span class="p">(</span><span class="n">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">errorResponse</span><span class="p">.</span><span class="nf">GetResponseStream</span><span class="p">()))</span>
+                            <span class="p">{</span>
+                                <span class="n">result</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadToEnd</span><span class="p">();</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="k">return</span> <span class="n">result</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<pre><code class="highlight ruby">
+    <span class="nb">require</span> <span class="s1">'uri'</span>
+    <span class="nb">require</span> <span class="s1">'net/http'</span>
+    <span class="nb">require</span> <span class="s1">'json'</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.payhub.com/api/v2/report/transactionReport"</span><span class="p">)</span>
+
+    <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
+
+    <span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">request</span><span class="p">[</span><span class="s2">"content-type"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
+    <span class="n">request</span><span class="p">[</span><span class="s2">"accept"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
+    <span class="n">request</span><span class="p">[</span><span class="s2">"authorization"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Bearer 2a5d6a73-d294-4fba-bfba-957a4948d4a3'</span>
+    <span class="n">request</span><span class="p">[</span><span class="s2">"cache-control"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'no-cache'</span>
+
+    <span class="n">informationToSend</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"batchIdFrom"</span><span class="o">=&gt;</span> <span class="s2">"5"</span><span class="p">,</span>
+                         <span class="s2">"batchIdTo"</span><span class="o">=&gt;</span> <span class="s2">"10"</span><span class="p">,</span>
+                         <span class="s2">"transactionType"</span><span class="o">=&gt;</span> <span class="s2">"Sale"</span><span class="p">,</span>
+                         <span class="s2">"responseCode"</span><span class="o">=&gt;</span> <span class="s2">"00"</span><span class="p">,</span>
+                         <span class="s2">"amountFrom"</span><span class="o">=&gt;</span> <span class="s2">"1"</span><span class="p">,</span>
+                         <span class="s2">"amountTo"</span><span class="o">=&gt;</span> <span class="s2">"2"</span><span class="p">,</span>
+                         <span class="s2">"firstName"</span><span class="o">=&gt;</span> <span class="s2">"First"</span><span class="p">,</span>
+                         <span class="s2">"lastName"</span><span class="o">=&gt;</span> <span class="s2">"Contact"</span><span class="p">,</span>
+                         <span class="s2">"phoneNumber"</span><span class="o">=&gt;</span> <span class="s2">"(415) 479 1349"</span><span class="p">,</span>
+                         <span class="s2">"email"</span><span class="o">=&gt;</span> <span class="s2">"jhon@company.com"</span><span class="p">,</span>
+                         <span class="s2">"trnDateFrom"</span><span class="o">=&gt;</span> <span class="s2">"2015-06-06 00:00:00"</span><span class="p">,</span>
+                         <span class="s2">"trnDateTo"</span><span class="o">=&gt;</span> <span class="s2">"2015-07-07 23:59:59"</span><span class="p">,</span>
+                         <span class="s2">"cardType"</span><span class="o">=&gt;</span> <span class="s2">"Visa"</span>
+                         <span class="p">}</span>                         
+
+    <span class="n">request</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">generate</span><span class="p">(</span><span class="n">informationToSend</span><span class="p">)</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">read_body</span>
+</code></pre>
+
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"batchIdFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"batchIdTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"transactionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sale"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"responseCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"amountFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"amountTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"First"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Contact"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"phoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"(415) 479 1349"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jhon@company.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"trnDateFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-06 00:00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"trnDateTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-07-07 23:59:59"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cardType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Visa"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>This API allows the merchant to search for transactions filtering by a wide range of optional parameters.</p>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">PATCH</code></p>
+
+<h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
+
+<p><code class="prettyprint">webservice URL/api/v2/search/transactionReport</code></p>
+
+<h3 id="required-headers">Required Headers</h3>
+
+<ul>
+<li><strong>Content-Type</strong>: application/json</li>
+<li><strong>Accept</strong>: application/json</li>
+<li><strong>Authorization</strong>: Bearer {auth_token}</li>
+</ul>
+
+<h2 id="parameters">Parameters</h2>
+
+<p>All the parameters are optional, they can be sent in no particular order. If one of the parameters is incorrect the server will return an error.</p>
+
+<p>The parameters are case sensitive.</p>
+
+<p>Below is an explanation of the parameters.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>batchIdFrom, batchIdTo</td>
+<td>Allows the merchant to look for transactions where the <strong>batchId</strong> is between the batchIdFrom and batchIdTo. <br>You can also use any one of the two parameters. In that case, the result will be the transactions with the batchId greater than <strong>batchIdFrom</strong>, or the batchId less than <strong>batchIdTo</strong>.</td>
+</tr>
+<tr>
+<td>transactionType</td>
+<td>Allows the merchant to look for transactions where the transaction type is any one of the following:<ul><li>Void</li><li>Sale</li><li>Refund</li><li>Verify</li></ul></td>
+</tr>
+<tr>
+<td>responseCode</td>
+<td>Allows the merchant to look for transactions where the response code is equal to a specific code. For example, the code “00” means a successful transaction.</td>
+</tr>
+<tr>
+<td>amountFrom, amountTo</td>
+<td>Allows the merchant to look for transactions where the amount of the transaction is between the <strong>amountFrom</strong> and <strong>amountTo</strong>. <br>You can use any one of the two parameters. In that case, the result will be the transactions with the amount greater than <strong>amountFrom</strong>, or the amount less than <strong>amountTo</strong>.</td>
+</tr>
+<tr>
+<td>firstName</td>
+<td>Allows the merchant to look for transactions where the customer’s first name contains the value of the parameter.</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>Allows the merchant to look for transactions where the customer’s first name contains the value of the parameter.</td>
+</tr>
+<tr>
+<td>phoneNumber</td>
+<td>Allows the merchant to look for transactions where the customer’s phone number contains the value of the parameter.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>This parameter allows the merchant to look for transactions where the customer’s email address contains the value of the parameter.</td>
+</tr>
+<tr>
+<td>trnDateFrom, trnDateTo</td>
+<td>Allows the merchant to look for transactions where the date of the transaction is between the trnDateFrom and trnDateTo. <br>You can use any one of the two parameters. In that case, the result will be the transactions with the date later than the trnDateFrom, or the date earlier than trnDateTo.<br>Format: “yyyy-mm-dd hh:mm:ss”.</td>
+</tr>
+<tr>
+<td>cardType</td>
+<td>This parameter allows the merchant to look for transactions where the card type matches the value of the parameter. <br>For instance: MasterCard, Visa.</td>
+</tr>
+<tr>
+<td>cardLast4Digits</td>
+<td>Allows the merchant to look for transactions where the credit card’s last four digits matches the value of the parameter. <br>Format: “XXXX”.</td>
+</tr>
+<tr>
+<td>cardToken</td>
+<td>Allows the merchant to look for transactions where the credit card’s token matches the value of the parameter. <br>Format: “XXXXXXXXXXXXXXXX”.</td>
+</tr>
+<tr>
+<td>authAmountFrom, authAmountTo</td>
+<td>Allows the merchant to look for transactions where the authorized amount of the transaction is between the authAmountFrom and authAmountTo. <br>You can use any one of the two parameters. In that case the result will be the transactions with the authorization amount is greater than <strong>authAmountFrom</strong>, or the authorization amount less than <strong>authAmountTo</strong>.</td>
+</tr>
+<tr>
+<td>swiped</td>
+<td>Allows the merchant to look for transactions that where performed with a swiper device. <br>Valid values: true, false</td>
+</tr>
+<tr>
+<td>source</td>
+<td>Allows the merchant to look for transactions where the source matches the value of the parameter. <br>For instance: “3rd Party API”</td>
+</tr>
+<tr>
+<td>note</td>
+<td>Allows the merchant to look for transactions where the note matches the value of the parameter.</td>
+</tr>
+<tr>
+<td>transactionStatus</td>
+<td>Allows the merchant to look for transactions where the transaction status matches the value of the parameter. <br>For instance: “Approved”</td>
+</tr>
+<tr>
+<td>recurringBillId</td>
+<td>Allows the merchant to look for transactions that were scheduled.</td>
+</tr>
+</tbody></table>
+
+<h2 id="result-data">Result Data</h2>
+<pre><code class="highlight shell"><span class="o">[</span>
+  <span class="o">{</span>
+    <span class="s2">"amount"</span>: <span class="s2">"99.25"</span>,
+    <span class="s2">"authAmount"</span>: <span class="s2">"99.25"</span>,
+    <span class="s2">"batchID"</span>: <span class="s2">"1302"</span>,
+    <span class="s2">"cardLast4Digits"</span>: <span class="s2">"XXXXXXXXXXXX8888"</span>,
+    <span class="s2">"cardToken"</span>: <span class="s2">"9999000000001838"</span>,
+    <span class="s2">"cardType"</span>: <span class="s2">"Visa"</span>,
+    <span class="s2">"customerName"</span>: <span class="s2">"Joe Tester"</span>,
+    <span class="s2">"email"</span>: <span class="s2">"lsun@payhub.com"</span>,
+    <span class="s2">"note"</span>: <span class="s2">""</span>,
+    <span class="s2">"phoneNumber"</span>: <span class="s2">"(917) 823-4567"</span>,
+    <span class="s2">"recurringBillId"</span>: <span class="s2">"2108"</span>,
+    <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>,
+    <span class="s2">"responseText"</span>: <span class="s2">"NO  MATCH"</span>,
+    <span class="s2">"source"</span>: <span class="s2">"Recurring"</span>,
+    <span class="s2">"swiped"</span>: <span class="s2">"true"</span>,
+    <span class="s2">"transactionDate"</span>: <span class="s2">"2015-02-15 01:10:19"</span>,
+    <span class="s2">"transactionID"</span>: <span class="s2">"180628"</span>,
+    <span class="s2">"transactionStatus"</span>: <span class="s2">"Approved"</span>,
+    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">"amount"</span>: <span class="s2">"99.25"</span>,
+    <span class="s2">"authAmount"</span>: <span class="s2">"99.25"</span>,
+    <span class="s2">"batchID"</span>: <span class="s2">"1302"</span>,
+    <span class="s2">"cardLast4Digits"</span>: <span class="s2">"XXXXXXXXXXXX8888"</span>,
+    <span class="s2">"cardToken"</span>: <span class="s2">"9999000000001838"</span>,
+    <span class="s2">"cardType"</span>: <span class="s2">"Visa"</span>,
+    <span class="s2">"customerName"</span>: <span class="s2">"Joe Tester"</span>,
+    <span class="s2">"email"</span>: <span class="s2">"lsun@payhub.com"</span>,
+    <span class="s2">"note"</span>: <span class="s2">""</span>,
+    <span class="s2">"phoneNumber"</span>: <span class="s2">"(917) 823-4567"</span>,
+    <span class="s2">"recurringBillId"</span>: <span class="s2">"2109"</span>,
+    <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>,
+    <span class="s2">"responseText"</span>: <span class="s2">"NO  MATCH"</span>,
+    <span class="s2">"source"</span>: <span class="s2">"Recurring"</span>,
+    <span class="s2">"swiped"</span>: <span class="s2">"true"</span>,
+    <span class="s2">"transactionDate"</span>: <span class="s2">"2015-02-15 01:10:21"</span>,
+    <span class="s2">"transactionID"</span>: <span class="s2">"180629"</span>,
+    <span class="s2">"transactionStatus"</span>: <span class="s2">"Approved"</span>,
+    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>
+  <span class="o">}</span>
+<span class="o">]</span>
+</code></pre>
+
+<p>The result data is an array of objects in JSON format.</p>
+
+          <h1 id="payhub-webhook">PayHub Webhook</h1>
+
+<h2 id="configuration-process">Configuration Process</h2>
+
+<p><strong>With this new service you can receive a notification in two cases:</strong></p>
+
+<ul>
+<li><strong>for each transaction in your account.</strong></li>
+<li><strong>when a batch was settled.</strong></li>
+</ul>
+
+<p>Go to your Merchant Administration and select <code class="prettyprint">Webhook Configuration</code>.</p>
+
+<p><img src="images/webhook-admin.png" /></p>
+
+<p>There, you will see your current webhook configuration.</p>
+
+<p>From this page, you can enter your website url and select those services for which you would like to receive notifications. 
+Also, once that the webhook is configured, you can disable or enable it at any time.</p>
+
+<h2 id="services">Services</h2>
+
+<h3 id="transaction-services">Transaction Services</h3>
+
+<ul>
+<li>VirtualHub</li>
+<li>MobileHub</li>
+<li>Recurring Billing</li>
+<li>API</li>
+</ul>
+
+<h3 id="batch-service">Batch Service</h3>
+
+<ul>
+<li>Batch</li>
+</ul>
+
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+<li>The endpoint validation only allows HTTPS.</li>
+<li>The controller for your endpoint must be implemented with a POST method.</li>
+<li>The controller for your endpoint must be set to accept JSON.</li>
+</ul>
+
+<p><img src="images/webhook-admin-config.png" /></p>
+
+<p>After you have saved your configuration (by selecting the green &ldquo;Update&rdquo; button), our service will send you a notification for each event that occurs on your account to the endpoint that you have indicated.</p>
+
+<h2 id="events">Events</h2>
+
+<p>There are two kinds of events: transactions and settled batches.</p>
+
+<h2 id="transaction-message-from-webhook-to-your-endpoint">Transaction Message from Webhook to your endpoint</h2>
+
+<h3 id="the-json-message-is-as-follows:">The JSON message is as follows:</h3>
+<pre><code class="highlight shell">    <span class="o">{</span>
+        <span class="s2">"endpoint"</span>: <span class="s2">"https://yoursite.com/your_controller/"</span>,
+        <span class="s2">"eventType"</span>: <span class="s2">"transaction"</span>,
+        <span class="s2">"event"</span>: <span class="o">{</span>
+            <span class="s2">"type"</span>: <span class="o">{</span>
+                <span class="s2">"transaction"</span>: <span class="o">{</span>
+                    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>,
+                    <span class="s2">"recurringBillId"</span>: <span class="s2">""</span>,
+                    <span class="s2">"responseText"</span>: <span class="s2">"VER UNAVAILABLE"</span>,
+                    <span class="s2">"source"</span>: <span class="s2">"3rd Party API"</span>,
+                    <span class="s2">"cardObscured"</span>: <span class="s2">"XXXXXXXXXXXX4507"</span>,
+                    <span class="s2">"orgId"</span>: <span class="s2">"10002"</span>,
+                    <span class="s2">"transactionId"</span>: <span class="s2">"721"</span>,
+                    <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre>
+
+<h3 id="fields-meaning">Fields Meaning</h3>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>endpoint</td>
+<td>String</td>
+<td>Your site endpoint to receive the notifications</td>
+</tr>
+<tr>
+<td>eventType</td>
+<td>String</td>
+<td>In this case the type is always &ldquo;transaction&rdquo;</td>
+</tr>
+<tr>
+<td>batch_settled</td>
+<td>Object</td>
+<td>JSON object with batch information</td>
+</tr>
+<tr>
+<td>transaction</td>
+<td>String</td>
+<td>Possible values: <br><ul><li> &ldquo;Sale&rdquo; </li><li> &ldquo;Authorization Only&rdquo; </li><li> &ldquo;Offline&rdquo; </li> <li>&ldquo;Void&rdquo;</li><li>&ldquo;Refund&rdquo;</li></ul></td>
+</tr>
+<tr>
+<td>source</td>
+<td>String</td>
+<td>Possible values: <br><ul><li>&ldquo;Virtual Terminal&rdquo;</li><li>&ldquo;3rd Party API&rdquo;</li><li>&ldquo;Recurring&rdquo;</li><li>&ldquo;Mobile VT&rdquo;</li></ul></td>
+</tr>
+<tr>
+<td>orgId</td>
+<td>String</td>
+<td>String</td>
+</tr>
+<tr>
+<td>transactionId</td>
+<td>String</td>
+<td>The transaction id.</td>
+</tr>
+<tr>
+<td>recurringBillId</td>
+<td>String</td>
+<td>The recurring bill id if the transaction was scheduled.</td>
+</tr>
+<tr>
+<td>cardObscured</td>
+<td>String</td>
+<td>the obscured card entered for the transaction.</td>
+</tr>
+<tr>
+<td>responseText</td>
+<td>String</td>
+<td>A descriptive text of the transaction result.</td>
+</tr>
+<tr>
+<td>responseCode</td>
+<td>String</td>
+<td>The code for the transaction result.</td>
+</tr>
+</tbody></table>
+
+<h2 id="batch-message-from-webhook-to-your-endpoint">Batch Message from Webhook to your endpoint</h2>
+
+<h3 id="the-json-message-is-at-follows:">The JSON message is at follows:</h3>
+<pre><code class="highlight shell">
+    <span class="o">{</span>
+        <span class="s2">"endpoint"</span>: <span class="s2">"https://yoursite.com/your_controller/"</span>,
+        <span class="s2">"eventType"</span>: <span class="s2">"batch_settled"</span>,
+        <span class="s2">"event"</span>: <span class="o">{</span>
+            <span class="s2">"type"</span>: <span class="o">{</span>
+                <span class="s2">"batch_settled"</span>: <span class="o">{</span>
+                    <span class="s2">"date"</span>: <span class="s2">"Thu Oct 29 11:23:11 ART 2015"</span>,
+                    <span class="s2">"batch_id"</span>: <span class="s2">"102"</span>,
+                    <span class="s2">"net_total"</span>: <span class="s2">"15"</span>,
+                    <span class="s2">"terminal"</span>: <span class="s2">"Virtual Hub"</span>,
+                    <span class="s2">"trans_count"</span>: <span class="s2">"15"</span>,
+                    <span class="s2">"status"</span>: <span class="s2">"Settled"</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+</code></pre>
+
+<h3 id="fields-meaning">Fields Meaning</h3>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>endpoint</td>
+<td>String</td>
+<td>Your site endpoint to receive the notifications</td>
+</tr>
+<tr>
+<td>eventType</td>
+<td>String</td>
+<td>In this case the type is always &ldquo;batch_settled&rdquo;</td>
+</tr>
+<tr>
+<td>batch_settled</td>
+<td>Object</td>
+<td>JSON object with batch information</td>
+</tr>
+<tr>
+<td>date</td>
+<td>String</td>
+<td>Date.</td>
+</tr>
+<tr>
+<td>batch_id</td>
+<td>String</td>
+<td>The batch id.</td>
+</tr>
+<tr>
+<td>net_total</td>
+<td>String</td>
+<td>The total amount of money</td>
+</tr>
+<tr>
+<td>terminal</td>
+<td>String</td>
+<td>The terminal name.</td>
+</tr>
+<tr>
+<td>trans_count</td>
+<td>String</td>
+<td>The number of transaction that were settled on the batch.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>String</td>
+<td>The batch status .</td>
+</tr>
+</tbody></table>
+
+          <h1 id="how-to-test">How to Test</h1>
+
+<p>To run test transactions, simply set the &ldquo;mode&rdquo; parameter to &ldquo;demo&rdquo; and all transactions will automatically be routed through our test system. When in demo mode, the &ldquo;orgid&rdquo;, &ldquo;username&rdquo;, &ldquo;password&rdquo;, and &ldquo;tid&rdquo; fields are optional. </p>
+
+<h2 id="use-the-following-test-data-to-run-test-transactions:">Use the following test data to run test transactions:</h2>
+
+<h3 id="test-data">Test Data</h3>
+
+<table><thead>
+<tr>
+<th>Card Type</th>
+<th>Card #</th>
+<th>Card CVV</th>
+<th>Transaction Amount</th>
+<th>Expected Result</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Visa</td>
+<td>4012881888818888</td>
+<td>999</td>
+<td>10.00</td>
+<td>Success</td>
+</tr>
+<tr>
+<td>Visa</td>
+<td>4266841082854082</td>
+<td>999</td>
+<td>0.01</td>
+<td>Fail</td>
+</tr>
+<tr>
+<td>MasterCard</td>
+<td>5466410004374507</td>
+<td>998</td>
+<td>10.00</td>
+<td>Success</td>
+</tr>
+<tr>
+<td>MasterCard</td>
+<td>5454545454545454</td>
+<td>998</td>
+<td>0.20</td>
+<td>Fail</td>
+</tr>
+<tr>
+<td>American Express</td>
+<td>371449635398431</td>
+<td>9997</td>
+<td>10.00</td>
+<td>Success</td>
+</tr>
+<tr>
+<td>American Express</td>
+<td>371449635398431</td>
+<td>9997</td>
+<td>0.20</td>
+<td>Fail</td>
+</tr>
+<tr>
+<td>Discover</td>
+<td>6011000990156527</td>
+<td>996</td>
+<td>10.00</td>
+<td>Success</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+The expiration date used can be any time in the future. 
+To test AVS, just provide any valid address or zip information with the request and you will get a successful AVS response. To test for a failed CVV code, use a different CVV than what is specified in the table above.
+</aside>
+
+          <h1 id="response-codes">Response Codes</h1>
+
+<table><thead>
+<tr>
+<th>Response Code</th>
+<th>Response Text</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>00</td>
+<td>Approval</td>
+<td>Successful - Approved and completed</td>
+</tr>
+<tr>
+<td>01</td>
+<td>Call</td>
+<td>Failed - Refer to issuer</td>
+</tr>
+<tr>
+<td>02</td>
+<td>Call</td>
+<td>Failed - Refer to issuer-Special condition</td>
+</tr>
+<tr>
+<td>03</td>
+<td>Term ID Error No Merchant</td>
+<td>Failed - Invalid Merchant ID</td>
+</tr>
+<tr>
+<td>04</td>
+<td>Hold-call or Pick Up Card</td>
+<td>Failed - Pick up card (no fraud)</td>
+</tr>
+<tr>
+<td>05</td>
+<td>Decline</td>
+<td>Failed - Do not honor</td>
+</tr>
+<tr>
+<td>06</td>
+<td>Error XXXX</td>
+<td>Failed - General error</td>
+</tr>
+<tr>
+<td>06*</td>
+<td>(Check Service Custom Text)</td>
+<td>Failed - Error response text from check service</td>
+</tr>
+<tr>
+<td>07</td>
+<td>Hold-call or Pick Up Card</td>
+<td>Failed - Pick up card, special condition (fraud account)</td>
+</tr>
+<tr>
+<td>08</td>
+<td>Approval</td>
+<td>Successful - Honor MasterCard with ID</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Partial Approval</td>
+<td>Failed - PayHub does not support partial approvals.</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Approval</td>
+<td>Successful - VIP approval</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Invalid Trans</td>
+<td>Failed - Invalid transaction</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Amount Error</td>
+<td>Failed - Invalid amount</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Card No. Error</td>
+<td>Failed - Invalid card number</td>
+</tr>
+<tr>
+<td>15</td>
+<td>No such Issuer</td>
+<td>Failed - No such issuer</td>
+</tr>
+<tr>
+<td>19</td>
+<td>RE Enter</td>
+<td>Failed - Re-enter transaction</td>
+</tr>
+<tr>
+<td>21</td>
+<td>No Action Taken</td>
+<td>Failed - Unable to back out transaction</td>
+</tr>
+<tr>
+<td>28</td>
+<td>No Reply</td>
+<td>Failed - File is temporarily unavailable</td>
+</tr>
+<tr>
+<td>34</td>
+<td>Transaction Cancelled</td>
+<td>Failed - MasterCard use only, Transaction Cancelled; Fraud Concern (Used in reversal requests only)</td>
+</tr>
+<tr>
+<td>39</td>
+<td>No Credit Acct</td>
+<td>Failed - No credit account</td>
+</tr>
+<tr>
+<td>41</td>
+<td>Hold-call or Pick Up Card</td>
+<td>Failed - Lost card, pick up (fraud account)</td>
+</tr>
+<tr>
+<td>43</td>
+<td>Hold-call or Pick Up Card</td>
+<td>Failed - Stolen card, pick up (fraud account)</td>
+</tr>
+<tr>
+<td>51</td>
+<td>Decline</td>
+<td>Failed - Insufficient funds</td>
+</tr>
+<tr>
+<td>52</td>
+<td>No Check Account</td>
+<td>Failed - No checking account</td>
+</tr>
+<tr>
+<td>53</td>
+<td>No Save Account</td>
+<td>Failed - No savings account</td>
+</tr>
+<tr>
+<td>54</td>
+<td>Expired Card</td>
+<td>Failed - Expired card</td>
+</tr>
+<tr>
+<td>55</td>
+<td>Wrong PIN</td>
+<td>Failed - Incorrect PIN</td>
+</tr>
+<tr>
+<td>57</td>
+<td>Serv not allowed</td>
+<td>Failed - Transaction not permitted-Card</td>
+</tr>
+<tr>
+<td>58</td>
+<td>Serv not allowed</td>
+<td>Failed - Transaction not permitted-Terminal</td>
+</tr>
+<tr>
+<td>59</td>
+<td>Serv not allowed</td>
+<td>Failed - Transaction not permitted-Merchant</td>
+</tr>
+<tr>
+<td>61</td>
+<td>Declined</td>
+<td>Failed - Exceeds withdrawal limit</td>
+</tr>
+<tr>
+<td>62</td>
+<td>Declined</td>
+<td>Failed - Invalid service code, restricted</td>
+</tr>
+<tr>
+<td>63</td>
+<td>Sec Violation</td>
+<td>Failed - Security violation</td>
+</tr>
+<tr>
+<td>65</td>
+<td>Declined</td>
+<td>Failed - Activity limit exceeded</td>
+</tr>
+<tr>
+<td>75</td>
+<td>PIN Exceeded</td>
+<td>Failed - PIN tried exceeded</td>
+</tr>
+<tr>
+<td>76</td>
+<td>Unsolicated Reversal</td>
+<td>Failed - Unable to locate, no match</td>
+</tr>
+<tr>
+<td>77</td>
+<td>No Action Taken</td>
+<td>Failed - Inconsistent data, reversed, or repeat</td>
+</tr>
+<tr>
+<td>78</td>
+<td>No Account</td>
+<td>Failed - No account</td>
+</tr>
+<tr>
+<td>79</td>
+<td>Already Reversed</td>
+<td>Failed - Already reversed at switch</td>
+</tr>
+<tr>
+<td>80</td>
+<td>Date Error</td>
+<td>Failed - Invalid date</td>
+</tr>
+<tr>
+<td>81</td>
+<td>Encryption Error</td>
+<td>Failed - Cryptographic error</td>
+</tr>
+<tr>
+<td>82</td>
+<td>Incorrect CVV</td>
+<td>Failed - CVV data is not correct</td>
+</tr>
+<tr>
+<td>83</td>
+<td>Cannot Verify PIN</td>
+<td>Failed - Cannot verify PIN</td>
+</tr>
+<tr>
+<td>85</td>
+<td>Card OK</td>
+<td>Successful - No reason to decline</td>
+</tr>
+<tr>
+<td>86</td>
+<td>Cannot Verify PIN</td>
+<td>Failed - Cannot verify PIN</td>
+</tr>
+<tr>
+<td>91</td>
+<td>No Reply</td>
+<td>Failed - Issuer or switch is unavailable</td>
+</tr>
+<tr>
+<td>92</td>
+<td>Invalid Routing</td>
+<td>Failed - Destination not found</td>
+</tr>
+<tr>
+<td>93</td>
+<td>Decline</td>
+<td>Failed - Violation, cannot complete</td>
+</tr>
+<tr>
+<td>94</td>
+<td>Duplicate Trans</td>
+<td>Failed - Unable to locate, no match</td>
+</tr>
+<tr>
+<td>96</td>
+<td>System Error</td>
+<td>Failed - System malfunction</td>
+</tr>
+</tbody></table>
+
+          <h1 id="errors">Errors</h1>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>00</td>
+<td>VALID_OPERATION</td>
+</tr>
+<tr>
+<td>02</td>
+<td>CARD_NUMBER_MISSING_CODE</td>
+</tr>
+<tr>
+<td>1009</td>
+<td>INVALID_REFERENCE_NUMBER</td>
+</tr>
+<tr>
+<td>4006</td>
+<td>INVALID_MERCHANT</td>
+</tr>
+<tr>
+<td>4007</td>
+<td>INVALID_TERMINAL</td>
+</tr>
+<tr>
+<td>4008</td>
+<td>INVALID_USER_NAME</td>
+</tr>
+<tr>
+<td>4009</td>
+<td>INVALID_USER_PASSWORD</td>
+</tr>
+<tr>
+<td>4010</td>
+<td>INVALID_RECORD_FORMAT</td>
+</tr>
+<tr>
+<td>4011</td>
+<td>INACTIVE_TERMINAL</td>
+</tr>
+<tr>
+<td>4012</td>
+<td>INVALID_AUTHENTICATION</td>
+</tr>
+<tr>
+<td>4013</td>
+<td>INVALID_TRANSACTION_CD</td>
+</tr>
+<tr>
+<td>4014</td>
+<td>INVALID_OFFLINE_APPROVAL_CD</td>
+</tr>
+<tr>
+<td>4015</td>
+<td>INVALID_CARDHOLDER_ID_CODE</td>
+</tr>
+<tr>
+<td>4016</td>
+<td>INVALID_CARD_HOLDER_ID_DATA</td>
+</tr>
+<tr>
+<td>4017</td>
+<td>INVALID_ACCOUNT_DATA_SOURCE</td>
+</tr>
+<tr>
+<td>4018</td>
+<td>INVALID_CUSTOMER_DATA_FIELD</td>
+</tr>
+<tr>
+<td>4019</td>
+<td>INVALID_CVV_CODE</td>
+</tr>
+<tr>
+<td>4020</td>
+<td>INVALID_CVV_DATA</td>
+</tr>
+<tr>
+<td>4021</td>
+<td>INVALID_TRANSACTION_AMOUNT</td>
+</tr>
+<tr>
+<td>4022</td>
+<td>INVALID_CARD_NUMBER</td>
+</tr>
+<tr>
+<td>4023</td>
+<td>INVALID_BATCH_ID</td>
+</tr>
+<tr>
+<td>4024</td>
+<td>INVALID_TRANSACTION_ID</td>
+</tr>
+<tr>
+<td>4025</td>
+<td>INVALID_CARD_EXPIRY_DATE</td>
+</tr>
+<tr>
+<td>4026</td>
+<td>INVALID_AVS_DATA_FLAG</td>
+</tr>
+<tr>
+<td>4027</td>
+<td>INVALID_CUSTOMER_ID</td>
+</tr>
+<tr>
+<td>4028</td>
+<td>INVALID_CUSTOMER_WEB</td>
+</tr>
+<tr>
+<td>4029</td>
+<td>INVALID_CUSTOMER_EMAIL_ID</td>
+</tr>
+<tr>
+<td>4030</td>
+<td>INVALID_CUSTOMER_BILLING_ADD_ZIP</td>
+</tr>
+<tr>
+<td>4031</td>
+<td>INVALID_CUSTOMER_SHIPPING_ADD_ZIP</td>
+</tr>
+<tr>
+<td>4032</td>
+<td>INACTIVE_MERCHANT</td>
+</tr>
+<tr>
+<td>4033</td>
+<td>INVALID_TERMINAL_ORIGIN</td>
+</tr>
+<tr>
+<td>4034</td>
+<td>INVALID_CARD_DATA_FOR_DEBIT</td>
+</tr>
+<tr>
+<td>4035</td>
+<td>INVALID_TRANSACTION_CODE_FOR_DEBIT</td>
+</tr>
+<tr>
+<td>4036</td>
+<td>INVALID_CUSTOMER_ADDRESS</td>
+</tr>
+<tr>
+<td>4037</td>
+<td>INVALID_CUSTOMER_COMPANY_NAME</td>
+</tr>
+<tr>
+<td>4038</td>
+<td>INVALID_CUSTOMER_DATA</td>
+</tr>
+<tr>
+<td>4039</td>
+<td>INVALID_TRANSACTION_NOTE</td>
+</tr>
+<tr>
+<td>4040</td>
+<td>CARD_NOT_SUPPORT_CODE</td>
+</tr>
+<tr>
+<td>4041</td>
+<td>CVV_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4042</td>
+<td>AVS_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4043</td>
+<td>CARD_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4044</td>
+<td>EXPIRY_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4045</td>
+<td>TRACK_DATA_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4046</td>
+<td>CARD_TOKEN_GENRATION_FAILED_CODE</td>
+</tr>
+<tr>
+<td>4047</td>
+<td>PAYMENT_TYPE_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4048</td>
+<td>TRANSACTION_TYPE_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4049</td>
+<td>TRANSACTION_ID_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4050</td>
+<td>BATCH_ID_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4051</td>
+<td>TERMINAL_ID_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4052</td>
+<td>ORGANIZATION_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4053</td>
+<td>BATCH_TRANSACTION_NOT_FOUND_CODE</td>
+</tr>
+<tr>
+<td>4054</td>
+<td>ALREADY_SETTLED_BATCH_CODE</td>
+</tr>
+<tr>
+<td>4055</td>
+<td>DUPLICATE_BATCH_CODE</td>
+</tr>
+<tr>
+<td>4056</td>
+<td>BATCH_SETTLED_SUCCESSFULLY_CODE</td>
+</tr>
+<tr>
+<td>4057</td>
+<td>BATCH_SETTLEMENT_FAILD_CODE</td>
+</tr>
+<tr>
+<td>4058</td>
+<td>BATCH_REJECTED_CODE</td>
+</tr>
+<tr>
+<td>4059</td>
+<td>NETWORK_UNAVAILABLE_CODE</td>
+</tr>
+<tr>
+<td>4060</td>
+<td>UNABLE_TO_BUILT_REQUEST_CODE</td>
+</tr>
+<tr>
+<td>4061</td>
+<td>RECORD_NOT_FOUND_CODE</td>
+</tr>
+<tr>
+<td>4062</td>
+<td>RECURRING_SAVED_CODE</td>
+</tr>
+<tr>
+<td>4063</td>
+<td>RECURRING_SAVING_FAILED_CODE</td>
+</tr>
+<tr>
+<td>4064</td>
+<td>RECURRING_UPDATION_CODE</td>
+</tr>
+<tr>
+<td>4065</td>
+<td>RECURRING_UPDATION_FAILED_CODE</td>
+</tr>
+<tr>
+<td>4066</td>
+<td>RECURRING_STATUS_CHANGED_SUCCESSFULLY</td>
+</tr>
+<tr>
+<td>4067</td>
+<td>RECURRING_STATUS_CHANGING_FAILED</td>
+</tr>
+<tr>
+<td>4068</td>
+<td>INVALID_TRANSACTION_ID_CODE</td>
+</tr>
+<tr>
+<td>4069</td>
+<td>TRANSACTION_ALREADY_VOIDED_CODE</td>
+</tr>
+<tr>
+<td>4070</td>
+<td>CARD_TYPE_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4071</td>
+<td>INVALID_BATCH_NO_CODE</td>
+</tr>
+<tr>
+<td>4072</td>
+<td>TRANSACTION_ALREADY_REFUNDED_CODE</td>
+</tr>
+<tr>
+<td>4073</td>
+<td>UNABLE_TO_VOID_CODE</td>
+</tr>
+<tr>
+<td>4074</td>
+<td>UNABLE_TO_REFUND_CODE</td>
+</tr>
+<tr>
+<td>4075</td>
+<td>UNABLE_TO_CAPTURE_CODE</td>
+</tr>
+<tr>
+<td>4076</td>
+<td>CAPTURED_TRANSACTION_SENT_CODE</td>
+</tr>
+<tr>
+<td>4077</td>
+<td>CAPTURED_TRANSACTION_FAILED_CODE</td>
+</tr>
+<tr>
+<td>4078</td>
+<td>INVALID_INVOICE_NUMBER</td>
+</tr>
+<tr>
+<td>4080</td>
+<td>INVALID_BILL_TYPE_CODE</td>
+</tr>
+<tr>
+<td>4081</td>
+<td>INVALID_BILL_GENERATION_SPAN_CODE</td>
+</tr>
+<tr>
+<td>4082</td>
+<td>INVALID_END_DATE_TYPE_CODE</td>
+</tr>
+<tr>
+<td>4083</td>
+<td>INVALID_END_BILL_COUNT_CODE</td>
+</tr>
+<tr>
+<td>4084</td>
+<td>INVALID_END_BILL_DATE_CODE</td>
+</tr>
+<tr>
+<td>4085</td>
+<td>INVALID_WEEK_DAYS_CODE</td>
+</tr>
+<tr>
+<td>4086</td>
+<td>INVALID_MONTHLY_TYPE_CODE</td>
+</tr>
+<tr>
+<td>4087</td>
+<td>INVALID_MONTHLY_WEEK_DAYS_CODE</td>
+</tr>
+<tr>
+<td>4088</td>
+<td>INVALID_MONTHLY_DAYS_POSSION_CODE</td>
+</tr>
+<tr>
+<td>4089</td>
+<td>INVALID_MONTHLY_DAYS_CODE</td>
+</tr>
+<tr>
+<td>4090</td>
+<td>INVALID_START_DATE_CODE</td>
+</tr>
+<tr>
+<td>4091</td>
+<td>INVALID_SPECIFIC_DATES_CODE</td>
+</tr>
+<tr>
+<td>4092</td>
+<td>SPECIFIC_SAME_DATES_CODE</td>
+</tr>
+<tr>
+<td>4093</td>
+<td>INVALID_RECURRING_DATA_CODE</td>
+</tr>
+<tr>
+<td>4094</td>
+<td>END_BILL_DATE_BEFORE_START_CODE</td>
+</tr>
+<tr>
+<td>4095</td>
+<td>CARD_HOLDER_DATA_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4096</td>
+<td>CARD_HOLDER_CODE_REQUIRED_CODE</td>
+</tr>
+<tr>
+<td>4097</td>
+<td>INVALID_STATUS_CODE</td>
+</tr>
+<tr>
+<td>4098</td>
+<td>UNABLE_TO_CHANGE_STATUS</td>
+</tr>
+<tr>
+<td>4099</td>
+<td>CARD_VALIDATION_FAILED_CODE</td>
+</tr>
+<tr>
+<td>4100</td>
+<td>RECURRING_CIS_FAILED_CODE</td>
+</tr>
+<tr>
+<td>4101</td>
+<td>UNABLE_BUILT_RECURRING_FILTER__CODE</td>
+</tr>
+<tr>
+<td>4103</td>
+<td>UNABLE_TO_BUILT_NEXT_BILL_CODE</td>
+</tr>
+<tr>
+<td>4501</td>
+<td>INVALID_PHONE_TYPE</td>
+</tr>
+<tr>
+<td>4502</td>
+<td>INVALID_PHONE_NUMBER</td>
+</tr>
+<tr>
+<td>4503</td>
+<td>INVALID_ZIP_CODE</td>
+</tr>
+<tr>
+<td>4504</td>
+<td>INVALID_STATE_CODE</td>
+</tr>
+<tr>
+<td>4505</td>
+<td>INVALID_INTERVAL_TYPE</td>
+</tr>
+<tr>
+<td>4506</td>
+<td>INVALID_END_DATE</td>
+</tr>
+<tr>
+<td>4507</td>
+<td>INVALID_BILL_WEEKLY_DAYS</td>
+</tr>
+<tr>
+<td>4508</td>
+<td>INVALID_YEAR_MONTH_DAYS</td>
+</tr>
+<tr>
+<td>4509</td>
+<td>INVALID_YEAR_BILL_ON_MONTH_NO</td>
+</tr>
+<tr>
+<td>4510</td>
+<td>INVALID_MONTHLY_BILL_TYPE</td>
+</tr>
+<tr>
+<td>4511</td>
+<td>INVALID_MDAYS_POSITION</td>
+</tr>
+<tr>
+<td>4512</td>
+<td>INVALID_MDAYS</td>
+</tr>
+<tr>
+<td>4513</td>
+<td>INVALID_MDAY_EACH_POSITIONS</td>
+</tr>
+<tr>
+<td>4514</td>
+<td>INCONSISTENT_SCHEDULE_FIELDS</td>
+</tr>
+<tr>
+<td>4515</td>
+<td>ACCOUNT_IS_NOT_ADMINISTRATOR</td>
+</tr>
+<tr>
+<td>4516</td>
+<td>INCONSISTENT_CARD_DATA_FIELDS</td>
+</tr>
+<tr>
+<td>4517</td>
+<td>WRONG_OAUTH_TOKEN_FOR_MERCHANT</td>
+</tr>
+<tr>
+<td>4518</td>
+<td>NO_MERCHANT_ACCOUNT_FOR_OUTH_TOKEN_FOR_MERCHANT</td>
+</tr>
+<tr>
+<td>4519</td>
+<td>NO_SETUP_ACCOUNT_FOR_OUTH_TOKEN_FOR_MERCHANT</td>
+</tr>
+<tr>
+<td>4520</td>
+<td>NO_VT_CLIENT_ACCOUNT_FOR_OUTH_TOKEN_FOR_MERCHANT</td>
+</tr>
+<tr>
+<td>4521</td>
+<td>INVALID_CURRENCY_CODE</td>
+</tr>
+<tr>
+<td>4522</td>
+<td>INVALID_RECURRING_BILL_STATUS_CHANGE_CODE</td>
+</tr>
+<tr>
+<td>4523</td>
+<td>INCONSISTENT_CURRENCIES</td>
+</tr>
+<tr>
+<td>4524</td>
+<td>MISSING_PROPERTY_CODE</td>
+</tr>
+<tr>
+<td>4525</td>
+<td>INCONSISTENT_CUSTOMER_DATA_CODE</td>
+</tr>
+<tr>
+<td>4526</td>
+<td>DUPLICATE_DEVELOPER_CODE</td>
+</tr>
+<tr>
+<td>9989</td>
+<td>METHOD_REQUEST_BODY_VALIDATION_ERROR_CODE</td>
+</tr>
+<tr>
+<td>9990</td>
+<td>HTTP_NOT_READABLE_EXCEPTION_CODE</td>
+</tr>
+<tr>
+<td>9991</td>
+<td>JSONPARSE_EXCEPTION_CODE</td>
+</tr>
+<tr>
+<td>9992</td>
+<td>MAPPING_EXCEPTION_CODE</td>
+</tr>
+<tr>
+<td>9993</td>
+<td>MEDIA_TYPE_NOT_SUPPORTED_CODE</td>
+</tr>
+<tr>
+<td>9994</td>
+<td>METHOD_NOT_SUPPORTED_CODE</td>
+</tr>
+<tr>
+<td>9995</td>
+<td>PAGE_NOT_FOUND_ERROR_CODE</td>
+</tr>
+<tr>
+<td>9996</td>
+<td>ACCESS_DENIED_ERROR_CODE</td>
+</tr>
+<tr>
+<td>9997</td>
+<td>JSON_SYNTAX_ERROR_CODE</td>
+</tr>
+<tr>
+<td>9998</td>
+<td>NOT_FOUND_ERROR_CODE</td>
+</tr>
+<tr>
+<td>9999</td>
+<td>INTERNAL_SERVER_ERROR_CODE</td>
+</tr>
+</tbody></table>
 
             <h1 id="safyer-boarding-settlement">Safyer Boarding-Settlement</h1>
 

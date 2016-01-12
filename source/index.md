@@ -20,11 +20,13 @@ includes_gateway:
   - refund_transaction
   - recurring_bill
   - recurring_bill_status
+  - administration_configuration
   - transaction_report
   - webhook_for_integrators
+  - how_to_test
   - response_codes  
   - errors
-  - administration_configuration
+
   
 includes_safyer:
   - safyer

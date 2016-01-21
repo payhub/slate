@@ -2631,7 +2631,47 @@ supplied findByMerchantOrganizationId search functions.
 
       <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"merchant"</span><span class="o">,</span> <span class="n">merchant</span><span class="o">);</span>
       <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"record_format"</span><span class="o">,</span> <span class="s">"CREDIT_CARD"</span><span class="o">);</span>
+      <span class="c1">//optional</span>
       <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"transaction_id"</span><span class="o">,</span> <span class="s">"226"</span><span class="o">);</span>
+      <span class="c1">//optional</span>
+      <span class="n">JSONObject</span> <span class="n">bill</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
+              <span class="n">JSONObject</span> <span class="n">base_amount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
+                <span class="n">base_amount</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amount"</span><span class="o">,</span> <span class="s">"1275"</span><span class="o">);</span><span class="c1">//$12.75</span>
+              <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"base_amount"</span><span class="o">,</span> <span class="n">base_amount</span><span class="o">);</span>
+              <span class="n">JSONObject</span> <span class="n">shipping_amount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
+                <span class="n">shipping_amount</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amount"</span><span class="o">,</span> <span class="s">"725"</span><span class="o">);</span><span class="c1">//$7.25</span>
+              <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"shipping_amount"</span><span class="o">,</span> <span class="n">shipping_amount</span><span class="o">);</span>
+              <span class="n">JSONObject</span> <span class="n">tax_amount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
+                <span class="n">tax_amount</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"amount"</span><span class="o">,</span> <span class="s">"113"</span><span class="o">);</span><span class="c1">//$1.13</span>
+              <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"tax_amount"</span><span class="o">,</span> <span class="n">tax_amount</span><span class="o">);</span>
+              <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"note"</span><span class="o">,</span> <span class="s">"Shipped as a gift"</span><span class="o">);</span>
+              <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"invoice_number"</span><span class="o">,</span> <span class="s">"4645782"</span><span class="o">);</span>
+              <span class="n">bill</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"po_number"</span><span class="o">,</span> <span class="s">"1234-654321"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"bill"</span><span class="o">,</span> <span class="n">bill</span><span class="o">);</span>
+      <span class="c1">//optional</span>
+      <span class="n">JSONObject</span> <span class="n">card_data</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
+              <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"card_number"</span><span class="o">,</span> <span class="s">"5466410004374507"</span><span class="o">);</span>
+              <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"card_expiry_date"</span><span class="o">,</span> <span class="s">"201809"</span><span class="o">);</span><span class="c1">// September 2018</span>
+              <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_address_1"</span><span class="o">,</span> <span class="s">"237 E 33rd Street"</span><span class="o">);</span>
+              <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_address_2"</span><span class="o">,</span> <span class="s">"3rd Floor"</span><span class="o">);</span>
+              <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_city"</span><span class="o">,</span> <span class="s">"New York"</span><span class="o">);</span>
+              <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_zip"</span><span class="o">,</span> <span class="s">"10016"</span><span class="o">);</span>
+              <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"billing_state"</span><span class="o">,</span> <span class="s">"NY"</span><span class="o">);</span>
+              <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"cvv_data"</span><span class="o">,</span> <span class="s">"998"</span><span class="o">);</span>
+              <span class="n">card_data</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"cvv_code"</span><span class="o">,</span> <span class="s">"Y"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"card_data"</span><span class="o">,</span> <span class="n">card_data</span><span class="o">);</span>
+      <span class="c1">//optional</span>
+      <span class="n">JSONObject</span> <span class="n">customer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="o">();</span>
+              <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"first_name"</span><span class="o">,</span> <span class="s">"John"</span><span class="o">);</span>
+              <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"last_name"</span><span class="o">,</span> <span class="s">"Smith"</span><span class="o">);</span>
+              <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"company_name"</span><span class="o">,</span> <span class="s">"CBA Steakhouse"</span><span class="o">);</span>
+              <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"job_title"</span><span class="o">,</span> <span class="s">"Owner"</span><span class="o">);</span>
+              <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"email_address"</span><span class="o">,</span> <span class="s">"john@cbasteakhouse.com"</span><span class="o">);</span>
+              <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"web_address"</span><span class="o">,</span> <span class="s">"http://www.cbasteakhouse.com"</span><span class="o">);</span>
+              <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"phone_number"</span><span class="o">,</span> <span class="s">"(917) 479 1349"</span><span class="o">);</span>
+              <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"phone_ext"</span><span class="o">,</span> <span class="s">"5478"</span><span class="o">);</span>
+              <span class="n">customer</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"phone_type"</span><span class="o">,</span> <span class="s">"M"</span><span class="o">);</span>
+      <span class="n">jsonRequestObject</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"customer"</span><span class="o">,</span> <span class="n">customer</span><span class="o">);</span>
 
       <span class="n">HttpPost</span> <span class="n">postCreate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpPost</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
       <span class="n">postCreate</span><span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"Authorization"</span><span class="o">,</span> <span class="s">"Bearer dfd4f12a-79af-4825-8dba-db27342c8491"</span><span class="o">);</span><span class="c1">//You put your token here</span>
@@ -2715,7 +2755,21 @@ supplied findByMerchantOrganizationId search functions.
 </span>  <span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
   <span class="nv">$data</span><span class="p">[</span><span class="s2">"merchant"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"organization_id"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$organization_id</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"terminal_id"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$terminal_id</span><span class="s2">"</span><span class="p">);</span>
   <span class="nv">$data</span><span class="p">[</span><span class="s2">"record_format"</span><span class="p">]</span><span class="o">=</span><span class="nv">$record_format</span><span class="p">;</span>
-  <span class="nv">$data</span><span class="p">[</span><span class="s2">"transaction_id"</span><span class="p">]</span><span class="o">=</span><span class="nv">$transaction_id</span><span class="p">;</span>
+  <span class="c1">//optional
+</span>  <span class="nv">$data</span><span class="p">[</span><span class="s2">"transaction_id"</span><span class="p">]</span><span class="o">=</span><span class="nv">$transaction_id</span><span class="p">;</span>
+  <span class="c1">//optional
+</span>  <span class="nv">$data</span><span class="p">[</span><span class="s2">"bill"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"base_amount"</span> <span class="o">=&gt;</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"currency"</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span><span class="s2">"amount"</span> <span class="o">=&gt;</span> <span class="nv">$base_amount</span><span class="p">),</span>
+      <span class="s2">"shipping_amount"</span> <span class="o">=&gt;</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"currency"</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span><span class="s2">"amount"</span> <span class="o">=&gt;</span> <span class="nv">$shipping_amount</span><span class="p">),</span>
+      <span class="s2">"tax_amount"</span> <span class="o">=&gt;</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"currency"</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span><span class="s2">"amount"</span> <span class="o">=&gt;</span> <span class="nv">$tax_amount</span><span class="p">));</span>
+  <span class="c1">//optional
+</span>  <span class="nv">$data</span><span class="p">[</span><span class="s2">"card_data"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"card_number"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$card_number</span><span class="s2">"</span><span class="p">,</span><span class="s2">"card_expiry_date"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$card_expiry_date</span><span class="s2">"</span><span class="p">,</span>
+      <span class="s2">"cvv_data"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$cvv_data</span><span class="s2">"</span><span class="p">,</span><span class="s2">"billing_address_1"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_address_1</span><span class="s2">"</span><span class="p">,</span>
+      <span class="s2">"billing_address_2"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_address_2</span><span class="s2">"</span><span class="p">,</span><span class="s2">"billing_city"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_city</span><span class="s2">"</span><span class="p">,</span>
+      <span class="s2">"billing_state"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_state</span><span class="s2">"</span><span class="p">,</span><span class="s2">"billing_zip"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$billing_zip</span><span class="s2">"</span><span class="p">);</span>
+  <span class="c1">//optional
+</span>  <span class="nv">$data</span> <span class="p">[</span><span class="s2">"customer"</span><span class="p">]</span><span class="o">=</span>  <span class="k">array</span><span class="p">(</span><span class="s2">"first_name"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$first_name</span><span class="s2">"</span><span class="p">,</span><span class="s2">"last_name"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$last_name</span><span class="s2">"</span><span class="p">,</span><span class="s2">"company_name"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$company_name</span><span class="s2">"</span><span class="p">,</span>
+      <span class="s2">"job_title"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$job_title</span><span class="s2">"</span><span class="p">,</span><span class="s2">"email_address"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$email_address</span><span class="s2">"</span><span class="p">,</span><span class="s2">"web_address"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$web_address</span><span class="s2">"</span><span class="p">,</span>
+      <span class="s2">"phone_number"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$phone_number</span><span class="s2">"</span><span class="p">,</span><span class="s2">"phone_ext"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$phone_ext</span><span class="s2">"</span><span class="p">,</span><span class="s2">"phone_type"</span> <span class="o">=&gt;</span> <span class="s2">"</span><span class="nv">$phone_type</span><span class="s2">"</span><span class="p">);</span>
 
   <span class="c1">//Convert data from Array to JSON
 </span>  <span class="nv">$data_string</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
@@ -2814,8 +2868,51 @@ supplied findByMerchantOrganizationId search functions.
                          <span class="n">terminal_id</span> <span class="p">=</span> <span class="s">"5"</span><span class="p">,</span>
                      <span class="p">},</span>
                     <span class="n">record_format</span> <span class="p">=</span> <span class="s">"CREDIT_CARD"</span><span class="p">,</span>
-                    <span class="n">transaction_id</span> <span class="p">=</span> <span class="s">"228"</span>
-                   <span class="p">};</span>
+                    <span class="n">transaction_id</span> <span class="p">=</span> <span class="s">"228"</span><span class="p">,</span><span class="c1">//optional
+</span>                    <span class="n">bill</span> <span class="p">=</span> <span class="k">new</span> <span class="c1">//optional 
+</span>                    <span class="p">{</span>
+                        <span class="n">base_amount</span> <span class="p">=</span> <span class="k">new</span>
+                        <span class="p">{</span>
+                            <span class="n">amount</span> <span class="p">=</span> <span class="s">"1275"</span> <span class="c1">//$12.75
+</span>                        <span class="p">},</span>
+                        <span class="n">shipping_amount</span> <span class="p">=</span> <span class="k">new</span>
+                        <span class="p">{</span>
+                            <span class="n">amount</span> <span class="p">=</span> <span class="s">"725"</span> <span class="c1">//$7.25
+</span>                        <span class="p">},</span>
+                        <span class="n">tax_amount</span> <span class="p">=</span> <span class="k">new</span>
+                        <span class="p">{</span>
+                            <span class="n">amount</span> <span class="p">=</span> <span class="s">"113"</span> <span class="c1">//$1.13
+</span>                        <span class="p">},</span>
+                        <span class="n">note</span> <span class="p">=</span> <span class="s">"Shipped as a gift"</span><span class="p">,</span>
+                        <span class="n">invoice_number</span> <span class="p">=</span> <span class="s">"4645782"</span><span class="p">,</span>
+                        <span class="n">po_number</span> <span class="p">=</span> <span class="s">"1234-654321"</span>
+                    <span class="p">},</span>
+                    <span class="n">card_data</span> <span class="p">=</span> <span class="k">new</span> <span class="c1">//optional
+</span>                    <span class="p">{</span>
+                        <span class="n">card_number</span> <span class="p">=</span> <span class="s">"5466410004374507"</span><span class="p">,</span>
+                        <span class="n">card_expiry_date</span> <span class="p">=</span> <span class="s">"201809"</span><span class="p">,</span> <span class="c1">//September 2018
+</span>                        <span class="n">billing_address_1</span> <span class="p">=</span> <span class="s">"237 E 33rd Street"</span><span class="p">,</span>
+                        <span class="n">billing_address_2</span> <span class="p">=</span> <span class="s">"3rd Floor"</span><span class="p">,</span>
+                        <span class="n">billing_city</span> <span class="p">=</span> <span class="s">"New York"</span><span class="p">,</span>
+                        <span class="n">billing_state</span> <span class="p">=</span> <span class="s">"NY"</span><span class="p">,</span>
+                        <span class="n">billing_zip</span> <span class="p">=</span> <span class="s">"10016"</span><span class="p">,</span>
+                        <span class="n">cvv_data</span> <span class="p">=</span> <span class="s">"998"</span><span class="p">,</span>
+                        <span class="n">cvv_code</span> <span class="p">=</span> <span class="s">"Y"</span>
+                    <span class="p">},</span>
+                    <span class="n">customer</span> <span class="p">=</span> <span class="k">new</span> <span class="c1">//optional
+</span>                    <span class="p">{</span>
+                        <span class="n">first_name</span> <span class="p">=</span> <span class="s">"John"</span><span class="p">,</span>
+                        <span class="n">last_name</span> <span class="p">=</span> <span class="s">"Smith"</span><span class="p">,</span>
+                        <span class="n">company_name</span> <span class="p">=</span> <span class="s">"CBA Stakehouse"</span><span class="p">,</span>
+                        <span class="n">job_title</span> <span class="p">=</span> <span class="s">"Owner"</span><span class="p">,</span>
+                        <span class="n">email_address</span> <span class="p">=</span> <span class="s">"john@cbastakehouse.com"</span><span class="p">,</span>
+                        <span class="n">web_address</span> <span class="p">=</span> <span class="s">"http://www.cbasteakhouse.com"</span><span class="p">,</span>
+                        <span class="n">phone_number</span> <span class="p">=</span> <span class="s">"(917) 479 1349"</span><span class="p">,</span>
+                        <span class="n">phone_ext</span> <span class="p">=</span> <span class="s">"5478"</span><span class="p">,</span>
+                        <span class="n">phone_type</span> <span class="p">=</span> <span class="s">"M"</span>
+                    <span class="p">},</span>
+                    <span class="n">record_format</span> <span class="p">=</span> <span class="s">"CC"</span>
+                <span class="p">};</span>
 
                 <span class="kt">string</span> <span class="n">json</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="n">refund</span><span class="p">);</span>
 
@@ -2873,14 +2970,69 @@ supplied findByMerchantOrganizationId search functions.
 <span class="p">}</span>
 </code></pre>
 
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"merchant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"organization_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10005</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"terminal_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"record_format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CREDIT_CARD"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"114"</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<pre><code class="highlight json"><span class="w">    </span><span class="p">{</span><span class="w">
+
+      </span><span class="s2">"merchant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"organization_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">10005</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"terminal_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+
+      </span><span class="s2">"record_format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CREDIT_CARD"</span><span class="p">,</span><span class="w">
+
+      </span><span class="s2">"transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"114"</span><span class="p">,</span><span class="w">
+
+      </span><span class="s2">"bill"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"base_amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+                </span><span class="s2">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mf">0.30</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+
+            </span><span class="s2">"shipping_amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+                </span><span class="s2">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mf">0.20</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+
+            </span><span class="s2">"tax_amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+                </span><span class="s2">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mf">0.10</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+
+            </span><span class="s2">"note"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"This is a note."</span><span class="p">,</span><span class="w">
+
+            </span><span class="s2">"invoice_number"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"This is an Invoice number.XXX"</span><span class="p">,</span><span class="w">
+             </span><span class="s2">"po_number"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"a test po number"</span><span class="w">
+
+        </span><span class="p">},</span><span class="w">
+
+        </span><span class="s2">"card_data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+
+            </span><span class="s2">"card_number"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"5466410004374507"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"card_expiry_date"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"202011"</span><span class="p">,</span><span class="w">
+
+            </span><span class="s2">"billing_address_1"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2350 Kerner Blvd"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"billing_address_2"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"billing_city"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"San Rafael"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"billing_state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CA"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"billing_zip"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"99997-0003"</span><span class="w">
+
+
+
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"customer"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"first_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"First"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"last_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Contact"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"company_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Payhub Inc"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"job_title"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Software Engineer"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"email_address"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"test@payhub.com"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"web_address"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"http://payhub.com"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"phone_number"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"(415) 479 1349"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"phone_ext"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"phone_type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"M"</span><span class="w">
+
+
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <pre><code class="highlight ruby">
@@ -2907,10 +3059,41 @@ supplied findByMerchantOrganizationId search functions.
     <span class="c1">#Record Format </span>
     <span class="n">record_format</span><span class="o">=</span><span class="s2">"CREDIT_CARD"</span>
 
-    <span class="c1">#transaction Id</span>
+    <span class="c1">#transaction Id (optional)</span>
     <span class="n">transaction_id</span><span class="o">=</span><span class="s2">"114"</span>
 
-    <span class="n">informationToSend</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"merchant"</span><span class="o">=&gt;</span><span class="n">merchant</span><span class="p">,</span><span class="s2">"record_format"</span><span class="o">=&gt;</span><span class="n">record_format</span><span class="p">,</span><span class="s2">"transaction_id"</span><span class="o">=&gt;</span><span class="n">transaction_id</span><span class="p">}</span>
+    <span class="c1"># bill data (optional)</span>
+        <span class="n">bill</span><span class="o">=</span> <span class="p">{</span>
+                <span class="s2">"base_amount"</span><span class="o">=&gt;</span><span class="no">Hash</span><span class="p">[</span><span class="s2">"amount"</span> <span class="o">=&gt;</span><span class="s2">"1.00"</span><span class="p">],</span>
+                <span class="s2">"shipping_amount"</span><span class="o">=&gt;</span><span class="no">Hash</span><span class="p">[</span><span class="s2">"amount"</span> <span class="o">=&gt;</span><span class="s2">"1.00"</span><span class="p">],</span>
+                <span class="s2">"tax_amount"</span><span class="o">=&gt;</span><span class="no">Hash</span><span class="p">[</span><span class="s2">"amount"</span> <span class="o">=&gt;</span><span class="s2">"1.00"</span><span class="p">],</span>
+                <span class="s2">"note"</span><span class="o">=&gt;</span><span class="s2">"this a sample note"</span><span class="p">,</span>
+                <span class="s2">"invoice_number"</span><span class="o">=&gt;</span><span class="s2">"this is an invoice"</span><span class="p">,</span>
+                <span class="s2">"po_number"</span><span class="o">=&gt;</span><span class="s2">"a test po number"</span>
+        <span class="p">}</span>
+        <span class="c1">#Credit card data (optional)</span>
+        <span class="n">card_data</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">"card_number"</span><span class="o">=&gt;</span><span class="s2">"4055011111111111"</span><span class="p">,</span>
+                    <span class="s2">"card_expiry_date"</span><span class="o">=&gt;</span><span class="s2">"202012"</span><span class="p">,</span>
+                    <span class="s2">"billing_address_1"</span><span class="o">=&gt;</span><span class="s2">"2350 Kerner Blvd"</span><span class="p">,</span>
+                    <span class="s2">"billing_address_2"</span><span class="o">=&gt;</span><span class="s2">"On the corner"</span><span class="p">,</span>
+                    <span class="s2">"billing_city"</span><span class="o">=&gt;</span><span class="s2">"San Rafael"</span><span class="p">,</span>
+                    <span class="s2">"billing_state"</span><span class="o">=&gt;</span><span class="s2">"CA"</span><span class="p">,</span>
+                    <span class="s2">"billing_zip"</span><span class="o">=&gt;</span><span class="s2">"99997-0003"</span>
+                    <span class="p">}</span>
+        <span class="c1"># Customer data (optional)</span>
+        <span class="n">customer</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"first_name"</span><span class="o">=&gt;</span><span class="s2">"First"</span><span class="p">,</span>
+                    <span class="s2">"last_name"</span><span class="o">=&gt;</span><span class="s2">"Contact"</span><span class="p">,</span>
+                    <span class="s2">"company_name"</span><span class="o">=&gt;</span><span class="s2">"Payhub Inc"</span><span class="p">,</span>
+                    <span class="s2">"job_title"</span><span class="o">=&gt;</span><span class="s2">"Software Engineer"</span><span class="p">,</span>
+                    <span class="s2">"email_address"</span><span class="o">=&gt;</span><span class="s2">"jhon@company.com"</span><span class="p">,</span>
+                    <span class="s2">"web_address"</span><span class="o">=&gt;</span><span class="s2">"http://payhub.com"</span><span class="p">,</span>
+                    <span class="s2">"phone_number"</span><span class="o">=&gt;</span><span class="s2">"(415) 479 1349"</span><span class="p">,</span>
+                    <span class="s2">"phone_ext"</span><span class="o">=&gt;</span><span class="s2">"123"</span><span class="p">,</span>
+                    <span class="s2">"phone_type"</span><span class="o">=&gt;</span><span class="s2">"M"</span>
+        <span class="p">}</span>
+
+    <span class="n">informationToSend</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"merchant"</span><span class="o">=&gt;</span><span class="n">merchant</span><span class="p">,</span><span class="s2">"record_format"</span><span class="o">=&gt;</span><span class="n">record_format</span><span class="p">,</span><span class="s2">"transaction_id"</span><span class="o">=&gt;</span><span class="n">transaction_id</span><span class="p">,</span><span class="s2">"bill"</span><span class="o">=&gt;</span><span class="n">bill</span><span class="p">,</span><span class="s2">"customer"</span><span class="o">=&gt;</span><span class="n">customer</span><span class="p">,</span><span class="s2">"card_data"</span><span class="o">=&gt;</span><span class="n">card_data</span><span class="p">}</span>
 
     <span class="n">request</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">generate</span><span class="p">(</span><span class="n">informationToSend</span><span class="p">)</span>
 
@@ -2923,7 +3106,10 @@ supplied findByMerchantOrganizationId search functions.
 
 <p>This topic provides the information the Refund transaction.</p>
 
-<p>Run the Refund transaction when you want to refund the full amount of a settled sale, which is not yet refunded. The refund amount will be the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.</p>
+<p>Run the Refund transaction when you want to refund either the full amount or a partial amount of a sale. 
+The refund amount it doesn&rsquo;t needs to be the same as the total amount that was originally charged in the sale. 
+The amount is refunded to the credit or debit card that was originally charged.
+Also, you can Refund amounts to your credit or debit card without enter the transaction id.</p>
 
 <h3 id="request-method">Request Method</h3>
 
@@ -2931,9 +3117,9 @@ supplied findByMerchantOrganizationId search functions.
 
 <p><code class="prettyprint">https://api.payhub.com/api/v2/refund</code></p>
 
-<h2 id="elements-(all-required)">Elements (All Required)</h2>
+<h2 id="elements">Elements</h2>
 
-<h3 id="merchant">merchant</h3>
+<h3 id="merchant-(required)">merchant (required)</h3>
 
 <table><thead>
 <tr>
@@ -2959,7 +3145,7 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
-<h3 id="transaction">Transaction</h3>
+<h3 id="transaction-(optional)">Transaction (optional)</h3>
 
 <table><thead>
 <tr>
@@ -2975,6 +3161,173 @@ supplied findByMerchantOrganizationId search functions.
 </tr>
 </tbody></table>
 
+<p><strong>Note:</strong> you need the transaction_id if you want to refund a partial amount or the total ammount.If you want to refund an amount to your credit or debit card you don&rsquo;t need the transaction Id at all.</p>
+
+<h3 id="customer-(required-to-create-refunds-that-aren&#39;t-associated-to-existent-transactions)">Customer (required to create refunds that aren&rsquo;t associated to existent transactions)</h3>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>first_name</td>
+<td>string</td>
+<td>The first name of the customer.</td>
+</tr>
+<tr>
+<td>last_name</td>
+<td>string</td>
+<td>The last name of the customer.</td>
+</tr>
+<tr>
+<td>company_name</td>
+<td>string, optional</td>
+<td>The company name of the customer.</td>
+</tr>
+<tr>
+<td>job_title</td>
+<td>string, optional</td>
+<td>The job title of the customer.</td>
+</tr>
+<tr>
+<td>email_address</td>
+<td>string, optional</td>
+<td>The valid email address of the customer. The email address must be syntactically correct. If you do not specify the email address, you must provide a phone_number to identify the customer.</td>
+</tr>
+<tr>
+<td>web_address</td>
+<td>string, optional</td>
+<td>The web address of the customer. The web address, if you specify, must be syntactically valid web address.</td>
+</tr>
+<tr>
+<td>phone_number</td>
+<td>string, optional</td>
+<td>The phone number of the customer. The phone number must be syntactically correct. <br>For example, (415) 234 5678, or 4152345678, or (415) 234-5678. <br>If you do not specify the phone number, you must provide an email_address to identify the customer.</td>
+</tr>
+<tr>
+<td>phone_ext</td>
+<td>string, optional</td>
+<td>The phone extension number of the customer.</td>
+</tr>
+<tr>
+<td>phone_type</td>
+<td>string, optional</td>
+<td>The type ([&lsquo;H&rsquo; or &#39;W&rsquo; or &rsquo;M&rsquo;]) of the phone number: H (Home), W (Work), M (Mobile).</td>
+</tr>
+</tbody></table>
+
+<h3 id="card_data-(required-to-create-refunds-that-aren&#39;t-associated-to-existent-transactions)">card_data (required to create refunds that aren&rsquo;t associated to existent transactions)</h3>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tokenized_card</td>
+<td>string, optional</td>
+<td>This is the 16 character PayHub-specific tokenized string representing the card number. <br>The value for the given customer and credit card can be obtained by examining the last Sale by accessing the link to the card data that was successfully created. It is safer (and recommended) for the third party client to store and use this string in any future requests for the same customer.</td>
+</tr>
+<tr>
+<td>card_number</td>
+<td>string, optional</td>
+<td>This is the 16 character card number. <br> The card number is not stored by the API in plain text. The response will contain a tokenized card number that should always be used in future requests, (for the same Customer) in place of this property.</td>
+</tr>
+<tr>
+<td>track1_data</td>
+<td>string, optional</td>
+<td>This is the string read by the swiper (It contents track 1 data without sentinels).</td>
+</tr>
+<tr>
+<td>track2_data</td>
+<td>string, optional</td>
+<td>This is the string read by the swiper (It contents track 2 data without sentinels).</td>
+</tr>
+<tr>
+<td>encrypted_track _data</td>
+<td>Optional</td>
+<td><ul><li><strong>encrypted_track</strong> (string, optional): This is the string read by the swiper. This string contains the encrypted track data. </li><li><strong>swiper_brand</strong> (string, optional): The swiper brand&rsquo;s name with capital letters. Default value is <strong>IDTECH</strong>.</li><li><strong>swiper_model</strong> (string, optional): The swiper model with capital letters. Default value is <strong>UNIMAGII</strong>.</li></ul></td>
+</tr>
+<tr>
+<td>billing_address_1</td>
+<td>string, optional</td>
+<td>The billing street address of the customer.</td>
+</tr>
+<tr>
+<td>billing_address_2</td>
+<td>string, optional</td>
+<td>The additional billing street address of the customer.</td>
+</tr>
+<tr>
+<td>billing_city</td>
+<td>string, optional</td>
+<td>The billing city of the customer.</td>
+</tr>
+<tr>
+<td>billing_state</td>
+<td>string, optional</td>
+<td>The billing state Code of the customer. <br>For example, CA, WI, NY, etc. <br>The sate codes should be for the states in the USA.</td>
+</tr>
+<tr>
+<td>billing_zip</td>
+<td>string, optional</td>
+<td>The billing Zip Code of the customer. <br>The zip code must be either 5 digits or 5 plus four separated by a &rsquo;-&rsquo;. <br>The zip code is required if the merchant has turned ON the AVS flag.</td>
+</tr>
+<tr>
+<td>card_expiry_date</td>
+<td>string</td>
+<td>The card expiry date in the <em>YYYYMM</em> format.</td>
+</tr>
+</tbody></table>
+
+<h3 id="bill-(required-to-create-refunds-with-different-ammounts,-or-to-create-new-refunds-that-aren&#39;t-associated-to-existent-transactions)">bill (required to create refunds with different ammounts, or to create new refunds that aren&rsquo;t associated to existent transactions)</h3>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>base_amount</td>
+<td>TransactionAmount</td>
+<td>The base amount of the recurring bill. <br>The total amount charged will be the sum of this amount and (any) &#39;shipping_amount&rsquo; and &#39;tax_amount&rsquo;.</td>
+</tr>
+<tr>
+<td>shipping_amount</td>
+<td>TransactionAmount, optional</td>
+<td>The shipping amount for the transaction. <br>This value will be included in the total amount charged.</td>
+</tr>
+<tr>
+<td>tax_amount</td>
+<td>TransactionAmount, optional</td>
+<td>The tax amount for the transaction. <br>This value will be included in the total amount charged.</td>
+</tr>
+<tr>
+<td>invoice_number</td>
+<td>string, optional</td>
+<td>The invoice number for the transaction.</td>
+</tr>
+<tr>
+<td>po_number</td>
+<td>string, optional</td>
+<td>The purchase order number for the transaction.</td>
+</tr>
+<tr>
+<td>note</td>
+<td>string, optional</td>
+<td>A free format note for the transaction. The note will be read by the merchant.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Note:</strong> One of the following fields must be present: <ul><li>tokenized_card</li><li>card_number</li><li>track1_data</li><li>track2_data</li><li>encrypted_track_data</li></ul></p>
+
 <h2 id="response" style="clear: right;">Response</h2>
 
 <pre><code class="highlight shell"><span class="o">{</span>
@@ -2987,10 +3340,36 @@ supplied findByMerchantOrganizationId search functions.
         <span class="s2">"transaction_id"</span>: 181293,
         <span class="s2">"record_format"</span>: <span class="s2">"CREDIT_CARD"</span>,
         <span class="s2">"lastRefundResponse"</span>: <span class="o">{</span>
-          <span class="s2">"saleTransactionId"</span>: <span class="s2">"181293"</span>,
-          <span class="s2">"refundTransactionId"</span>: <span class="s2">"181332"</span>,
-          <span class="s2">"token"</span>: <span class="s2">"9999000000001853"</span>
-        <span class="o">}</span>,
+            <span class="s2">"saleTransactionId"</span>: <span class="s2">"43063"</span>,//it will be empty <span class="k">if </span>the refund is not associated to one transaction.
+            <span class="s2">"refundTransactionId"</span>: <span class="s2">"43064"</span>,
+            <span class="s2">"token"</span>: null,
+            <span class="s2">"approvalCode"</span>: <span class="s2">"      "</span>,
+            <span class="s2">"processedDateTime"</span>: null,
+            <span class="s2">"avsResultCode"</span>: <span class="s2">"0"</span>,
+            <span class="s2">"verificationResultCode"</span>: <span class="s2">""</span>,
+            <span class="s2">"batchId"</span>: <span class="s2">"133"</span>,
+            <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>,
+            <span class="s2">"responseText"</span>: <span class="s2">"OFFLINE APPROVAL"</span>,
+            <span class="s2">"cisNote"</span>: <span class="s2">""</span>,
+            <span class="s2">"riskStatusResponseText"</span>: <span class="s2">""</span>,
+            <span class="s2">"riskStatusResponseCode"</span>: <span class="s2">""</span>,
+            <span class="s2">"refundDateTime"</span>: <span class="s2">"2016-01-20 17:46:36"</span>,
+            <span class="s2">"customerReference"</span>: <span class="o">{</span>
+              <span class="s2">"customerId"</span>: 0,
+              <span class="s2">"customerEmail"</span>: <span class="s2">""</span>,
+              <span class="s2">"customerPhones"</span>: <span class="o">[]</span>
+            <span class="o">}</span>,
+            <span class="s2">"billingReferences"</span>: <span class="o">{</span>
+              <span class="s2">"tokenizedCard"</span>: <span class="s2">"9999000000001998"</span>,
+              <span class="s2">"customerId"</span>: 0,
+              <span class="s2">"customerCardId"</span>: 486,
+              <span class="s2">"customerBillId"</span>: 1,
+              <span class="s2">"cardObscured"</span>: <span class="s2">"XXXXXXXXXXXX4507"</span>,
+              <span class="s2">"cardType"</span>: <span class="s2">"MasterCard"</span>
+            <span class="o">}</span>
+          <span class="o">}</span>,
+        <span class="s2">"settlementStatus"</span>: <span class="s2">"Not settled"</span>,
+
         <span class="s2">"merchantOrganizationId"</span>: 10127,
         <span class="s2">"_links"</span>: <span class="o">{</span>
           <span class="s2">"self"</span>: <span class="o">{</span>

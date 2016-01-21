@@ -4,7 +4,10 @@
 
 This topic provides the information the Refund transaction.
 
-Run the Refund transaction when you want to refund the full amount of a settled sale, which is not yet refunded. The refund amount will be the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.
+Run the Refund transaction when you want to refund either the full amount or a partial amount of a sale. 
+The refund amount it doesn't needs to be the same as the total amount that was originally charged in the sale. 
+The amount is refunded to the credit or debit card that was originally charged.
+Also, you can Refund amounts to your credit or debit card without enter the transaction id.
 
 ### Request Method
 
@@ -12,19 +15,65 @@ Run the Refund transaction when you want to refund the full amount of a settled 
 
 `https://api.payhub.com/api/v2/refund`
 
-## Elements (All Required)
+## Elements
 
-### merchant
+### merchant (required)
 Element | Type | Value
 --- | ---- | -----
  organization_id | integer | The organization id of the merchant who did the sale that you are trying to refund.
  terminal_id | integer | The terminal id of the merchant from where the sale is done.
  record_format | string | To specify if the sale has to be made over a credit card, debit card or cash payment. <br>The accepted values are: <ul><li>CASH_PAYMENT</li><li>CREDIT_CARD</li><li>DEBIT_CARD</li></ul>
  
-### Transaction
+### Transaction (optional)
 Key | Type | Value
 --- | ---- | ----- 
  transaction_id | integer | The transaction id of the sale you want to refund.
+
+**Note:** you need the transaction_id if you want to refund a partial amount or the total ammount.If you want to refund an amount to your credit or debit card you don't need the transaction Id at all.
+
+### Customer (required to create refunds that aren't associated to existent transactions)
+
+Key | Type | Value
+--- | ---- | -----
+first_name | string | The first name of the customer.
+last_name | string | The last name of the customer.
+company_name | string, optional | The company name of the customer.
+job_title | string, optional | The job title of the customer.
+email_address | string, optional | The valid email address of the customer. The email address must be syntactically correct. If you do not specify the email address, you must provide a phone_number to identify the customer.
+web_address | string, optional | The web address of the customer. The web address, if you specify, must be syntactically valid web address.
+phone_number | string, optional | The phone number of the customer. The phone number must be syntactically correct. <br>For example, (415) 234 5678, or 4152345678, or (415) 234-5678. <br>If you do not specify the phone number, you must provide an email_address to identify the customer.
+phone_ext | string, optional | The phone extension number of the customer.
+phone_type | string, optional | The type (['H' or 'W' or 'M']) of the phone number: H (Home), W (Work), M (Mobile).
+
+### card_data (required to create refunds that aren't associated to existent transactions)
+
+|Key | Type | Value |
+|--- | ---- | ----------------|
+|tokenized_card | string, optional | This is the 16 character PayHub-specific tokenized string representing the card number. <br>The value for the given customer and credit card can be obtained by examining the last Sale by accessing the link to the card data that was successfully created. It is safer (and recommended) for the third party client to store and use this string in any future requests for the same customer.|
+|card_number | string, optional | This is the 16 character card number. <br> The card number is not stored by the API in plain text. The response will contain a tokenized card number that should always be used in future requests, (for the same Customer) in place of this property.|
+|track1_data | string, optional | This is the string read by the swiper (It contents track 1 data without sentinels).|
+|track2_data | string, optional | This is the string read by the swiper (It contents track 2 data without sentinels).|
+|encrypted_track _data | Optional | <ul><li>**encrypted_track** (string, optional): This is the string read by the swiper. This string contains the encrypted track data. </li><li>**swiper_brand** (string, optional): The swiper brand's name with capital letters. Default value is **IDTECH**.</li><li>**swiper_model** (string, optional): The swiper model with capital letters. Default value is **UNIMAGII**.</li></ul>|
+|billing_address_1 | string, optional | The billing street address of the customer.|
+|billing_address_2 | string, optional | The additional billing street address of the customer.|
+|billing_city | string, optional | The billing city of the customer.|
+|billing_state | string, optional | The billing state Code of the customer. <br>For example, CA, WI, NY, etc. <br>The sate codes should be for the states in the USA.|
+|billing_zip | string, optional | The billing Zip Code of the customer. <br>The zip code must be either 5 digits or 5 plus four separated by a '-'. <br>The zip code is required if the merchant has turned ON the AVS flag.|
+|card_expiry_date | string | The card expiry date in the _YYYYMM_ format.|
+
+### bill (required to create refunds with different ammounts, or to create new refunds that aren't associated to existent transactions)
+
+Key | Type | Value
+--- | ---- | -----
+base_amount | TransactionAmount | The base amount of the recurring bill. <br>The total amount charged will be the sum of this amount and (any) 'shipping_amount' and 'tax_amount'.
+shipping_amount | TransactionAmount, optional | The shipping amount for the transaction. <br>This value will be included in the total amount charged.
+tax_amount | TransactionAmount, optional | The tax amount for the transaction. <br>This value will be included in the total amount charged.
+invoice_number | string, optional | The invoice number for the transaction.
+po_number | string, optional | The purchase order number for the transaction.
+note | string, optional | A free format note for the transaction. The note will be read by the merchant.
+
+**Note:** One of the following fields must be present: <ul><li>tokenized_card</li><li>card_number</li><li>track1_data</li><li>track2_data</li><li>encrypted_track_data</li></ul>
+
 
 <h2 id="response" style="clear: right;">Response</h2>
 <%= partial "includes/refund_transaction_result" %>

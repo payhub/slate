@@ -32,11 +32,51 @@ public class Refund {
       JSONObject merchant = new JSONObject();
       merchant.put("organization_id", "10005");//You put your org id here
       merchant.put("terminal_id", "5");//You put your terminal id
-
+      
       jsonRequestObject.put("merchant", merchant);
       jsonRequestObject.put("record_format", "CREDIT_CARD");
+      //optional
       jsonRequestObject.put("transaction_id", "226");
-
+      //optional
+      JSONObject bill = new JSONObject();
+              JSONObject base_amount = new JSONObject();
+                base_amount.put("amount", "1275");//$12.75
+              bill.put("base_amount", base_amount);
+              JSONObject shipping_amount = new JSONObject();
+                shipping_amount.put("amount", "725");//$7.25
+              bill.put("shipping_amount", shipping_amount);
+              JSONObject tax_amount = new JSONObject();
+                tax_amount.put("amount", "113");//$1.13
+              bill.put("tax_amount", tax_amount);
+              bill.put("note", "Shipped as a gift");
+              bill.put("invoice_number", "4645782");
+              bill.put("po_number", "1234-654321");
+      jsonRequestObject.put("bill", bill);
+      //optional
+      JSONObject card_data = new JSONObject();
+              card_data.put("card_number", "5466410004374507");
+              card_data.put("card_expiry_date", "201809");// September 2018
+              card_data.put("billing_address_1", "237 E 33rd Street");
+              card_data.put("billing_address_2", "3rd Floor");
+              card_data.put("billing_city", "New York");
+              card_data.put("billing_zip", "10016");
+              card_data.put("billing_state", "NY");
+              card_data.put("cvv_data", "998");
+              card_data.put("cvv_code", "Y");
+      jsonRequestObject.put("card_data", card_data);
+      //optional
+      JSONObject customer = new JSONObject();
+              customer.put("first_name", "John");
+              customer.put("last_name", "Smith");
+              customer.put("company_name", "CBA Steakhouse");
+              customer.put("job_title", "Owner");
+              customer.put("email_address", "john@cbasteakhouse.com");
+              customer.put("web_address", "http://www.cbasteakhouse.com");
+              customer.put("phone_number", "(917) 479 1349");
+              customer.put("phone_ext", "5478");
+              customer.put("phone_type", "M");
+      jsonRequestObject.put("customer", customer);
+            
       HttpPost postCreate = new HttpPost(url);
       postCreate.addHeader("Authorization", "Bearer dfd4f12a-79af-4825-8dba-db27342c8491");//You put your token here
       postCreate.addHeader("Content-Type", "application/json");
@@ -120,7 +160,21 @@ public class Refund {
   $data = array();
   $data["merchant"] = array("organization_id" => "$organization_id", "terminal_id" => "$terminal_id");
   $data["record_format"]=$record_format;
+  //optional
   $data["transaction_id"]=$transaction_id;
+  //optional
+  $data["bill"] = array ("base_amount" => array ("currency" => "USD","amount" => $base_amount),
+      "shipping_amount" => array ("currency" => "USD","amount" => $shipping_amount),
+      "tax_amount" => array ("currency" => "USD","amount" => $tax_amount));
+  //optional
+  $data["card_data"] = array("card_number" => "$card_number","card_expiry_date" => "$card_expiry_date",
+      "cvv_data" => "$cvv_data","billing_address_1" => "$billing_address_1",
+      "billing_address_2" => "$billing_address_2","billing_city" => "$billing_city",
+      "billing_state" => "$billing_state","billing_zip" => "$billing_zip");
+  //optional
+  $data ["customer"]=  array("first_name" => "$first_name","last_name" => "$last_name","company_name" => "$company_name",
+      "job_title" => "$job_title","email_address" => "$email_address","web_address" => "$web_address",
+      "phone_number" => "$phone_number","phone_ext" => "$phone_ext","phone_type" => "$phone_type");
 
   //Convert data from Array to JSON
   $data_string = json_encode($data);
@@ -220,8 +274,51 @@ namespace PayHubSamples
                          terminal_id = "5",
                      },
                     record_format = "CREDIT_CARD",
-                    transaction_id = "228"
-                   };
+                    transaction_id = "228",//optional
+                    bill = new //optional 
+                    {
+                        base_amount = new
+                        {
+                            amount = "1275" //$12.75
+                        },
+                        shipping_amount = new
+                        {
+                            amount = "725" //$7.25
+                        },
+                        tax_amount = new
+                        {
+                            amount = "113" //$1.13
+                        },
+                        note = "Shipped as a gift",
+                        invoice_number = "4645782",
+                        po_number = "1234-654321"
+                    },
+                    card_data = new //optional
+                    {
+                        card_number = "5466410004374507",
+                        card_expiry_date = "201809", //September 2018
+                        billing_address_1 = "237 E 33rd Street",
+                        billing_address_2 = "3rd Floor",
+                        billing_city = "New York",
+                        billing_state = "NY",
+                        billing_zip = "10016",
+                        cvv_data = "998",
+                        cvv_code = "Y"
+                    },
+                    customer = new //optional
+                    {
+                        first_name = "John",
+                        last_name = "Smith",
+                        company_name = "CBA Stakehouse",
+                        job_title = "Owner",
+                        email_address = "john@cbastakehouse.com",
+                        web_address = "http://www.cbasteakhouse.com",
+                        phone_number = "(917) 479 1349",
+                        phone_ext = "5478",
+                        phone_type = "M"
+                    },
+                    record_format = "CC"
+                };
 
                 string json = JsonConvert.SerializeObject(refund);
 
@@ -280,14 +377,69 @@ namespace PayHubSamples
 ```
 
 ```json
-{
-  "merchant": {
-    "organization_id": 10005,
-    "terminal_id": 5
-  },
-  "record_format": "CREDIT_CARD",
-  "transaction_id": "114"
-}
+    {
+    
+      "merchant": {
+        "organization_id": 10005,
+        "terminal_id": 5
+      },
+      
+      "record_format": "CREDIT_CARD",
+      
+      "transaction_id": "114",
+      
+      "bill" : {
+            "base_amount" : {
+                
+                "amount" : 0.30
+            },
+      
+            "shipping_amount" : {
+                
+                "amount" : 0.20
+            },
+      
+            "tax_amount" : {
+            
+                "amount" : 0.10
+            },
+      
+            "note" : "This is a note.",
+            
+            "invoice_number" : "This is an Invoice number.XXX",
+             "po_number" : "a test po number"
+      
+        },
+        
+        "card_data" : {
+        
+      
+            "card_number" : "5466410004374507",
+            "card_expiry_date" : "202011",
+            
+            "billing_address_1" : "2350 Kerner Blvd",
+            "billing_address_2" : "",
+            "billing_city" : "San Rafael",
+            "billing_state" : "CA",
+            "billing_zip" : "99997-0003"
+            
+           
+        
+        },
+        "customer" : {
+            "first_name" : "First",
+            "last_name" : "Contact",
+            "company_name" : "Payhub Inc",
+            "job_title" : "Software Engineer",
+            "email_address" : "test@payhub.com",
+            "web_address" : "http://payhub.com",
+            "phone_number" : "(415) 479 1349",
+            "phone_ext" : "123",
+            "phone_type" : "M"
+      
+      
+        }
+    }
 ```
 ```ruby
     
@@ -314,10 +466,41 @@ namespace PayHubSamples
     #Record Format 
     record_format="CREDIT_CARD"
     
-    #transaction Id
+    #transaction Id (optional)
     transaction_id="114"
    
-    informationToSend = {"merchant"=>merchant,"record_format"=>record_format,"transaction_id"=>transaction_id}
+    # bill data (optional)
+        bill= {
+        		"base_amount"=>Hash["amount" =>"1.00"],
+        		"shipping_amount"=>Hash["amount" =>"1.00"],
+        		"tax_amount"=>Hash["amount" =>"1.00"],
+        		"note"=>"this a sample note",
+        		"invoice_number"=>"this is an invoice",
+        		"po_number"=>"a test po number"
+        }
+        #Credit card data (optional)
+        card_data = {
+                    "card_number"=>"4055011111111111",
+                    "card_expiry_date"=>"202012",
+                    "billing_address_1"=>"2350 Kerner Blvd",
+                    "billing_address_2"=>"On the corner",
+                    "billing_city"=>"San Rafael",
+                    "billing_state"=>"CA",
+                    "billing_zip"=>"99997-0003"
+                    }
+        # Customer data (optional)
+        customer = {"first_name"=>"First",
+                    "last_name"=>"Contact",
+                    "company_name"=>"Payhub Inc",
+                    "job_title"=>"Software Engineer",
+                    "email_address"=>"jhon@company.com",
+                    "web_address"=>"http://payhub.com",
+                    "phone_number"=>"(415) 479 1349",
+                    "phone_ext"=>"123",
+                    "phone_type"=>"M"
+        }
+    
+    informationToSend = {"merchant"=>merchant,"record_format"=>record_format,"transaction_id"=>transaction_id,"bill"=>bill,"customer"=>customer,"card_data"=>card_data}
     
     request.body = JSON.generate(informationToSend)
     

@@ -21,6 +21,7 @@ includes_gateway:
   - recurring_bill
   - recurring_bill_status
   - administration_configuration
+  - customers
   - transaction_report
   - webhook_for_integrators
   - how_to_test

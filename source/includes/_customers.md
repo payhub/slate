@@ -1,0 +1,7 @@
+# Customers
+## Linking Customers
+
+PayHub automatically identifies customers that have processed with the merchant before then associates the transaction or recurring billing schedule with the corresponding customer. This relationship is used when reporting on merchants and processing new transactions so you can reference the customerID instead of providing the full customer details.
+Then processing new transaction the email address is checked first for customer accounts, so that any transaction run which includes an email address will be associated with the existing account that uses that email address, or if none exists, it will create a new customer account based on that email address and associate the transaction with this account.
+PayHub uses the phone number as the secondary key for customer accounts, so that any transaction in which a phone number was included AND NO email address was provided, the transaction will be associated with the existing account that uses that phone number, or if none exists, it will create a new customer account based on that phone number and associate the transaction with this account.
+When both an email address and a phone number are present the system will use the email address to determine which account to associate the transaction with using the logic described above.

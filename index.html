@@ -6288,6 +6288,15 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 <strong>Note:</strong> You will need to use the Oauth token in the header request. For more information, see the OAUTH section.</li>
 </ul>
 
+          <h1 id="customers">Customers</h1>
+
+<h2 id="linking-customers">Linking Customers</h2>
+
+<p>PayHub automatically identifies customers that have processed with the merchant before then associates the transaction or recurring billing schedule with the corresponding customer. This relationship is used when reporting on merchants and processing new transactions so you can reference the customerID instead of providing the full customer details.
+Then processing new transaction the email address is checked first for customer accounts, so that any transaction run which includes an email address will be associated with the existing account that uses that email address, or if none exists, it will create a new customer account based on that email address and associate the transaction with this account.
+PayHub uses the phone number as the secondary key for customer accounts, so that any transaction in which a phone number was included AND NO email address was provided, the transaction will be associated with the existing account that uses that phone number, or if none exists, it will create a new customer account based on that phone number and associate the transaction with this account.
+When both an email address and a phone number are present the system will use the email address to determine which account to associate the transaction with using the logic described above.</p>
+
           <h1 id="transaction-report">Transaction Report</h1>
 
 <pre><code class="highlight java">
@@ -6751,9 +6760,11 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
     <span class="s2">"cardType"</span>: <span class="s2">"Visa"</span>,
     <span class="s2">"customerName"</span>: <span class="s2">"Joe Tester"</span>,
     <span class="s2">"email"</span>: <span class="s2">"lsun@payhub.com"</span>,
+    <span class="s2">"isCaptured"</span>: <span class="s2">"False"</span>,
     <span class="s2">"note"</span>: <span class="s2">""</span>,
     <span class="s2">"phoneNumber"</span>: <span class="s2">"(917) 823-4567"</span>,
     <span class="s2">"recurringBillId"</span>: <span class="s2">"2108"</span>,
+    <span class="s2">"refundedBy"</span>: <span class="s2">"0"</span>,
     <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>,
     <span class="s2">"responseText"</span>: <span class="s2">"NO  MATCH"</span>,
     <span class="s2">"source"</span>: <span class="s2">"Recurring"</span>,
@@ -6761,7 +6772,8 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
     <span class="s2">"transactionDate"</span>: <span class="s2">"2015-02-15 01:10:19"</span>,
     <span class="s2">"transactionID"</span>: <span class="s2">"180628"</span>,
     <span class="s2">"transactionStatus"</span>: <span class="s2">"Approved"</span>,
-    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>
+    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>,
+    <span class="s2">"voidedBy"</span>: <span class="s2">"0"</span>
   <span class="o">}</span>,
   <span class="o">{</span>
     <span class="s2">"amount"</span>: <span class="s2">"99.25"</span>,
@@ -6772,9 +6784,11 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
     <span class="s2">"cardType"</span>: <span class="s2">"Visa"</span>,
     <span class="s2">"customerName"</span>: <span class="s2">"Joe Tester"</span>,
     <span class="s2">"email"</span>: <span class="s2">"lsun@payhub.com"</span>,
+    <span class="s2">"isCaptured"</span>: <span class="s2">"False"</span>,
     <span class="s2">"note"</span>: <span class="s2">""</span>,
     <span class="s2">"phoneNumber"</span>: <span class="s2">"(917) 823-4567"</span>,
     <span class="s2">"recurringBillId"</span>: <span class="s2">"2109"</span>,
+    <span class="s2">"refundedBy"</span>: <span class="s2">"0"</span>,
     <span class="s2">"responseCode"</span>: <span class="s2">"00"</span>,
     <span class="s2">"responseText"</span>: <span class="s2">"NO  MATCH"</span>,
     <span class="s2">"source"</span>: <span class="s2">"Recurring"</span>,
@@ -6782,7 +6796,8 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
     <span class="s2">"transactionDate"</span>: <span class="s2">"2015-02-15 01:10:21"</span>,
     <span class="s2">"transactionID"</span>: <span class="s2">"180629"</span>,
     <span class="s2">"transactionStatus"</span>: <span class="s2">"Approved"</span>,
-    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>
+    <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>,
+    <span class="s2">"voidedBy"</span>: <span class="s2">"0"</span>
   <span class="o">}</span>
 <span class="o">]</span>
 </code></pre>

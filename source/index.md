@@ -27,6 +27,7 @@ includes_gateway:
   - how_to_test
   - response_codes  
   - errors
+  - change_log
 
   
 includes_safyer:

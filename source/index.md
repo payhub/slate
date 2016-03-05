@@ -27,9 +27,7 @@ includes_gateway:
   - how_to_test
   - response_codes  
   - errors
-  - change_log
 
-  
 includes_safyer:
   - safyer
   - authentication_safyer  
@@ -41,7 +39,10 @@ includes_safyer:
   - reserve_balance
   - chargeback_webhook
   - merchant_status_change_webhook
-
+  
+includes_last_five:
+  - change_log
+  
 toc_footers:
  - <a href='https://github.com/payhub/payhubws-public-sdk'>SDK Download</a>
 

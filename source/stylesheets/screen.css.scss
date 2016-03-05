@@ -179,7 +179,7 @@ html, body {
     @include transition-timing-function('linear');
     @include transition-duration(230ms);
   }
-  li[data-unique="payhub-gateway"] , li[data-unique="safyer-boarding-settlement"]{
+  li[data-unique="payhub-gateway"] , li[data-unique="safyer-boarding-settlement"],li[data-unique="changelog"]{
     color: whitesmoke;
     background-color: $aside-nav-bar-titles;
     border-top: 1px dashed #666;
@@ -237,7 +237,7 @@ html, body {
 
 }
 // Section headers
-.tocify-item [data-unique="payhub-gateway"], .tocify-item[data-unique="safyer-boarding-settlement"] {
+.tocify-item [data-unique="payhub-gateway"], .tocify-item[data-unique="safyer-boarding-settlement"],.tocify-item[data-unique="changelog"] {
   moz-box-shadow: 0px 1px 0px #000;
   -webkit-box-shadow: 0px 1px 0px #000;
   box-shadow: 0px 1px 0px #000;
@@ -424,6 +424,21 @@ html, body {
     background: $aside-nav-bar-titles;
     color:black;
     text-shadow: none;
+  }
+  #changelog{
+       @extend %header-font;
+       font-size: 30px;
+       text-align: center;
+       //text-decoration: underline;
+       padding-top: 0.5em;
+       padding-bottom: 0.5em;
+       border-bottom: 1px solid #ccc;
+       margin-bottom: $h1-margin-bottom;
+       margin-top: 2em;
+       border-top: 1px solid #ddd;
+       background: $aside-nav-bar-titles;
+       color:black;
+       text-shadow: none;
   }
 
 

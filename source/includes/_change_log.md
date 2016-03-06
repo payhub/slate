@@ -1,7 +1,6 @@
 # Changelog
-## Introduction
 
-This is a summary of all the WS changes made in the last sprint.
+## Release Date 2015-02-23
 
 ###transaction Report
 * Added **customerId** in the request. This allows the merchant to look for transactions that were executed by specific customers.

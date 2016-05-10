@@ -13,7 +13,7 @@
 
   </head>
 
-  <body class="includes includes_webhook_patch_method">
+  <body class="includes includes_email_settings_get_result">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -28,15 +28,18 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <pre><code class="highlight shell">PATCH METHOD
+        <pre><code class="highlight shell">GET METHOD:
 <span class="o">{</span>
-    <span class="s2">"virtualHub"</span>: <span class="nb">true</span>,
-    <span class="s2">"endPoint"</span>: <span class="s2">"https://yoursite/yourcontroller/"</span>,
-    <span class="s2">"batchIsActive"</span>: <span class="nb">true</span>,
-    <span class="s2">"api"</span>: <span class="nb">true</span>,
-    <span class="s2">"webhookActive"</span>: <span class="nb">true</span>,
-    <span class="s2">"recurringBill"</span>: <span class="nb">true</span>,
-    <span class="s2">"mobileHub"</span>: <span class="nb">true</span>
+    <span class="s2">"customRBReport"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailTrnReceipt"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailExpPsw"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailRbSuccessTransaction"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailBatchSuccess"</span>: <span class="nb">true</span>,
+    <span class="s2">"pdfOrCsvForRB"</span>: <span class="s2">"0"</span>,
+    <span class="s2">"customBatchReport"</span>: <span class="nb">true</span>,
+    <span class="s2">"pdfOrCsvForBatch"</span>: <span class="s2">"0"</span>,
+    <span class="s2">"emailBatchFail"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailRbFailTransaction"</span>: <span class="nb">true</span>
 <span class="o">}</span>
 </code></pre>
 

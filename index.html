@@ -4717,6 +4717,131 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 
 <pre><code class="highlight shell">GET METHOD:
 <span class="o">{</span>
+    <span class="s2">"customRBReport"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailTrnReceipt"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailExpPsw"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailRbSuccessTransaction"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailBatchSuccess"</span>: <span class="nb">true</span>,
+    <span class="s2">"pdfOrCsvForRB"</span>: <span class="s2">"0"</span>,
+    <span class="s2">"customBatchReport"</span>: <span class="nb">true</span>,
+    <span class="s2">"pdfOrCsvForBatch"</span>: <span class="s2">"0"</span>,
+    <span class="s2">"emailBatchFail"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailRbFailTransaction"</span>: <span class="nb">true</span>
+<span class="o">}</span>
+</code></pre>
+
+<pre><code class="highlight shell">PATCH METHOD:
+<span class="o">{</span>
+    <span class="s2">"customRBReport"</span>: <span class="nb">false</span>,
+    <span class="s2">"emailTrnReceipt"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailExpPsw"</span>: <span class="nb">false</span>,
+    <span class="s2">"emailRbSuccessTransaction"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailBatchSuccess"</span>: <span class="nb">true</span>,
+    <span class="s2">"pdfOrCsvForRB"</span>: <span class="s2">"1"</span>,
+    <span class="s2">"customBatchReport"</span>: <span class="nb">false</span>,
+    <span class="s2">"pdfOrCsvForBatch"</span>: <span class="s2">"1"</span>,
+    <span class="s2">"emailBatchFail"</span>: <span class="nb">true</span>,
+    <span class="s2">"emailRbFailTransaction"</span>: <span class="nb">true</span>
+<span class="o">}</span>
+</code></pre>
+
+<h2 id="email-configuration">Email Configuration</h2>
+
+<h3 id="1.-get-email-configuration">1. Get Email Configuration</h3>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/adminSettings/emailConfiguration</code></p>
+
+<h3 id="result">Result</h3>
+
+<p>You will get the Email Configuration that is associated to your account. 
+<strong>Note:</strong> You will need to use the Oauth token in the header request. For more information, see the OAUTH section.</p>
+
+<h3 id="2.-patch-email-configuration">2. Patch Email Configuration</h3>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">PATCH</code></p>
+
+<h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
+
+<p><code class="prettyprint">PATCH https://api.payhub.com/api/v2/adminSettings/emailConfiguration</code></p>
+
+<h3 id="parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>customRBReport</td>
+<td>Boolean</td>
+<td>Set it to True/False to enable/disable the Custom Reports for Recurring Bills via email</td>
+</tr>
+<tr>
+<td>pdfOrCsvForRB</td>
+<td>String</td>
+<td>Set it to &ldquo;0&rdquo; (zero - PDF) or 1 (one - XLS). This is the format for the Custom Recurring Billing Report</td>
+</tr>
+<tr>
+<td>customBatchReport</td>
+<td>Boolean</td>
+<td>Set it to True/False to enable/disable the Custom Batch Report via email</td>
+</tr>
+<tr>
+<td>pdfOrCsvForBatch</td>
+<td>String</td>
+<td>Set it to &ldquo;0&rdquo; (zero - PDF) or 1 (one - xls). This is the format for the Custom Batch Report</td>
+</tr>
+<tr>
+<td>emailTrnReceipt</td>
+<td>Boolean</td>
+<td>Set it to True/False to enable/disable the notifications for transactions via email</td>
+</tr>
+<tr>
+<td>emailExpPsw</td>
+<td>Boolean</td>
+<td>Set it to True/False to enable/disable the notification for password expiration on your account via email</td>
+</tr>
+<tr>
+<td>emailRbSuccessTransaction</td>
+<td>Boolean</td>
+<td>Set it to True/False to enable/disable the email notifications for successful Recurring Bill transactions</td>
+</tr>
+<tr>
+<td>emailRbFailTransaction</td>
+<td>Boolean</td>
+<td>Set it to True/False to enable/disable the email notifications for failed Recurring Bill transactions</td>
+</tr>
+<tr>
+<td>emailBatchSuccess</td>
+<td>Boolean</td>
+<td>Set it to True/False to enable/disable the email notifications for settled batches</td>
+</tr>
+<tr>
+<td>emailBatchFail</td>
+<td>Boolean</td>
+<td>Set it to True/False to enable/disable the email notifications for unsettled batches</td>
+</tr>
+</tbody></table>
+
+<h3 id="result">Result</h3>
+
+<ul>
+<li>A 201 code (created)
+<strong>Note:</strong> You will need to use the Oauth token in the header request. For more information, see the OAUTH section.</li>
+</ul>
+
+<pre><code class="highlight shell">GET METHOD:
+<span class="o">{</span>
   <span class="s2">"transaction_volume_settings"</span>: <span class="o">{</span>
     <span class="s2">"checked"</span>: <span class="nb">false</span>,
     <span class="s2">"hours_trn_number_more_than"</span>: <span class="o">{</span>
@@ -6777,7 +6902,8 @@ When both an email address and a phone number are present the system will use th
     <span class="s2">"transactionID"</span>: <span class="s2">"180628"</span>,
     <span class="s2">"transactionStatus"</span>: <span class="s2">"Approved"</span>,
     <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>,
-    <span class="s2">"voidedBy"</span>: <span class="s2">"0"</span>
+    <span class="s2">"voidedBy"</span>: <span class="s2">"0"</span>,
+    <span class="s2">"settlementStatus"</span>:<span class="s2">"Risk Hold"</span>
   <span class="o">}</span>,
   <span class="o">{</span>
     <span class="s2">"amount"</span>: <span class="s2">"99.25"</span>,
@@ -6801,7 +6927,8 @@ When both an email address and a phone number are present the system will use th
     <span class="s2">"transactionID"</span>: <span class="s2">"180629"</span>,
     <span class="s2">"transactionStatus"</span>: <span class="s2">"Approved"</span>,
     <span class="s2">"transactionType"</span>: <span class="s2">"Sale"</span>,
-    <span class="s2">"voidedBy"</span>: <span class="s2">"0"</span>
+    <span class="s2">"voidedBy"</span>: <span class="s2">"0"</span>,
+    <span class="s2">"settlementStatus"</span>:<span class="s2">"Settled"</span>
   <span class="o">}</span>
 <span class="o">]</span>
 </code></pre>
@@ -7922,6 +8049,7 @@ To test AVS, just provide any valid address or zip information with the request 
 </tr>
 </tbody></table>
 
+        <!--
             <h1 id="safyer-boarding-settlement">Safyer Boarding-Settlement</h1>
 
             <h1 id="authentication">Authentication</h1>
@@ -9844,6 +9972,32 @@ Business Types</h2>
 
 </code>
 </pre>
+
+        -->
+            <h1 id="changelog">Changelog</h1>
+
+<h1 id="release-date-2015-02-23">Release Date 2015-02-23</h1>
+
+<h2 id="transaction-report">transaction Report</h2>
+
+<ul>
+<li>Added <strong>customerId</strong> in the request. This allows the merchant to look for transactions that were executed by specific customers.</li>
+<li>Added <strong>isCaptured</strong> in the response. (true / false) This allows to know if an Auth Only is Captured. </li>
+<li>Added <strong>voidedBy</strong> in the response. Shows the number of the transaction that voided the transaction searched.</li>
+<li>Added <strong>refundedB</strong> in the response. Shows (as an array) the numbers of the transactions that refunded the transaction searched.</li>
+</ul>
+
+<h2 id="recurring-bill">recurring-bill</h2>
+
+<ul>
+<li>Misc bug fixes</li>
+</ul>
+
+<h2 id="customers-&gt;-linking-customers">Customers &gt; Linking Customers</h2>
+
+<ul>
+<li>Provided documentation on how Customers are linked together</li>
+</ul>
 
       </div>
       <div class="dark-box">

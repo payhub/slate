@@ -113,6 +113,56 @@ You will get the Webhook Configuration that was associated to your account.
 * A 201 code (created)
 **Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
 
+<%= partial "includes/email_settings_get_result" %>
+<%= partial "includes/email_settings_patch_method" %>
+## Email Configuration
+
+### 1. Get Email Configuration
+
+### Request Method
+
+`GET`
+
+### Endpoint (URL to Call)
+
+`GET https://api.payhub.com/api/v2/adminSettings/emailConfiguration`
+
+
+###Result
+You will get the Email Configuration that is associated to your account. 
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+
+### 2. Patch Email Configuration
+
+### Request Method
+
+`PATCH`
+
+### Endpoint (URL to Call)
+
+`PATCH https://api.payhub.com/api/v2/adminSettings/emailConfiguration`
+
+### Parameters
+
+|Key | Type | Value|
+|--- | ---- | -----|
+|customRBReport|Boolean|Set it to True/False to enable/disable the Custom Reports for Recurring Bills via email|
+|pdfOrCsvForRB|String|Set it to "0" (zero - PDF) or 1 (one - XLS). This is the format for the Custom Recurring Billing Report|
+|customBatchReport|Boolean| Set it to True/False to enable/disable the Custom Batch Report via email|
+|pdfOrCsvForBatch|String|Set it to "0" (zero - PDF) or 1 (one - xls). This is the format for the Custom Batch Report|
+|emailTrnReceipt|Boolean|Set it to True/False to enable/disable the notifications for transactions via email|
+|emailExpPsw|Boolean|Set it to True/False to enable/disable the notification for password expiration on your account via email|
+|emailRbSuccessTransaction|Boolean|Set it to True/False to enable/disable the email notifications for successful Recurring Bill transactions|
+|emailRbFailTransaction|Boolean|Set it to True/False to enable/disable the email notifications for failed Recurring Bill transactions|
+|emailBatchSuccess|Boolean|Set it to True/False to enable/disable the email notifications for settled batches|
+|emailBatchFail|Boolean|Set it to True/False to enable/disable the email notifications for unsettled batches|
+
+###Result
+* A 201 code (created)
+**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+
+
 <%= partial "includes/riskFraud_get_result" %>
 <%= partial "includes/riskFraud_patch_method" %>
 ## Risk and Fraud Settings

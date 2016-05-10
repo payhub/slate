@@ -83,9 +83,11 @@ under the License.
         <% current_page.data.includes_gateway && current_page.data.includes_gateway.each do |include| %>
           <%= partial "includes/#{include}" %>
         <% end %>
+        <!--
         <% current_page.data.includes_safyer && current_page.data.includes_safyer.each do |include| %>
             <%= partial "includes/#{include}" %>
         <% end %>
+        -->
         <% current_page.data.includes_last_five && current_page.data.includes_last_five.each do |include| %>
             <%= partial "includes/#{include}" %>
         <% end %>

@@ -3,7 +3,7 @@
 
 ## Introduction
 
-This topic provides the information about the using Verify transaction. Run the Verify transaction when you want to know if the card data you have is valid and ready to run other transactions, such as sale. The amount refunded is the same as the total amount that was originally charged in the sale. The amount is refunded to the credit or debit card that was originally charged.
+This topic provides the information about the using Verify transaction. Run the Verify transaction when you want to know if the card data you have is valid and ready to run other transactions,such as sale. This is a zero ($0.00) amount transaction, no funds are exchanged. 
 
 ### Request Method
 
@@ -37,7 +37,7 @@ billing_city | string, optional | The billing city of the customer.
 billing_state | string, optional | The billing state Code of the customer. For example, CA, WI, NY, etc. <br>The sate codes should be for the states in the USA.
 billing_zip | string, optional | The billing Zip Code of the customer. The zip code must be either 5 digits or 5 plus four separated by a '-'. <br>The zip code is required if the merchant has turned ON the AVS flag.
 card_expiry_date | string | The card expiry in the YYYYMM format.
-cvv_data | string | This is the three or four digit CVV code on the credit and debit card.
+cvv_data | string, optional | This is the three or four digit CVV code on the credit and debit card.
 
 ### customer
 
@@ -53,7 +53,7 @@ phone_number | string, optional | The phone number of the customer. <br> The pho
 phone_ext | string, optional | The phone extension number of the customer.
 phone_type | string, optional | The type (['H' or 'W' or 'M']) phone number: H (Home), W (Work), M (Mobile).
 
-#
+
 <%= partial "includes/verify_transaction_result" %>
 ## Response
 

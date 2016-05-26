@@ -14,9 +14,10 @@ includes_gateway:
   - gateway
   - oauth   
   - sale_transaction
+  - verify_transaction
   - authonly_transaction   
   - capture_transaction
-  - void_transaction 
+  - void_transaction   
   - refund_transaction
   - recurring_bill
   - recurring_bill_status

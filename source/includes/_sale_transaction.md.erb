@@ -73,10 +73,61 @@ note | string, optional | A free format note for the transaction. The note will 
 ## Result
 
 * A 201 code (created)
-* The Id of the Sale in the Location header.
+* The Id of the Sale will be provided in the Location header that is returned. This is referred as the Transaction Id.
     <br>Sample header in the response: `Location → https:// [payhub-api-server]:8251/payhubws/api/sale/5501b651da06a879ce520d4d`.
     <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
 
 On the same way you  can query about merchant, customer, bill and card data details using the given URLs.
 
-**Note:** You will need to use the Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.
+**Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> [OAuth 2.0 Access Tokens](#authentication) section.
+
+## Extended Methods
+### Request Method
+
+`GET`
+
+### Endpoints (URLs to Call)
+
+`GET https://api.payhub.com/api/v2/sale/{id}` <br>
+Use the sale Id in order to get the information of the sale response.
+
+`GET https://api.payhub.com/api/v2/sale/{id}/merchant` <br>
+Use the sale Id in order to get the merchant information of the sale response.
+
+`GET https://api.payhub.com/api/v2/sale/{id}/customer` <br>
+Use the sale Id in order to get the customer information of the sale response.
+
+`GET https://api.payhub.com/api/v2/sale/{id}/bill` <br>
+Use the sale Id in order to get the bill information of the sale response.
+
+`GET https://api.payhub.com/api/v2/sale/{id}/card_data` <br>
+Use the sale Id in order to get the card data of the sale response. (The information on this method is reduced by security policies)
+
+`GET https://api.payhub.com/api/v2/sale/` <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:
+
+`page={pageNo}&size={size}`
+
+## SDKs Methods
+
+### Each SDK has a transaction manager class with the next methods:
+
+* Create a transaction: **doSale**
+* Get transaction information based on the transaction ID: **getSaleInformation({transactionId})**
+* Get all the transactions performed under this method: **getAllSalesInformation** (optional parameters for page and size)
+
+`The first two methods returns a SaleResponseInformation object, the third method returns a list of SaleResponseInformation objects.` <br>
+ `Each SaleResponseInformation has the next methods:` 
+
+* getMerchantInformation()
+* getBillInformation()
+* getCardDataInformation()
+* getCustomerInformation()
+
+
+
+
+
+
+

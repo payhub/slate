@@ -73,6 +73,49 @@ record_format | string, optional | The value that indicates whether the sale has
 <%= partial "includes/authonly_transaction_result" %>
 ## Result
 * 201 code (created)
-* The Id of the AuthOnly in the Location header <br>Sample header in the response:Location: https://api.payhub.com/api/v2/authOnly/234
+* The Id of the AuthOnly will be provided in the Location header that is returned. This is referred as the Transaction Id. <br>Sample header in the response:Location: https://api.payhub.com/api/v2/authOnly/234
 
-**Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> [OAuth 2.0 Access Tokens](https://payhub.atlassian.net/wiki/display/MM/OAuth+2.0+Access+Tokens) section.
+**Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> [OAuth 2.0 Access Tokens](#authentication) section.
+## Extended Methods
+### Request Method
+
+`GET`
+
+### Endpoints (URLs to Call)
+
+`GET https://api.payhub.com/api/v2/authonly/{id}` <br>
+Use the Authorization Id in order to get the information of the Authorization response.
+
+`GET https://api.payhub.com/api/v2/authonly/{id}/merchant` <br>
+Use the Authorization Id in order to get the merchant information of the Authorization response.
+
+`GET https://api.payhub.com/api/v2/authonly/{id}/customer` <br>
+Use the Authorization Id in order to get the customer information of the Authorization response.
+
+`GET https://api.payhub.com/api/v2/authonly/{id}/bill` <br>
+Use the Authorization Id in order to get the bill information of the Authorization response.
+
+`GET https://api.payhub.com/api/v2/authonly/{id}/card_data` <br>
+Use the Authorization Id in order to get the card data of the Authorization response. (The information on this method is reduced by security policies)
+
+`GET https://api.payhub.com/api/v2/authonly/` <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:
+
+`page={pageNo}&size={size}`
+
+## SDKs Methods
+
+### Each SDK has a transaction manager class with the next methods:
+
+* Create a transaction: **doAuthonly**
+* Get transaction information based on the transaction ID: **getAuthorizationInformation({transactionId})**
+* Get all the transactions performed under this method: **getAllAuthOnlyInformation** (optional parameters for page and size)
+
+`The first two methods returns a AuthorizationResponseInformation  object, the third method returns a list of AuthorizationResponseInformation objects.` <br>
+ `Each AuthorizationResponseInformation has the next methods:` 
+
+* getMerchantInformation()
+* getBillInformation()
+* getCardDataInformation()
+* getCustomerInformation()

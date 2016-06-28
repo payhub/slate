@@ -22,6 +22,11 @@
 
 `GET https://api.payhub.com/api/v2/adminSettings/generalSettings`
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* getGeneralSettings()
+
 ###Result:
 You will get the list of all the terminals that you have associated to your account. 
 **Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
@@ -40,6 +45,10 @@ You will get the list of all the terminals that you have associated to your acco
 
 `GET https://api.payhub.com/api/v2/adminSettings/validatedDevices`
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* getValidatedDevices()
 
 ###Result
 You will get the list of all the devices that were associated to your account. 
@@ -62,6 +71,11 @@ You will get the list of all the devices that were associated to your account.
 |--- | ---- | -----|
 |enforce_device_validation|Boolean|Device Validation is an enhanced security feature that allows you to reasonably control the devices that are allowed to access your PayHub account. <br>Turning device validation ON will require users to enter a validation code when they try to access your account on a new device. The validation code is sent to the administrator's email address.<br> Turning device validation OFF will allow any device to access your account.|
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* updateValidatedDevices()
+
 ###Result
 * A 201 code (created)
 **Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
@@ -80,6 +94,10 @@ You will get the list of all the devices that were associated to your account.
 
 `GET https://api.payhub.com/api/v2/adminSettings/webhookConfiguration`
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* getWebhookConfiguration()
 
 ###Result
 You will get the Webhook Configuration that was associated to your account. 
@@ -108,6 +126,10 @@ You will get the Webhook Configuration that was associated to your account.
 |recurringBill|Boolean|Set it to True/False to enable/disable the notifications for transactions that are coming from your Recurring bills|
 |mobileHub|Boolean|Set it to True/False to enable/disable the notifications for transactions that are coming from your Mobile Hub|
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* updateWebhookConfiguration()
 
 ###Result
 * A 201 code (created)
@@ -127,6 +149,10 @@ You will get the Webhook Configuration that was associated to your account.
 
 `GET https://api.payhub.com/api/v2/adminSettings/emailConfiguration`
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* getEmailConfiguration()
 
 ###Result
 You will get the Email Configuration that is associated to your account. 
@@ -158,6 +184,12 @@ You will get the Email Configuration that is associated to your account.
 |emailBatchSuccess|Boolean|Set it to True/False to enable/disable the email notifications for settled batches|
 |emailBatchFail|Boolean|Set it to True/False to enable/disable the email notifications for unsettled batches|
 
+
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* updateEmailConfiguration()
+
 ###Result
 * A 201 code (created)
 **Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
@@ -177,6 +209,10 @@ You will get the Email Configuration that is associated to your account.
 
 `GET https://api.payhub.com/api/v2/adminSettings/riskFraudDetection`
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* getRiskFraudSettings()
 
 ###Result
 You will get the Risk and Fraud Settings that are associated to your account. 
@@ -243,6 +279,10 @@ You will get the Risk and Fraud Settings that are associated to your account.
 |option|String|Posible Values are: 1, 2, and 3 <br> <ul><li> 1:Ignore this Setting</li><li>2:Process and Hold</li><li>3:Deny</li></ul>|
 |value|String|Amount|
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* updateRiskFraudSettings()
 
 ###Result
 * A 201 code (created)
@@ -268,6 +308,10 @@ You will get the Risk and Fraud Settings that are associated to your account.
 
 `GET https://api.payhub.com/api/v2/userRole/roles`
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* getUserRoles()
 
 ###Result
 You will get the list of the rol names that are associated to your account. 
@@ -283,13 +327,17 @@ You will get the list of the rol names that are associated to your account.
 
 `GET https://api.payhub.com/api/v2/userRole/roles/{id}`
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* getUserRolesById()
 
 ###Result
 You will get all the settings for that particular role. 
 **Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
 
 
-### 3. Patch Risk and Fraud Settings
+### 3. Patch User Roles
 
 ### Request Method
 
@@ -300,6 +348,7 @@ You will get all the settings for that particular role.
 `PATCH https://api.payhub.com/api/v2/userRole/roles/update/{id}`
 
 ###General Structure
+
 |Key | Type | Value|
 |--- | ---- | -----|
 |roleName|String|the role name|
@@ -512,11 +561,15 @@ You will get all the settings for that particular role.
 |customPrompt|Boolean|Set it to True/False|
 |customMessage|Boolean|Set it to True/False|
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* updateRoleSettings()
+
 ###Result
 * A 201 code (created)
-**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
-
-### 4. Post Risk and Fraud Settings
+**Note:** You will need to use Oauth token in the header request. For more information, see the <br> [OAuth 2.0 Access Tokens](#authentication) section.
+### 4. Create User Roles
 
 ### Request Method
 
@@ -526,6 +579,11 @@ You will get all the settings for that particular role.
 
 `POST https://api.payhub.com/api/v2/userRole/roles/create`
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
+
+* createRoleSettings()
+
 ###Result
 * A 201 code (created)
-**Note:** You will need to use the Oauth token in the header request. For more information, see the OAUTH section.
+**Note:** You will need to use Oauth token in the header request. For more information, see the <br> [OAuth 2.0 Access Tokens](#authentication) section.

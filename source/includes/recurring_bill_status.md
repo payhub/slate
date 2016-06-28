@@ -3,6 +3,8 @@
 ## Introduction
 
 This topic provides the information about the Recurring Bill Status API. Use the Recurring Billing Status API to change the status of any recurring bill.
+<br>
+_In order to get the current Recurring Bill Status, use the method described in the Extended Methods of the Recurring Bill Section above._
 
 ### Request Method
 
@@ -36,3 +38,11 @@ Code | Meaning | Sample code
 401 | Unauthorized. You do not have permission to perform this operation. Make sure you entered a valid API Key at the top of the page. | `Void {}`
 403 | Forbidden. The server does not permit you to use this URI. | `Void {}`
 500 | Internal server error due to encoding the data, or to a PayHub server failure. Contact PayHub. | `Void {}`
+
+## SDKs Method
+
+### Each SDK has a transaction manager class with the next method:
+
+* Update the Status of one Recurring Bill Transaction: **updateRecurringBillStatus({recurringBillId},{String:newRecurringBillStatus})**
+
+This method returns a boolean value if the process was successful or not (TRUE or FALSE).

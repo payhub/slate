@@ -58,6 +58,49 @@ phone_type | string, optional | The type (['H' or 'W' or 'M']) phone number: H (
 ## Response
 
 
-A 201 Created status if the card data is correct. That's all you need to know if card data is valid.
+* A 201 Created status if the card data is correct. That's all you need to know if card data is valid.
+* The Id of the Verify will be provided in the Location header that is returned. This is referred as the Transaction Id.
+    <br>Verify header in the response: `Location ? https:// [payhub-api-server]:8251/payhubws/api/verify/23053`.
+    <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
 
-**Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.
+**Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> [OAuth 2.0 Access Tokens](#authentication) section.
+
+## Extended Methods
+### Request Method
+
+`GET`
+
+### Endpoints (URLs to Call)
+
+`GET https://api.payhub.com/api/v2/verify/{id}` <br>
+Use the verify Id in order to get the information of the verify response.
+
+`GET https://api.payhub.com/api/v2/verify/{id}/merchant` <br>
+Use the verify Id in order to get the merchant information of the verify response.
+
+`GET https://api.payhub.com/api/v2/verify/{id}/customer` <br>
+Use the verify Id in order to get the customer information of the verify response.
+
+`GET https://api.payhub.com/api/v2/verify/{id}/card_data` <br>
+Use the verify Id in order to get the card data of the verify response. (The information on this method is reduced by security policies)
+
+`GET https://api.payhub.com/api/v2/verify/` <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:
+
+`page={pageNo}&size={size}`
+
+## SDKs Methods
+
+### Each SDK has a transaction manager class with the next methods:
+
+* Create a transaction: **doVerify**
+* Get transaction information based on the transaction ID: **getVerifyInformation({transactionId})**
+* Get all the transactions performed under this method: **getAllVerifyInformation** (optional parameters for page and size)
+
+`The first two methods returns a VerifyResponseInformation object, the third method returns a list of VerifyResponseInformation objects.` <br>
+ `Each VerifyResponseInformation has the next methods:` 
+
+* getMerchantInformation()
+* getCardDataInformation()
+* getCustomerInformation()

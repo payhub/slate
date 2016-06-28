@@ -10,7 +10,7 @@ This API allows the merchant to search for transactions filtering by a wide rang
 
 ### Endpoint (URL to Call)
 
-`webservice URL/api/v2/search/transactionReport`
+`webservice URL/api/v2/report/transactionReport`
 
 ### Required Headers
 * **Content-Type**: application/json
@@ -103,4 +103,7 @@ customerId | Allows the merchant to look for transactions that were executed by 
 ```
 The result data is an array of objects in JSON format.
 
+### SDKs method: 
+**Each SDK has a transaction manager class with the next method:**
 
+* findTransactions()

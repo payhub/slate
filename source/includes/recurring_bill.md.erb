@@ -159,6 +159,72 @@ Code | Meaning | Sample code
 403 | Forbidden. The server does not permit you to use this URI. | `Void {}`
 500 | Internal server error due to encoding the data, or to a PayHub server failure. Contact PayHub. | `Void {}`
 
-## Get
-You can also send a GET  to https://api.payhub.com/api/v2/recurring-bill to list all recurring bills and associated operations in compact form.
+## Extended Methods
+
+### Request Method
+
+`GET`
+
+### Endpoints (URLs to Call)
+
+`GET https://api.payhub.com/api/v2/recurring-bill/{id}` <br>
+Use the Recurring Bill Id in order to get the information of the Recurring Bill response.
+
+`GET https://api.payhub.com/api/v2/recurring-bill/{id}/merchant` <br>
+Use the Recurring Bill Id in order to get the merchant information of the Recurring Bill response.
+
+`GET https://api.payhub.com/api/v2/recurring-bill/{id}/customer` <br>
+Use the Recurring Bill Id in order to get the customer information of the Recurring Bill response.
+
+`GET https://api.payhub.com/api/v2/recurring-bill/{id}/bill` <br>
+Use the Recurring Bill Id in order to get the bill information of the Recurring Bill response.
+
+`GET https://api.payhub.com/api/v2/recurring-bill/{id}/card_data` <br>
+Use the Recurring Bill Id in order to get the card data of the Recurring Bill response. (The information on this method is reduced by security policies)
+
+`GET https://api.payhub.com/api/v2/recurring-bill/{id}/schedule` <br>
+Use the Recurring Bill Id in order to get the schedule of the Recurring Bill response. (The information on this method is reduced by security policies)
+
+`GET https://api.payhub.com/api/v2/recurring-bill/{id}/status` <br>
+Use the Recurring Bill Id in order to get the status of the Recurring Bill response. (The information on this method is reduced by security policies)
+
+`GET https://api.payhub.com/api/v2/recurring-bill/` <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:
+
+`page={pageNo}&size={size}`
+
+
+### Request Method
+
+`PATCH`
+
+### Endpoint (URL to Call)
+
+`https://api.payhub.com/api/v2/recurring-bill/{id}`
+
+By using this method, you are able to update the bill information, card_data information, or schedule information
+of one specific recurring bill. Elements described Recurring Bill Elements section.
+
+
+## SDKs Methods
+
+### Each SDK has a transaction manager class with the next methods:
+
+* Create a Recurring Bill Transaction: **doRecurringBill**
+* Update a Recurring Bill Transaction: **updateRecurringBill({recurringBillId})**
+* Update the Status of one Recurring Bill Transaction: **updateRecurringBillStatus({recurringBillId,{String:newRecurringBillStatus})**
+* Get transaction information based on the transaction ID: **getRecurringBillInformation({recurringBillId})**
+* Get all the transactions performed under this method: **getAllRecurringBillInformation** (optional parameters for page and size)
+
+`The first method returns a RecurringBillInformation  object, the second and third methods, returns a boolean value if the process was successful or not (TRUE or FALSE), the fourth method returns a list of RecurringBillInformation objects.` <br>
+ `Each RecurringBillInformation has the next methods:` 
+
+* getMerchantInformation()
+* getBillInformation()
+* getCardDataInformation()
+* getCustomerInformation()
+* getScheduleInformation()
+* getStatusInformation()
+
 

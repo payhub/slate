@@ -91,6 +91,12 @@ under the License.
         <% current_page.data.includes_last_five && current_page.data.includes_last_five.each do |include| %>
             <%= partial "includes/#{include}" %>
         <% end %>
+
+
+        <% current_page.data.includes_sdk_download && current_page.data.includes_sdk_download.each do |include| %>
+            <%= partial "includes/#{include}" %>
+        <% end %>
+
       </div>
       <div class="dark-box">
         <% if language_tabs %>

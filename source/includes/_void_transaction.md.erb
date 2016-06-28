@@ -28,11 +28,42 @@ transaction_id | string | The Transaction Id to be voided.
 
 ###Result
 * A 201 code (created)
-* The Id of the Void in the Location header.
-    <br>Sample header in the response: `Location ? https:// [payhub-api-server]:8251/payhubws/api/verify/5501b651da06a879ce520d4d`.
+* The Id of the Void will be provided in the Location header that is returned. This is referred as the Transaction Id.
+    <br>Sample header in the response: `Location ? https:// [payhub-api-server]:8251/payhubws/api/void/5501b651da06a879ce520d4d`.
     <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.
 
 On the same way you  can query about merchant, customer, bill and card data details using the given URLs.
 
-**Note:** You will need to use the Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.
+**Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> [OAuth 2.0 Access Tokens](#authentication) section.
 
+## Extended Methods
+### Request Method
+
+`GET`
+
+### Endpoints (URLs to Call)
+
+`GET https://api.payhub.com/api/v2/void/{id}` <br>
+Use the Void Id in order to get the information of the Void response.
+
+`GET https://api.payhub.com/api/v2/void/{id}/merchant` <br>
+Use the Void Id in order to get the merchant information of the Void response.
+
+`GET https://api.payhub.com/api/v2/void/` <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:
+
+`page={pageNo}&size={size}`
+
+## SDKs Methods
+
+### Each SDK has a transaction manager class with the next methods:
+
+* Create a transaction: **doVoid**
+* Get transaction information based on the transaction ID: **getVoidInformation({transactionId})**
+* Get all the transactions performed under this method: **getAllVoidInformation** (optional parameters for page and size)
+
+`The first two methods returns a VoidResponseInformation  object, the third method returns a list of VoidResponseInformation objects.` <br>
+ `Each VoidResponseInformation has the next methods:` 
+
+* getMerchantInformation()

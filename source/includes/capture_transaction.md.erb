@@ -48,5 +48,42 @@ note | string, optional | A free format note for the transaction. The note will 
 ### Result
 
 * 201 code (created)
-* The Id of the Capture in the Location header. This ID should be the same that you provided. 
-<br>Sample header in the response:Location: https://api.payhub.com/api/v2/authOnly/234
+* The Id of the Capture will be provided in the Location header that is returned. This is referred as the Transaction Id.
+<br>Sample header in the response:Location: https://api.payhub.com/api/v2/capture/234
+
+**Note:** You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> [OAuth 2.0 Access Tokens](#authentication) section.
+## Extended Methods
+### Request Method
+
+`GET`
+
+### Endpoints (URLs to Call)
+
+`GET https://api.payhub.com/api/v2/capture/{id}` <br>
+Use the Capture Id in order to get the information of the Capture response.
+
+`GET https://api.payhub.com/api/v2/capture/{id}/merchant` <br>
+Use the Capture Id in order to get the merchant information of the Capture response.
+
+`GET https://api.payhub.com/api/v2/capture/{id}/bill` <br>
+Use the Capture Id in order to get the bill information of the Capture response.
+
+`GET https://api.payhub.com/api/v2/capture/` <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:
+
+`page={pageNo}&size={size}`
+
+## SDKs Methods
+
+### Each SDK has a transaction manager class with the next methods:
+
+* Create a transaction: **doCapture**
+* Get transaction information based on the transaction ID: **getCaptureInformation({transactionId})**
+* Get all the transactions performed under this method: **getAllCaptureInformation** (optional parameters for page and size)
+
+`The first two methods returns a CaptureResponseInfromation object, the third method returns a list of CaptureResponseInfromation objects.` <br>
+ `Each CaptureResponseInfromation  has the next methods:` 
+
+* getMerchantInformation()
+* getBillInformation()

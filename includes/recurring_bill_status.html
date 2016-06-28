@@ -32,7 +32,9 @@
 
 <h2 id="introduction">Introduction</h2>
 
-<p>This topic provides the information about the Recurring Bill Status API. Use the Recurring Billing Status API to change the status of any recurring bill.</p>
+<p>This topic provides the information about the Recurring Bill Status API. Use the Recurring Billing Status API to change the status of any recurring bill.
+<br>
+<em>In order to get the current Recurring Bill Status, use the method described in the Extended Methods of the Recurring Bill Section above.</em></p>
 
 <h3 id="request-method">Request Method</h3>
 
@@ -105,8 +107,21 @@
 </tr>
 </tbody></table>
 
+<h2 id="sdks-method">SDKs Method</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-method:">Each SDK has a transaction manager class with the next method:</h3>
+
+<ul>
+<li>Update the Status of one Recurring Bill Transaction: <strong>updateRecurringBillStatus({recurringBillId},{String:newRecurringBillStatus})</strong></li>
+</ul>
+
+<p>This method returns a boolean value if the process was successful or not (TRUE or FALSE).</p>
+
         <!--
         -->
+
+
+
       </div>
       <div class="dark-box">
       </div>

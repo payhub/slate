@@ -731,12 +731,65 @@
 
 <h2 id="response">Response</h2>
 
-<p>A 201 Created status if the card data is correct. That&rsquo;s all you need to know if card data is valid.</p>
+<ul>
+<li>A 201 Created status if the card data is correct. That&rsquo;s all you need to know if card data is valid.</li>
+<li>The Id of the Verify will be provided in the Location header that is returned. This is referred as the Transaction Id.
+<br>Verify header in the response: <code class="prettyprint">Location ? https:// [payhub-api-server]:8251/payhubws/api/verify/23053</code>.
+<br>If you do a GET request to this URL, you will get all the transaction information in JSON format.</li>
+</ul>
 
-<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.</p>
+<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.</p>
+
+<h2 id="extended-methods">Extended Methods</h2>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoints-(urls-to-call)">Endpoints (URLs to Call)</h3>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/verify/{id}</code> <br>
+Use the verify Id in order to get the information of the verify response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/verify/{id}/merchant</code> <br>
+Use the verify Id in order to get the merchant information of the verify response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/verify/{id}/customer</code> <br>
+Use the verify Id in order to get the customer information of the verify response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/verify/{id}/card_data</code> <br>
+Use the verify Id in order to get the card data of the verify response. (The information on this method is reduced by security policies)</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/verify/</code> <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:</p>
+
+<p><code class="prettyprint">page={pageNo}&amp;size={size}</code></p>
+
+<h2 id="sdks-methods">SDKs Methods</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-methods:">Each SDK has a transaction manager class with the next methods:</h3>
+
+<ul>
+<li>Create a transaction: <strong>doVerify</strong></li>
+<li>Get transaction information based on the transaction ID: <strong>getVerifyInformation({transactionId})</strong></li>
+<li>Get all the transactions performed under this method: <strong>getAllVerifyInformation</strong> (optional parameters for page and size)</li>
+</ul>
+
+<p><code class="prettyprint">The first two methods returns a VerifyResponseInformation object, the third method returns a list of VerifyResponseInformation objects.</code> <br>
+ <code class="prettyprint">Each VerifyResponseInformation has the next methods:</code> </p>
+
+<ul>
+<li>getMerchantInformation()</li>
+<li>getCardDataInformation()</li>
+<li>getCustomerInformation()</li>
+</ul>
 
         <!--
         -->
+
+
+
       </div>
       <div class="dark-box">
       </div>

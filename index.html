@@ -40,9 +40,6 @@
         <ul class="search-results"></ul>
       <div id="toc">
       </div>
-        <ul class="toc-footer">
-            <li><a href='https://github.com/payhub/payhubws-public-sdk'>SDK Download</a></li>
-        </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
@@ -886,14 +883,63 @@ supplied findByMerchantOrganizationId search functions.
 
 <ul>
 <li>A 201 code (created)</li>
-<li>The Id of the Sale in the Location header.
+<li>The Id of the Sale will be provided in the Location header that is returned. This is referred as the Transaction Id.
 <br>Sample header in the response: <code class="prettyprint">Location → https:// [payhub-api-server]:8251/payhubws/api/sale/5501b651da06a879ce520d4d</code>.
 <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.</li>
 </ul>
 
 <p>On the same way you  can query about merchant, customer, bill and card data details using the given URLs.</p>
 
-<p><strong>Note:</strong> You will need to use the Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.</p>
+<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.</p>
+
+<h2 id="extended-methods">Extended Methods</h2>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoints-(urls-to-call)">Endpoints (URLs to Call)</h3>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/sale/{id}</code> <br>
+Use the sale Id in order to get the information of the sale response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/sale/{id}/merchant</code> <br>
+Use the sale Id in order to get the merchant information of the sale response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/sale/{id}/customer</code> <br>
+Use the sale Id in order to get the customer information of the sale response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/sale/{id}/bill</code> <br>
+Use the sale Id in order to get the bill information of the sale response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/sale/{id}/card_data</code> <br>
+Use the sale Id in order to get the card data of the sale response. (The information on this method is reduced by security policies)</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/sale/</code> <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:</p>
+
+<p><code class="prettyprint">page={pageNo}&amp;size={size}</code></p>
+
+<h2 id="sdks-methods">SDKs Methods</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-methods:">Each SDK has a transaction manager class with the next methods:</h3>
+
+<ul>
+<li>Create a transaction: <strong>doSale</strong></li>
+<li>Get transaction information based on the transaction ID: <strong>getSaleInformation({transactionId})</strong></li>
+<li>Get all the transactions performed under this method: <strong>getAllSalesInformation</strong> (optional parameters for page and size)</li>
+</ul>
+
+<p><code class="prettyprint">The first two methods returns a SaleResponseInformation object, the third method returns a list of SaleResponseInformation objects.</code> <br>
+ <code class="prettyprint">Each SaleResponseInformation has the next methods:</code> </p>
+
+<ul>
+<li>getMerchantInformation()</li>
+<li>getBillInformation()</li>
+<li>getCardDataInformation()</li>
+<li>getCustomerInformation()</li>
+</ul>
 
           <h1 id="verify-transaction">Verify Transaction</h1>
 
@@ -1598,9 +1644,59 @@ supplied findByMerchantOrganizationId search functions.
 
 <h2 id="response">Response</h2>
 
-<p>A 201 Created status if the card data is correct. That&rsquo;s all you need to know if card data is valid.</p>
+<ul>
+<li>A 201 Created status if the card data is correct. That&rsquo;s all you need to know if card data is valid.</li>
+<li>The Id of the Verify will be provided in the Location header that is returned. This is referred as the Transaction Id.
+<br>Verify header in the response: <code class="prettyprint">Location ? https:// [payhub-api-server]:8251/payhubws/api/verify/23053</code>.
+<br>If you do a GET request to this URL, you will get all the transaction information in JSON format.</li>
+</ul>
 
-<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.</p>
+<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.</p>
+
+<h2 id="extended-methods">Extended Methods</h2>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoints-(urls-to-call)">Endpoints (URLs to Call)</h3>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/verify/{id}</code> <br>
+Use the verify Id in order to get the information of the verify response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/verify/{id}/merchant</code> <br>
+Use the verify Id in order to get the merchant information of the verify response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/verify/{id}/customer</code> <br>
+Use the verify Id in order to get the customer information of the verify response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/verify/{id}/card_data</code> <br>
+Use the verify Id in order to get the card data of the verify response. (The information on this method is reduced by security policies)</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/verify/</code> <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:</p>
+
+<p><code class="prettyprint">page={pageNo}&amp;size={size}</code></p>
+
+<h2 id="sdks-methods">SDKs Methods</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-methods:">Each SDK has a transaction manager class with the next methods:</h3>
+
+<ul>
+<li>Create a transaction: <strong>doVerify</strong></li>
+<li>Get transaction information based on the transaction ID: <strong>getVerifyInformation({transactionId})</strong></li>
+<li>Get all the transactions performed under this method: <strong>getAllVerifyInformation</strong> (optional parameters for page and size)</li>
+</ul>
+
+<p><code class="prettyprint">The first two methods returns a VerifyResponseInformation object, the third method returns a list of VerifyResponseInformation objects.</code> <br>
+ <code class="prettyprint">Each VerifyResponseInformation has the next methods:</code> </p>
+
+<ul>
+<li>getMerchantInformation()</li>
+<li>getCardDataInformation()</li>
+<li>getCustomerInformation()</li>
+</ul>
 
           <h1 id="authonly-transaction">AuthOnly Transaction</h1>
 
@@ -2364,10 +2460,59 @@ supplied findByMerchantOrganizationId search functions.
 
 <ul>
 <li>201 code (created)</li>
-<li>The Id of the AuthOnly in the Location header <br>Sample header in the response:Location: https://api.payhub.com/api/v2/authOnly/234</li>
+<li>The Id of the AuthOnly will be provided in the Location header that is returned. This is referred as the Transaction Id. <br>Sample header in the response:Location: https://api.payhub.com/api/v2/authOnly/234</li>
 </ul>
 
-<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="https://payhub.atlassian.net/wiki/display/MM/OAuth+2.0+Access+Tokens">OAuth 2.0 Access Tokens</a> section.</p>
+<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.</p>
+
+<h2 id="extended-methods">Extended Methods</h2>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoints-(urls-to-call)">Endpoints (URLs to Call)</h3>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/{id}</code> <br>
+Use the Authorization Id in order to get the information of the Authorization response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/{id}/merchant</code> <br>
+Use the Authorization Id in order to get the merchant information of the Authorization response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/{id}/customer</code> <br>
+Use the Authorization Id in order to get the customer information of the Authorization response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/{id}/bill</code> <br>
+Use the Authorization Id in order to get the bill information of the Authorization response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/{id}/card_data</code> <br>
+Use the Authorization Id in order to get the card data of the Authorization response. (The information on this method is reduced by security policies)</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/</code> <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:</p>
+
+<p><code class="prettyprint">page={pageNo}&amp;size={size}</code></p>
+
+<h2 id="sdks-methods">SDKs Methods</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-methods:">Each SDK has a transaction manager class with the next methods:</h3>
+
+<ul>
+<li>Create a transaction: <strong>doAuthonly</strong></li>
+<li>Get transaction information based on the transaction ID: <strong>getAuthorizationInformation({transactionId})</strong></li>
+<li>Get all the transactions performed under this method: <strong>getAllAuthOnlyInformation</strong> (optional parameters for page and size)</li>
+</ul>
+
+<p><code class="prettyprint">The first two methods returns a AuthorizationResponseInformation  object, the third method returns a list of AuthorizationResponseInformation objects.</code> <br>
+ <code class="prettyprint">Each AuthorizationResponseInformation has the next methods:</code> </p>
+
+<ul>
+<li>getMerchantInformation()</li>
+<li>getBillInformation()</li>
+<li>getCardDataInformation()</li>
+<li>getCustomerInformation()</li>
+</ul>
 
           <h1 id="capture-transaction">Capture Transaction</h1>
 
@@ -2891,8 +3036,51 @@ supplied findByMerchantOrganizationId search functions.
 
 <ul>
 <li>201 code (created)</li>
-<li>The Id of the Capture in the Location header. This ID should be the same that you provided. 
-<br>Sample header in the response:Location: https://api.payhub.com/api/v2/authOnly/234</li>
+<li>The Id of the Capture will be provided in the Location header that is returned. This is referred as the Transaction Id.
+<br>Sample header in the response:Location: https://api.payhub.com/api/v2/capture/234</li>
+</ul>
+
+<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.</p>
+
+<h2 id="extended-methods">Extended Methods</h2>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoints-(urls-to-call)">Endpoints (URLs to Call)</h3>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/capture/{id}</code> <br>
+Use the Capture Id in order to get the information of the Capture response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/capture/{id}/merchant</code> <br>
+Use the Capture Id in order to get the merchant information of the Capture response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/capture/{id}/bill</code> <br>
+Use the Capture Id in order to get the bill information of the Capture response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/capture/</code> <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:</p>
+
+<p><code class="prettyprint">page={pageNo}&amp;size={size}</code></p>
+
+<h2 id="sdks-methods">SDKs Methods</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-methods:">Each SDK has a transaction manager class with the next methods:</h3>
+
+<ul>
+<li>Create a transaction: <strong>doCapture</strong></li>
+<li>Get transaction information based on the transaction ID: <strong>getCaptureInformation({transactionId})</strong></li>
+<li>Get all the transactions performed under this method: <strong>getAllCaptureInformation</strong> (optional parameters for page and size)</li>
+</ul>
+
+<p><code class="prettyprint">The first two methods returns a CaptureResponseInfromation object, the third method returns a list of CaptureResponseInfromation objects.</code> <br>
+ <code class="prettyprint">Each CaptureResponseInfromation  has the next methods:</code> </p>
+
+<ul>
+<li>getMerchantInformation()</li>
+<li>getBillInformation()</li>
 </ul>
 
           <h1 id="void-transaction">Void Transaction</h1>
@@ -3291,14 +3479,51 @@ supplied findByMerchantOrganizationId search functions.
 
 <ul>
 <li>A 201 code (created)</li>
-<li>The Id of the Void in the Location header.
-<br>Sample header in the response: <code class="prettyprint">Location ? https:// [payhub-api-server]:8251/payhubws/api/verify/5501b651da06a879ce520d4d</code>.
+<li>The Id of the Void will be provided in the Location header that is returned. This is referred as the Transaction Id.
+<br>Sample header in the response: <code class="prettyprint">Location ? https:// [payhub-api-server]:8251/payhubws/api/void/5501b651da06a879ce520d4d</code>.
 <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.</li>
 </ul>
 
 <p>On the same way you  can query about merchant, customer, bill and card data details using the given URLs.</p>
 
-<p><strong>Note:</strong> You will need to use the Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.</p>
+<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.</p>
+
+<h2 id="extended-methods">Extended Methods</h2>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoints-(urls-to-call)">Endpoints (URLs to Call)</h3>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/void/{id}</code> <br>
+Use the Void Id in order to get the information of the Void response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/void/{id}/merchant</code> <br>
+Use the Void Id in order to get the merchant information of the Void response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/void/</code> <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:</p>
+
+<p><code class="prettyprint">page={pageNo}&amp;size={size}</code></p>
+
+<h2 id="sdks-methods">SDKs Methods</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-methods:">Each SDK has a transaction manager class with the next methods:</h3>
+
+<ul>
+<li>Create a transaction: <strong>doVoid</strong></li>
+<li>Get transaction information based on the transaction ID: <strong>getVoidInformation({transactionId})</strong></li>
+<li>Get all the transactions performed under this method: <strong>getAllVoidInformation</strong> (optional parameters for page and size)</li>
+</ul>
+
+<p><code class="prettyprint">The first two methods returns a VoidResponseInformation  object, the third method returns a list of VoidResponseInformation objects.</code> <br>
+ <code class="prettyprint">Each VoidResponseInformation has the next methods:</code> </p>
+
+<ul>
+<li>getMerchantInformation()</li>
+</ul>
 
           <h1 id="refund-transaction">Refund Transaction</h1>
 
@@ -4093,14 +4318,51 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 
 <ul>
 <li>A 201 code (created)</li>
-<li>The Id of the Refund in the Location header.
+<li>The Id of the Refund will be provided in the Location header that is returned. This is referred as the Transaction Id.
 <br>Sample header in the response: <code class="prettyprint">Location ? https:// [payhub-api-server]:8251/payhubws/api/refund/5501b651da06a879ce520d4d</code>.
 <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.</li>
 </ul>
 
 <p>On the same way you  can query about merchant, customer, bill and card data details using the given URLs.</p>
 
-<p><strong>Note:</strong> You will need to use the Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.</p>
+<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.</p>
+
+<h2 id="extended-methods">Extended Methods</h2>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoints-(urls-to-call)">Endpoints (URLs to Call)</h3>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/refund/{id}</code> <br>
+Use the Refund Id in order to get the information of the Refund response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/refund/{id}/merchant</code> <br>
+Use the Refund Id in order to get the merchant information of the Refund response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/refund/</code> <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:</p>
+
+<p><code class="prettyprint">page={pageNo}&amp;size={size}</code></p>
+
+<h2 id="sdks-methods">SDKs Methods</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-methods:">Each SDK has a transaction manager class with the next methods:</h3>
+
+<ul>
+<li>Create a transaction: <strong>doRefund</strong></li>
+<li>Get transaction information based on the transaction ID: <strong>getRefundInformation({refundId})</strong></li>
+<li>Get all the transactions performed under this method: <strong>getAllRefundInformation</strong> (optional parameters for page and size)</li>
+</ul>
+
+<p><code class="prettyprint">The first two methods returns a RefundInformation  object, the third method returns a list of RefundInformation objects.</code> <br>
+ <code class="prettyprint">Each RefundInformation has the next methods:</code> </p>
+
+<ul>
+<li>getMerchantInformation()</li>
+</ul>
 
           <h1 id="recurring-bill-transaction">Recurring Bill Transaction</h1>
 
@@ -5115,15 +5377,83 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 </tr>
 </tbody></table>
 
-<h2 id="get">Get</h2>
+<h2 id="extended-methods">Extended Methods</h2>
 
-<p>You can also send a GET  to https://api.payhub.com/api/v2/recurring-bill to list all recurring bills and associated operations in compact form.</p>
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoints-(urls-to-call)">Endpoints (URLs to Call)</h3>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/recurring-bill/{id}</code> <br>
+Use the Recurring Bill Id in order to get the information of the Recurring Bill response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/recurring-bill/{id}/merchant</code> <br>
+Use the Recurring Bill Id in order to get the merchant information of the Recurring Bill response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/recurring-bill/{id}/customer</code> <br>
+Use the Recurring Bill Id in order to get the customer information of the Recurring Bill response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/recurring-bill/{id}/bill</code> <br>
+Use the Recurring Bill Id in order to get the bill information of the Recurring Bill response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/recurring-bill/{id}/card_data</code> <br>
+Use the Recurring Bill Id in order to get the card data of the Recurring Bill response. (The information on this method is reduced by security policies)</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/recurring-bill/{id}/schedule</code> <br>
+Use the Recurring Bill Id in order to get the schedule of the Recurring Bill response. (The information on this method is reduced by security policies)</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/recurring-bill/{id}/status</code> <br>
+Use the Recurring Bill Id in order to get the status of the Recurring Bill response. (The information on this method is reduced by security policies)</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/recurring-bill/</code> <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:</p>
+
+<p><code class="prettyprint">page={pageNo}&amp;size={size}</code></p>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">PATCH</code></p>
+
+<h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
+
+<p><code class="prettyprint">https://api.payhub.com/api/v2/recurring-bill/{id}</code></p>
+
+<p>By using this method, you are able to update the bill information, card_data information, or schedule information
+of one specific recurring bill. Elements described Recurring Bill Elements section.</p>
+
+<h2 id="sdks-methods">SDKs Methods</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-methods:">Each SDK has a transaction manager class with the next methods:</h3>
+
+<ul>
+<li>Create a Recurring Bill Transaction: <strong>doRecurringBill</strong></li>
+<li>Update a Recurring Bill Transaction: <strong>updateRecurringBill({recurringBillId})</strong></li>
+<li>Update the Status of one Recurring Bill Transaction: <strong>updateRecurringBillStatus({recurringBillId,{String:newRecurringBillStatus})</strong></li>
+<li>Get transaction information based on the transaction ID: <strong>getRecurringBillInformation({recurringBillId})</strong></li>
+<li>Get all the transactions performed under this method: <strong>getAllRecurringBillInformation</strong> (optional parameters for page and size)</li>
+</ul>
+
+<p><code class="prettyprint">The first method returns a RecurringBillInformation  object, the second and third methods, returns a boolean value if the process was successful or not (TRUE or FALSE), the fourth method returns a list of RecurringBillInformation objects.</code> <br>
+ <code class="prettyprint">Each RecurringBillInformation has the next methods:</code> </p>
+
+<ul>
+<li>getMerchantInformation()</li>
+<li>getBillInformation()</li>
+<li>getCardDataInformation()</li>
+<li>getCustomerInformation()</li>
+<li>getScheduleInformation()</li>
+<li>getStatusInformation()</li>
+</ul>
 
           <h1 id="recurring-bill-status">Recurring Bill Status</h1>
 
 <h2 id="introduction">Introduction</h2>
 
-<p>This topic provides the information about the Recurring Bill Status API. Use the Recurring Billing Status API to change the status of any recurring bill.</p>
+<p>This topic provides the information about the Recurring Bill Status API. Use the Recurring Billing Status API to change the status of any recurring bill.
+<br>
+<em>In order to get the current Recurring Bill Status, use the method described in the Extended Methods of the Recurring Bill Section above.</em></p>
 
 <h3 id="request-method">Request Method</h3>
 
@@ -5196,6 +5526,16 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 </tr>
 </tbody></table>
 
+<h2 id="sdks-method">SDKs Method</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-method:">Each SDK has a transaction manager class with the next method:</h3>
+
+<ul>
+<li>Update the Status of one Recurring Bill Transaction: <strong>updateRecurringBillStatus({recurringBillId},{String:newRecurringBillStatus})</strong></li>
+</ul>
+
+<p>This method returns a boolean value if the process was successful or not (TRUE or FALSE).</p>
+
           <h1 id="administration-configuration">Administration Configuration</h1>
 
 <h2 id="introduction">Introduction</h2>
@@ -5239,6 +5579,14 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/adminSettings/generalSettings</code></p>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getGeneralSettings()</li>
+</ul>
+
 <h3 id="result:">Result:</h3>
 
 <p>You will get the list of all the terminals that you have associated to your account. 
@@ -5278,6 +5626,14 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/adminSettings/validatedDevices</code></p>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getValidatedDevices()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <p>You will get the list of all the devices that were associated to your account. 
@@ -5308,6 +5664,14 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 <td>Device Validation is an enhanced security feature that allows you to reasonably control the devices that are allowed to access your PayHub account. <br>Turning device validation ON will require users to enter a validation code when they try to access your account on a new device. The validation code is sent to the administrator&rsquo;s email address.<br> Turning device validation OFF will allow any device to access your account.</td>
 </tr>
 </tbody></table>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>updateValidatedDevices()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -5353,6 +5717,14 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/adminSettings/webhookConfiguration</code></p>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getWebhookConfiguration()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -5415,6 +5787,14 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 </tr>
 </tbody></table>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>updateWebhookConfiguration()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <ul>
@@ -5463,6 +5843,14 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/adminSettings/emailConfiguration</code></p>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getEmailConfiguration()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -5539,6 +5927,14 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 <td>Set it to True/False to enable/disable the email notifications for unsettled batches</td>
 </tr>
 </tbody></table>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>updateEmailConfiguration()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -5688,6 +6084,14 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/adminSettings/riskFraudDetection</code></p>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getRiskFraudSettings()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -5863,6 +6267,14 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 <td>Amount</td>
 </tr>
 </tbody></table>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>updateRiskFraudSettings()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -6172,6 +6584,14 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/userRole/roles</code></p>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getUserRoles()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <p>You will get the list of the rol names that are associated to your account. 
@@ -6187,12 +6607,20 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/userRole/roles/{id}</code></p>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getUserRolesById()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <p>You will get all the settings for that particular role. 
 <strong>Note:</strong> You will need to use the Oauth token in the header request. For more information, see the OAUTH section.</p>
 
-<h3 id="3.-patch-risk-and-fraud-settings">3. Patch Risk and Fraud Settings</h3>
+<h3 id="3.-patch-user-roles">3. Patch User Roles</h3>
 
 <h3 id="request-method">Request Method</h3>
 
@@ -7096,14 +7524,21 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 </tr>
 </tbody></table>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>updateRoleSettings()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <ul>
 <li>A 201 code (created)
-<strong>Note:</strong> You will need to use the Oauth token in the header request. For more information, see the OAUTH section.</li>
+<strong>Note:</strong> You will need to use Oauth token in the header request. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.
+### 4. Create User Roles</li>
 </ul>
-
-<h3 id="4.-post-risk-and-fraud-settings">4. Post Risk and Fraud Settings</h3>
 
 <h3 id="request-method">Request Method</h3>
 
@@ -7113,11 +7548,19 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 
 <p><code class="prettyprint">POST https://api.payhub.com/api/v2/userRole/roles/create</code></p>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>createRoleSettings()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <ul>
 <li>A 201 code (created)
-<strong>Note:</strong> You will need to use the Oauth token in the header request. For more information, see the OAUTH section.</li>
+<strong>Note:</strong> You will need to use Oauth token in the header request. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.</li>
 </ul>
 
           <h1 id="customers">Customers</h1>
@@ -7483,7 +7926,7 @@ When both an email address and a phone number are present the system will use th
 
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
-<p><code class="prettyprint">webservice URL/api/v2/search/transactionReport</code></p>
+<p><code class="prettyprint">webservice URL/api/v2/report/transactionReport</code></p>
 
 <h3 id="required-headers">Required Headers</h3>
 
@@ -7641,6 +8084,14 @@ When both an email address and a phone number are present the system will use th
 </code></pre>
 
 <p>The result data is an array of objects in JSON format.</p>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>findTransactions()</li>
+</ul>
 
           <h1 id="payhub-webhook">PayHub Webhook</h1>
 
@@ -10683,9 +11134,56 @@ Business Types</h2>
         -->
             <h1 id="changelog">Changelog</h1>
 
-<h1 id="release-date-2015-02-23">Release Date 2015-02-23</h1>
+<h1 id="release-date-2016-05-26">Release Date 2016-05-26</h1>
 
-<h2 id="transaction-report">transaction Report</h2>
+<h2 id="virtual-terminal-(vpos-or-vt)">Virtual Terminal (VPOS or VT)</h2>
+
+<ul>
+<li>Added customizable Processing Modal logo</li>
+<li>Misc bug fixes</li>
+</ul>
+
+<h3 id="recurring-bill">recurring-bill</h3>
+
+<ul>
+<li>Misc bug fixes</li>
+</ul>
+
+<h2 id="webservice-(ws)">WebService (WS)</h2>
+
+<ul>
+<li>Misc bug fixes</li>
+<li>Added recurring bill update methods</li>
+<li>Added Transaction Totals method.</li>
+<li>Added Email Settings methods.</li>
+</ul>
+
+<h3 id="transaction-report">transaction Report</h3>
+
+<ul>
+<li>Added <strong>SettlementStatus</strong> to transaction result report</li>
+<li>Misc bug fixes</li>
+</ul>
+
+<h1 id="release-date-2016-04-27">Release Date 2016-04-27</h1>
+
+<h2 id="virtual-terminal-(vpos-or-vt)">Virtual Terminal (VPOS or VT)</h2>
+
+<ul>
+<li>Misc bug fixes</li>
+</ul>
+
+<h2 id="webservice-(ws)">WebService (WS)</h2>
+
+<ul>
+<li>Misc bug fixes</li>
+</ul>
+
+<h1 id="release-date-2016-02-23">Release Date 2016-02-23</h1>
+
+<h2 id="webservice-(ws)">WebService (WS)</h2>
+
+<h3 id="transaction-report">transaction Report</h3>
 
 <ul>
 <li>Added <strong>customerId</strong> in the request. This allows the merchant to look for transactions that were executed by specific customers.</li>
@@ -10694,17 +11192,32 @@ Business Types</h2>
 <li>Added <strong>refundedB</strong> in the response. Shows (as an array) the numbers of the transactions that refunded the transaction searched.</li>
 </ul>
 
-<h2 id="recurring-bill">recurring-bill</h2>
+<h3 id="recurring-bill">recurring-bill</h3>
 
 <ul>
 <li>Misc bug fixes</li>
 </ul>
 
-<h2 id="customers-&gt;-linking-customers">Customers &gt; Linking Customers</h2>
+<h3 id="customers-&gt;-linking-customers">Customers &gt; Linking Customers</h3>
 
 <ul>
 <li>Provided documentation on how Customers are linked together</li>
 </ul>
+
+
+
+            <h1 id="sdk-download-links">SDK Download Links</h1>
+
+<h2 id="c#"><a href="https://github.com/payhub/payhubws-public-sdk/tree/master/Payhub%20-%20SDK/c%23_SDK">C#</a></h2>
+
+<h2 id="java"><a href="https://github.com/payhub/payhubws-public-sdk/tree/master/Payhub%20-%20SDK/java_SDK">Java</a></h2>
+
+<h2 id="php"><a href="https://github.com/payhub/payhubws-public-sdk/tree/master/Payhub%20-%20SDK/php_SDK">Php</a></h2>
+
+<h2 id="ruby"><a href="https://github.com/payhub/payhubws-public-sdk/tree/master/Payhub%20-%20SDK/ruby_SDK">Ruby</a></h2>
+
+<h2 id="nodejs"><a href="https://github.com/payhub/payhubws-public-sdk/tree/master/Payhub%20-%20SDK/node.js_SDK">NodeJs</a></h2>
+
 
       </div>
       <div class="dark-box">

@@ -790,13 +790,65 @@
 
 <ul>
 <li>201 code (created)</li>
-<li>The Id of the AuthOnly in the Location header <br>Sample header in the response:Location: https://api.payhub.com/api/v2/authOnly/234</li>
+<li>The Id of the AuthOnly will be provided in the Location header that is returned. This is referred as the Transaction Id. <br>Sample header in the response:Location: https://api.payhub.com/api/v2/authOnly/234</li>
 </ul>
 
-<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="https://payhub.atlassian.net/wiki/display/MM/OAuth+2.0+Access+Tokens">OAuth 2.0 Access Tokens</a> section.</p>
+<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.</p>
+
+<h2 id="extended-methods">Extended Methods</h2>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoints-(urls-to-call)">Endpoints (URLs to Call)</h3>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/{id}</code> <br>
+Use the Authorization Id in order to get the information of the Authorization response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/{id}/merchant</code> <br>
+Use the Authorization Id in order to get the merchant information of the Authorization response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/{id}/customer</code> <br>
+Use the Authorization Id in order to get the customer information of the Authorization response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/{id}/bill</code> <br>
+Use the Authorization Id in order to get the bill information of the Authorization response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/{id}/card_data</code> <br>
+Use the Authorization Id in order to get the card data of the Authorization response. (The information on this method is reduced by security policies)</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/authonly/</code> <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:</p>
+
+<p><code class="prettyprint">page={pageNo}&amp;size={size}</code></p>
+
+<h2 id="sdks-methods">SDKs Methods</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-methods:">Each SDK has a transaction manager class with the next methods:</h3>
+
+<ul>
+<li>Create a transaction: <strong>doAuthonly</strong></li>
+<li>Get transaction information based on the transaction ID: <strong>getAuthorizationInformation({transactionId})</strong></li>
+<li>Get all the transactions performed under this method: <strong>getAllAuthOnlyInformation</strong> (optional parameters for page and size)</li>
+</ul>
+
+<p><code class="prettyprint">The first two methods returns a AuthorizationResponseInformation  object, the third method returns a list of AuthorizationResponseInformation objects.</code> <br>
+ <code class="prettyprint">Each AuthorizationResponseInformation has the next methods:</code> </p>
+
+<ul>
+<li>getMerchantInformation()</li>
+<li>getBillInformation()</li>
+<li>getCardDataInformation()</li>
+<li>getCustomerInformation()</li>
+</ul>
 
         <!--
         -->
+
+
+
       </div>
       <div class="dark-box">
       </div>

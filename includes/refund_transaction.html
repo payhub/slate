@@ -821,17 +821,57 @@ Also, you can Refund amounts to your credit or debit card without enter the tran
 
 <ul>
 <li>A 201 code (created)</li>
-<li>The Id of the Refund in the Location header.
+<li>The Id of the Refund will be provided in the Location header that is returned. This is referred as the Transaction Id.
 <br>Sample header in the response: <code class="prettyprint">Location ? https:// [payhub-api-server]:8251/payhubws/api/refund/5501b651da06a879ce520d4d</code>.
 <br>If you do a GET request to this URL, you will get all the transaction information in JSON format.</li>
 </ul>
 
 <p>On the same way you  can query about merchant, customer, bill and card data details using the given URLs.</p>
 
-<p><strong>Note:</strong> You will need to use the Oauth token in the header request for sales or any other transaction. For more information, see the OAUTH section.</p>
+<p><strong>Note:</strong> You will need to use Oauth token in the header request for sales or any other transaction. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.</p>
+
+<h2 id="extended-methods">Extended Methods</h2>
+
+<h3 id="request-method">Request Method</h3>
+
+<p><code class="prettyprint">GET</code></p>
+
+<h3 id="endpoints-(urls-to-call)">Endpoints (URLs to Call)</h3>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/refund/{id}</code> <br>
+Use the Refund Id in order to get the information of the Refund response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/refund/{id}/merchant</code> <br>
+Use the Refund Id in order to get the merchant information of the Refund response.</p>
+
+<p><code class="prettyprint">GET https://api.payhub.com/api/v2/refund/</code> <br>
+If the ID is not present, you will get a list with all the transactions.<br>
+By default, the list return only the first 20 resutls and it can be paged, you can modify this by adding the next parameters to the url:</p>
+
+<p><code class="prettyprint">page={pageNo}&amp;size={size}</code></p>
+
+<h2 id="sdks-methods">SDKs Methods</h2>
+
+<h3 id="each-sdk-has-a-transaction-manager-class-with-the-next-methods:">Each SDK has a transaction manager class with the next methods:</h3>
+
+<ul>
+<li>Create a transaction: <strong>doRefund</strong></li>
+<li>Get transaction information based on the transaction ID: <strong>getRefundInformation({refundId})</strong></li>
+<li>Get all the transactions performed under this method: <strong>getAllRefundInformation</strong> (optional parameters for page and size)</li>
+</ul>
+
+<p><code class="prettyprint">The first two methods returns a RefundInformation  object, the third method returns a list of RefundInformation objects.</code> <br>
+ <code class="prettyprint">Each RefundInformation has the next methods:</code> </p>
+
+<ul>
+<li>getMerchantInformation()</li>
+</ul>
 
         <!--
         -->
+
+
+
       </div>
       <div class="dark-box">
       </div>

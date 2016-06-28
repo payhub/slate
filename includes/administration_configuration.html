@@ -71,6 +71,14 @@
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/adminSettings/generalSettings</code></p>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getGeneralSettings()</li>
+</ul>
+
 <h3 id="result:">Result:</h3>
 
 <p>You will get the list of all the terminals that you have associated to your account. 
@@ -110,6 +118,14 @@
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/adminSettings/validatedDevices</code></p>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getValidatedDevices()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <p>You will get the list of all the devices that were associated to your account. 
@@ -140,6 +156,14 @@
 <td>Device Validation is an enhanced security feature that allows you to reasonably control the devices that are allowed to access your PayHub account. <br>Turning device validation ON will require users to enter a validation code when they try to access your account on a new device. The validation code is sent to the administrator&rsquo;s email address.<br> Turning device validation OFF will allow any device to access your account.</td>
 </tr>
 </tbody></table>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>updateValidatedDevices()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -185,6 +209,14 @@
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/adminSettings/webhookConfiguration</code></p>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getWebhookConfiguration()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -247,6 +279,14 @@
 </tr>
 </tbody></table>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>updateWebhookConfiguration()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <ul>
@@ -295,6 +335,14 @@
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/adminSettings/emailConfiguration</code></p>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getEmailConfiguration()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -371,6 +419,14 @@
 <td>Set it to True/False to enable/disable the email notifications for unsettled batches</td>
 </tr>
 </tbody></table>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>updateEmailConfiguration()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -520,6 +576,14 @@
 <h3 id="endpoint-(url-to-call)">Endpoint (URL to Call)</h3>
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/adminSettings/riskFraudDetection</code></p>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getRiskFraudSettings()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -695,6 +759,14 @@
 <td>Amount</td>
 </tr>
 </tbody></table>
+
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>updateRiskFraudSettings()</li>
+</ul>
 
 <h3 id="result">Result</h3>
 
@@ -1004,6 +1076,14 @@
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/userRole/roles</code></p>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getUserRoles()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <p>You will get the list of the rol names that are associated to your account. 
@@ -1019,12 +1099,20 @@
 
 <p><code class="prettyprint">GET https://api.payhub.com/api/v2/userRole/roles/{id}</code></p>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>getUserRolesById()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <p>You will get all the settings for that particular role. 
 <strong>Note:</strong> You will need to use the Oauth token in the header request. For more information, see the OAUTH section.</p>
 
-<h3 id="3.-patch-risk-and-fraud-settings">3. Patch Risk and Fraud Settings</h3>
+<h3 id="3.-patch-user-roles">3. Patch User Roles</h3>
 
 <h3 id="request-method">Request Method</h3>
 
@@ -1928,14 +2016,21 @@
 </tr>
 </tbody></table>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>updateRoleSettings()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <ul>
 <li>A 201 code (created)
-<strong>Note:</strong> You will need to use the Oauth token in the header request. For more information, see the OAUTH section.</li>
+<strong>Note:</strong> You will need to use Oauth token in the header request. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.
+### 4. Create User Roles</li>
 </ul>
-
-<h3 id="4.-post-risk-and-fraud-settings">4. Post Risk and Fraud Settings</h3>
 
 <h3 id="request-method">Request Method</h3>
 
@@ -1945,15 +2040,26 @@
 
 <p><code class="prettyprint">POST https://api.payhub.com/api/v2/userRole/roles/create</code></p>
 
+<h3 id="sdks-method:">SDKs method:</h3>
+
+<p><strong>Each SDK has a transaction manager class with the next method:</strong></p>
+
+<ul>
+<li>createRoleSettings()</li>
+</ul>
+
 <h3 id="result">Result</h3>
 
 <ul>
 <li>A 201 code (created)
-<strong>Note:</strong> You will need to use the Oauth token in the header request. For more information, see the OAUTH section.</li>
+<strong>Note:</strong> You will need to use Oauth token in the header request. For more information, see the <br> <a href="#authentication">OAuth 2.0 Access Tokens</a> section.</li>
 </ul>
 
         <!--
         -->
+
+
+
       </div>
       <div class="dark-box">
       </div>

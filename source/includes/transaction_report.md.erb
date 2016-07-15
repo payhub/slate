@@ -35,7 +35,7 @@ lastName | Allows the merchant to look for transactions where the customer’s f
 phoneNumber | Allows the merchant to look for transactions where the customer’s phone number contains the value of the parameter.
 email | This parameter allows the merchant to look for transactions where the customer’s email address contains the value of the parameter.
 trnDateFrom, trnDateTo | Allows the merchant to look for transactions where the date of the transaction is between the trnDateFrom and trnDateTo. <br>You can use any one of the two parameters. In that case, the result will be the transactions with the date later than the trnDateFrom, or the date earlier than trnDateTo.<br>Format: “yyyy-mm-dd hh:mm:ss”.
-cardType | This parameter allows the merchant to look for transactions where the card type matches the value of the parameter. <br>For instance: MasterCard, Visa.
+cardType | This parameter allows the merchant to look for transactions where the card type matches the value of the parameter. <br>For instance: MasterCard, Visa, Discover, Amex, Diners, and JCB
 cardLast4Digits | Allows the merchant to look for transactions where the credit card’s last four digits matches the value of the parameter. <br>Format: “XXXX”.
 cardToken | Allows the merchant to look for transactions where the credit card’s token matches the value of the parameter. <br>Format: “XXXXXXXXXXXXXXXX”.
 authAmountFrom, authAmountTo | Allows the merchant to look for transactions where the authorized amount of the transaction is between the authAmountFrom and authAmountTo. <br>You can use any one of the two parameters. In that case the result will be the transactions with the authorization amount is greater than **authAmountFrom**, or the authorization amount less than **authAmountTo**.
@@ -45,6 +45,83 @@ note | Allows the merchant to look for transactions where the note matches the v
 transactionStatus | Allows the merchant to look for transactions where the transaction status matches the value of the parameter. <br>For instance: “Approved”
 recurringBillId | Allows the merchant to look for transactions that were scheduled.
 customerId | Allows the merchant to look for transactions that were executed by specific customers. 
+
+##Compatibility - Usability
+
+**All fields are NOT case sensitive. For instance, if the field is called "transactionType", we might use it as "transactionType", or "TransactionType" or "transactiontype".
+All the fields with a compound name, such as, "transactionType" might also be referenced as "transaction_type".**
+
+**Field name (schema):**
+
+* batchIdFrom - batchidfrom, batch_id_from
+* batchIdTo - batchidto, batch_id_to
+* transactionType - transactiontype, transaction_type
+* responseCode - responsecode, response_code
+* amountFrom - amountfrom, amount_from
+* amountTo - amountto, amountTo
+* trnDateFrom - trndatefrom, trndate_from
+* trnDateTo - trndateto, trndate_to
+* firstName - firstname, first_name
+* lastName - lastname, last_name
+* customerId - customerid, customer_id
+* cardType - cardtype, card_type
+* cardLast4Digits - card_last_4_digits
+* cardToken - cardtoken, card_token
+* authAmountFrom - authamountfrom, auth_amount_from
+* authAmountTo - authamountto, auth_amount_to
+* swiped
+* source
+* phoneNumber - phonenumber, phone_number
+* email
+* note
+* transactionStatus - transactionstatus, transaction_status
+* recurringBillId - recurringbillid, recurring_bill_id
+
+## Filters - Search Engine
+
+###Fields allowed for filters:
+
+* transactiontype
+* responsecode
+* firstname
+* lastname
+* customerid
+* cardtype
+* cardlast4digits
+* cardtoken
+* swiped
+* source
+* phonenumber
+* email
+* note
+* transactionstatus
+* recurringbillid
+
+###Usage
+
+This is how a filter currently works:<br>
+The following JSON name/value pair,<br>
+**"responseCode":"00"**<br>
+looks for transactions for which the Response Code is equal to **"00"**.<br>
+Now we have the option to look for multiple values by using semicolon **";"** as a separator of the values that we send.<br>
+As an example,</br> 
+**"responseCode":"00;0930;4004;05;N7"**<br>
+looks for transactions for which the responseCode is equal to any of the values that were sent ( 00, 0930, 4004, 05 or N7 ).<br>
+Now we also have the option to negate values using the exclamation mark **"!"** before the value.<br>
+Such as in this example in which: </br>
+**"responseCode":"!00"**<br>
+looks for all the transactions for which the result is NOT 00.<br>
+We also have the option of mixing the use of inclusion (include) and exclusion (include) at the same time.<br>
+For instance:<br>
+**"responseCode":"!00;!4004;N7;0930"**<br>
+gets all the transactions where the Response Code is either N7 or 0930 or is neither 00 nor 4004.<br>
+There is a unique option when using the **"recurringBillId"** field where:<br>
+**"!"** means Get all the transactions that belong to a recurring bill<br>
+**""** means Get all the transactions that DO NOT belong to a recurring bill<br>
+FINALLY we can mix the use of inclusion (include) and exclusion (exclude) with recurring bill ids using the **"recurringBillId"** field such that, as in this example:<br>
+**"recurringBillId":"300;301;!302;!303"**<br>
+gets all the transactions where the recurringBillId is equal to 300 or 301 or both, but neither 302 nor 303.<br>
+
 
 ## Result Data
 ```shell

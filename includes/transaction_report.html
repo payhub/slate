@@ -444,7 +444,7 @@
 </tr>
 <tr>
 <td>cardType</td>
-<td>This parameter allows the merchant to look for transactions where the card type matches the value of the parameter. <br>For instance: MasterCard, Visa.</td>
+<td>This parameter allows the merchant to look for transactions where the card type matches the value of the parameter. <br>For instance: MasterCard, Visa, Discover, Amex, Diners, and JCB</td>
 </tr>
 <tr>
 <td>cardLast4Digits</td>
@@ -483,6 +483,86 @@
 <td>Allows the merchant to look for transactions that were executed by specific customers.</td>
 </tr>
 </tbody></table>
+
+<h2 id="compatibility---usability">Compatibility - Usability</h2>
+
+<p><strong>All fields are NOT case sensitive. For instance, if the field is called &ldquo;transactionType&rdquo;, we might use it as &ldquo;transactionType&rdquo;, or &ldquo;TransactionType&rdquo; or &ldquo;transactiontype&rdquo;.
+All the fields with a compound name, such as, &ldquo;transactionType&rdquo; might also be referenced as &ldquo;transaction_type&rdquo;.</strong></p>
+
+<p><strong>Field name (schema):</strong></p>
+
+<ul>
+<li>batchIdFrom - batchidfrom, batch_id_from</li>
+<li>batchIdTo - batchidto, batch_id_to</li>
+<li>transactionType - transactiontype, transaction_type</li>
+<li>responseCode - responsecode, response_code</li>
+<li>amountFrom - amountfrom, amount_from</li>
+<li>amountTo - amountto, amountTo</li>
+<li>trnDateFrom - trndatefrom, trndate_from</li>
+<li>trnDateTo - trndateto, trndate_to</li>
+<li>firstName - firstname, first_name</li>
+<li>lastName - lastname, last_name</li>
+<li>customerId - customerid, customer_id</li>
+<li>cardType - cardtype, card_type</li>
+<li>cardLast4Digits - card_last_4_digits</li>
+<li>cardToken - cardtoken, card_token</li>
+<li>authAmountFrom - authamountfrom, auth_amount_from</li>
+<li>authAmountTo - authamountto, auth_amount_to</li>
+<li>swiped</li>
+<li>source</li>
+<li>phoneNumber - phonenumber, phone_number</li>
+<li>email</li>
+<li>note</li>
+<li>transactionStatus - transactionstatus, transaction_status</li>
+<li>recurringBillId - recurringbillid, recurring_bill_id</li>
+</ul>
+
+<h2 id="filters---search-engine">Filters - Search Engine</h2>
+
+<h3 id="fields-allowed-for-filters:">Fields allowed for filters:</h3>
+
+<ul>
+<li>transactiontype</li>
+<li>responsecode</li>
+<li>firstname</li>
+<li>lastname</li>
+<li>customerid</li>
+<li>cardtype</li>
+<li>cardlast4digits</li>
+<li>cardtoken</li>
+<li>swiped</li>
+<li>source</li>
+<li>phonenumber</li>
+<li>email</li>
+<li>note</li>
+<li>transactionstatus</li>
+<li>recurringbillid</li>
+</ul>
+
+<h3 id="usage">Usage</h3>
+
+<p>This is how a filter currently works:<br>
+The following JSON name/value pair,<br>
+<strong>&ldquo;responseCode&rdquo;:&ldquo;00&rdquo;</strong><br>
+looks for transactions for which the Response Code is equal to <strong>&ldquo;00&rdquo;</strong>.<br>
+Now we have the option to look for multiple values by using semicolon <strong>&ldquo;;&rdquo;</strong> as a separator of the values that we send.<br>
+As an example,</br> 
+<strong>&ldquo;responseCode&rdquo;:&ldquo;00;0930;4004;05;N7&rdquo;</strong><br>
+looks for transactions for which the responseCode is equal to any of the values that were sent ( 00, 0930, 4004, 05 or N7 ).<br>
+Now we also have the option to negate values using the exclamation mark <strong>&ldquo;!&rdquo;</strong> before the value.<br>
+Such as in this example in which: </br>
+<strong>&ldquo;responseCode&rdquo;:&ldquo;!00&rdquo;</strong><br>
+looks for all the transactions for which the result is NOT 00.<br>
+We also have the option of mixing the use of inclusion (include) and exclusion (include) at the same time.<br>
+For instance:<br>
+<strong>&ldquo;responseCode&rdquo;:&ldquo;!00;!4004;N7;0930&rdquo;</strong><br>
+gets all the transactions where the Response Code is either N7 or 0930 or is neither 00 nor 4004.<br>
+There is a unique option when using the <strong>&ldquo;recurringBillId&rdquo;</strong> field where:<br>
+<strong>&ldquo;!&rdquo;</strong> means Get all the transactions that belong to a recurring bill<br>
+<strong>&ldquo;&rdquo;</strong> means Get all the transactions that DO NOT belong to a recurring bill<br>
+FINALLY we can mix the use of inclusion (include) and exclusion (exclude) with recurring bill ids using the <strong>&ldquo;recurringBillId&rdquo;</strong> field such that, as in this example:<br>
+<strong>&ldquo;recurringBillId&rdquo;:&ldquo;300;301;!302;!303&rdquo;</strong><br>
+gets all the transactions where the recurringBillId is equal to 300 or 301 or both, but neither 302 nor 303.<br></p>
 
 <h2 id="result-data">Result Data</h2>
 <pre><code class="highlight shell"><span class="o">[</span>
